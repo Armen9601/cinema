@@ -10,21 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequiredArgsConstructor
-@RequestMapping("/admin/")
+
 public class AdminController {
 
-    private final MovieService movieService;
 
-    @GetMapping("addMovie")
-    public String addMoviePage() {
-        return "add-movie-page";
-    }
-
-    @PostMapping("addMovie")
-    public String addMovie(@ModelAttribute Movie movie) {
-        movieService.addMovie(movie);
-        return "redirect:/add-movie-page";
-    }
 
 }

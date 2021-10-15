@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RatingRepository extends JpaRepository<Rating, Integer> {
 
-//    List<Rating> findByMovie_Id(int id);
+    List<Rating> findByMovie_Id(int id);
 
 }

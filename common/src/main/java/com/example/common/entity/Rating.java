@@ -21,4 +21,6 @@ public class Rating {
     private int rating;
     @ManyToOne
     private Movie movie;
+    @ManyToOne
+    private User user;
 }

@@ -20,4 +20,5 @@ public class Seance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDateTime seanceTime;
+
 }

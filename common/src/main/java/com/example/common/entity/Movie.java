@@ -1,7 +1,7 @@
 package com.example.common.entity;
 
 
-
+import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -22,15 +23,16 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String category;
+    @Enumerated(value = EnumType.STRING)
+    private Category category;
     private String description;
-    private int rating;
+    private double rating;
     private int popularity;
     private String picUrl;
     @ElementCollection
     private List<String> picUrls;
-    @ManyToOne
-    private Seance seanceDateTime;
+    @ElementCollection
+    private List<LocalDateTime> seanceDateTime;
     private String duration;
     @ManyToMany
     @JoinTable(
@@ -40,6 +42,8 @@ public class Movie {
     private List<Actor> actor;
     @Enumerated(value = EnumType.STRING)
     private Languages language;
+
+
 
 
 }

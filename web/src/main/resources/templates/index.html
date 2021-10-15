@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,11 +32,12 @@
             <div class="logo"><a href="index.html"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
             <ul class="menu">
                 <li><a href="#0" class="active">Home</a>
+                    <ul class="submenu">
+                        <li><a href="#0" class="active">Home One</a></li>
+                    </ul>
                 </li>
                 <li><a href="#0">movies</a>
                     <ul class="submenu">
-                        <li><a href="movie-grid.html">Movie Grid</a></li>
-                        <li><a href="movie-list.html">Movie List</a></li>
                         <li><a href="movie-details.html">Movie Details</a></li>
                         <li><a href="movie-details-2.html">Movie Details 2</a></li>
                         <li><a href="movie-ticket-plan.html">Movie Ticket Plan</a></li>
@@ -125,36 +126,16 @@
                         <div class="form-group large"><input type="text" placeholder="Search for Movies">
                             <button type="submit"><i class="fas fa-search"></i></button>
                         </div>
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/city.png" alt="ticket"></div>
-                            <span class="type">city</span><select class="select-bar">
-                            <option value="london">London</option>
-                            <option value="dhaka">dhaka</option>
-                            <option value="rosario">rosario</option>
-                            <option value="madrid">madrid</option>
-                            <option value="koltaka">kolkata</option>
-                            <option value="rome">rome</option>
-                            <option value="khoksa">khoksa</option>
-                        </select></div>
+
                         <div class="form-group">
                             <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
-                            <span class="type">date</span><select class="select-bar">
+                            <span class="type">date</span><select class="select-bar" name="date">
                             <option value="26-12-19">23/10/2020</option>
                             <option value="26-12-19">24/10/2020</option>
                             <option value="26-12-19">25/10/2020</option>
                             <option value="26-12-19">26/10/2020</option>
                         </select></div>
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/cinema.png" alt="ticket"></div>
-                            <span class="type">cinema</span><select class="select-bar">
-                            <option value="Awaken">Awaken</option>
-                            <option value="dhaka">dhaka</option>
-                            <option value="rosario">rosario</option>
-                            <option value="madrid">madrid</option>
-                            <option value="koltaka">kolkata</option>
-                            <option value="rome">rome</option>
-                            <option value="khoksa">khoksa</option>
-                        </select></div>
+
                     </form>
                 </div>
                 <div class="tab-item">
@@ -162,17 +143,7 @@
                         <div class="form-group large"><input type="text" placeholder="Search for Events">
                             <button type="submit"><i class="fas fa-search"></i></button>
                         </div>
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/city.png" alt="ticket"></div>
-                            <span class="type">city</span><select class="select-bar">
-                            <option value="london">London</option>
-                            <option value="dhaka">dhaka</option>
-                            <option value="rosario">rosario</option>
-                            <option value="madrid">madrid</option>
-                            <option value="koltaka">kolkata</option>
-                            <option value="rome">rome</option>
-                            <option value="khoksa">khoksa</option>
-                        </select></div>
+
                         <div class="form-group">
                             <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
                             <span class="type">date</span><select class="select-bar">
@@ -181,17 +152,7 @@
                             <option value="26-12-19">25/10/2020</option>
                             <option value="26-12-19">26/10/2020</option>
                         </select></div>
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/cinema.png" alt="ticket"></div>
-                            <span class="type">event</span><select class="select-bar">
-                            <option value="angular">angular</option>
-                            <option value="startup">startup</option>
-                            <option value="rosario">rosario</option>
-                            <option value="madrid">madrid</option>
-                            <option value="koltaka">kolkata</option>
-                            <option value="Last-First">Last-First</option>
-                            <option value="wish">wish</option>
-                        </select></div>
+
                     </form>
                 </div>
                 <div class="tab-item">
@@ -199,17 +160,7 @@
                         <div class="form-group large"><input type="text" placeholder="Search fo Sports">
                             <button type="submit"><i class="fas fa-search"></i></button>
                         </div>
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/city.png" alt="ticket"></div>
-                            <span class="type">city</span><select class="select-bar">
-                            <option value="london">London</option>
-                            <option value="dhaka">dhaka</option>
-                            <option value="rosario">rosario</option>
-                            <option value="madrid">madrid</option>
-                            <option value="koltaka">kolkata</option>
-                            <option value="rome">rome</option>
-                            <option value="khoksa">khoksa</option>
-                        </select></div>
+
                         <div class="form-group">
                             <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
                             <span class="type">date</span><select class="select-bar">
@@ -218,17 +169,7 @@
                             <option value="26-12-19">25/10/2020</option>
                             <option value="26-12-19">26/10/2020</option>
                         </select></div>
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/cinema.png" alt="ticket"></div>
-                            <span class="type">sports</span><select class="select-bar">
-                            <option value="football">football</option>
-                            <option value="cricket">cricket</option>
-                            <option value="cabadi">cabadi</option>
-                            <option value="madrid">madrid</option>
-                            <option value="gadon">gadon</option>
-                            <option value="rome">rome</option>
-                            <option value="khoksa">khoksa</option>
-                        </select></div>
+
                     </form>
                 </div>
             </div>
@@ -239,104 +180,26 @@
     <div class="container">
         <div class="row flex-wrap-reverse justify-content-center">
             <div class="col-lg-3 col-sm-10  mt-50 mt-lg-0">
-                <div class="widget-1 widget-facility">
-                    <div class="widget-1-body">
-                        <ul>
-                            <li><a href="#0"><span class="img"><img src="./assets/images/sidebar/icons/sidebar01.png"
-                                                                    alt="sidebar"></span><span
-                                    class="cate">24X7 Care</span></a></li>
-                            <li><a href="#0"><span class="img"><img src="./assets/images/sidebar/icons/sidebar02.png"
-                                                                    alt="sidebar"></span><span class="cate">100% Assurance</span></a>
-                            </li>
-                            <li><a href="#0"><span class="img"><img src="./assets/images/sidebar/icons/sidebar03.png"
-                                                                    alt="sidebar"></span><span
-                                    class="cate">Our Promise</span></a></li>
-                        </ul>
-                    </div>
-                </div>
                 <div class="widget-1 widget-banner">
-                    <div class="widget-1-body"><a href="#0"><img src="./assets/images/sidebar/banner/banner01.jpg"
-                                                                 alt="banner"></a></div>
-                </div>
-                <div class="widget-1 widget-trending-search"><h3 class="title">Trending Searches</h3>
-                    <div class="widget-1-body">
-                        <ul>
-                            <li><h6 class="sub-title"><a href="#0">mars</a></h6>
-                                <p>Movies</p></li>
-                            <li><h6 class="sub-title"><a href="#0">alone</a></h6>
-                                <p>Movies</p></li>
-                            <li><h6 class="sub-title"><a href="#0">music event</a></h6>
-                                <p>event</p></li>
-                            <li><h6 class="sub-title"><a href="#0">NBA Games 2020</a></h6>
-                                <p>Sports</p></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="widget-1 widget-banner">
-                    <div class="widget-1-body"><a href="#0"><img src="./assets/images/sidebar/banner/banner02.jpg"
-                                                                 alt="banner"></a></div>
+                    <div class="widget-1-body"></div>
                 </div>
             </div>
             <div class="col-lg-9">
-                <div class="article-section padding-bottom">
-                    <div class="section-header-1"><h2 class="title">movies</h2><a class="view-all"
-                                                                                  href="movie-grid.html">View All</a>
+                <div class="article-section padding-bottom" >
+                    <div class="section-header-1"><h2 class="title">premiere</h2><a class="view-all"
+                                                                                  href="/viewAll">View All</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
-                        <div class="col-sm-6 col-lg-4">
+                        <div class="col-sm-6 col-lg-4" th:each="movies:${allMovies}">
                             <div class="movie-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/movie/movie01.jpg" alt="movie"></a></div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">alone</a></h5>
-                                    <ul class="movie-rating-percent">
-                                        <li>
-                                            <div class="thumb"><img src="./assets/images/movie/tomato.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span></li>
-                                        <li>
-                                            <div class="thumb"><img src="./assets/images/movie/cake.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span></li>
-                                    </ul>
+                                <div class="movie-thumb c-thumb"><a th:href="@{/movieDetails(id=${movies.getId()})}"><img
+                                        th:src="@{/movieImage(movieUrl=${movies.picUrl})}"  alt="movie"></a></div>
+                                <div class="movie-content bg-one"><h5 class="title m-0"><a th:href="@{/movieDetails(id=${movies.getId()})}" th:text="${movies.name}"></a></h5>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="movie-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/movie/movie02.jpg" alt="movie"></a></div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">mars</a></h5>
-                                    <ul class="movie-rating-percent">
-                                        <li>
-                                            <div class="thumb"><img src="./assets/images/movie/tomato.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span></li>
-                                        <li>
-                                            <div class="thumb"><img src="./assets/images/movie/cake.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="movie-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/movie/movie03.jpg" alt="movie"></a></div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">venus</a></h5>
-                                    <ul class="movie-rating-percent">
-                                        <li>
-                                            <div class="thumb"><img src="./assets/images/movie/tomato.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span></li>
-                                        <li>
-                                            <div class="thumb"><img src="./assets/images/movie/cake.png" alt="movie">
-                                            </div>
-                                            <span class="content">88%</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="article-section padding-bottom">

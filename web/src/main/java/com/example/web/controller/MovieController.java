@@ -2,13 +2,12 @@ package com.example.web.controller;
 
 import com.example.common.entity.Movie;
 import com.example.common.entity.Rating;
+import com.example.common.properties.MovieProperties;
 import com.example.common.service.MovieService;
 import com.example.common.service.RatingService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
@@ -21,13 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -35,8 +32,7 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class MovieController {
 
-    @Value("C:\\Java2021\\cinemas\\web\\src\\main\\resources\\static\\assets\\images\\")
-    private String movieImg;
+    private final MovieProperties movieProperties;
     private final MovieService movieService;
     private final RatingService ratingService;
 
@@ -58,7 +54,7 @@ public class MovieController {
 
     @GetMapping("/movieImage")
     void productImage(@RequestParam("movieUrl") String productUrl, HttpServletResponse response) throws IOException {
-        InputStream in = new FileInputStream(movieImg + File.separator + productUrl);
+        InputStream in = new FileInputStream(movieProperties.getMovieImg() + File.separator + productUrl);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
     }

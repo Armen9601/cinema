@@ -23,17 +23,14 @@ public interface MovieService {
 
     List<Movie> getByCategory(String category);
 
-    Page<Movie> getByLanguage(String lang,Pageable pageable);
-
-    Set<Movie> getByRating();
-
-    Set<Movie> getByPopularity();
+    Page<Movie> getByLanguage(String lang, Pageable pageable);
 
     Movie findBySeanceTime(LocalDateTime localDateTime);
 
     List<Movie> showPreviewsWeek(LocalDate startLocalDate, LocalDate endLocalDate);
 
     List<Movie> getByDay();
+
     List<Movie> getByToDay(LocalDate localDate);
 
     void deleteMovie(int id);

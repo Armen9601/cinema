@@ -9,12 +9,10 @@ import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
 import com.example.common.service.MovieService;
 import com.example.common.util.CustomMultipartFile;
-import com.example.common.util.MovieRatingComparator;
 import lombok.RequiredArgsConstructor;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,11 +23,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -119,27 +113,6 @@ public class MovieServiceImpl implements MovieService {
 
         Languages languages = Languages.valueOf(lang.toUpperCase(Locale.ROOT));
         return movieRepository.findByLanguage(languages, pageable);
-    }
-
-    @Override
-    public Set<Movie> getByRating() {
-        List<Movie> all = movieRepository.findAll();
-        Set<Movie> movies = new TreeSet<>(new MovieRatingComparator());
-        for (Movie movie : all) {
-            movies.add(movie);
-        }
-
-        return movies;
-    }
-
-    @Override
-    public Set<Movie> getByPopularity() {
-        List<Movie> all = movieRepository.findAll();
-        Set<Movie> movies = new TreeSet<>(new MovieRatingComparator());
-        for (Movie movie : all) {
-            movies.add(movie);
-        }
-        return movies;
     }
 
     @Override

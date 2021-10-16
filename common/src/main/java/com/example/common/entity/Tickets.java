@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tickets")
 public class Tickets {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,6 +28,5 @@ public class Tickets {
     @ManyToOne
     private User user;
     private boolean isSold;
-
 
 }

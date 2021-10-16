@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -24,7 +25,11 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+    @Transient
+    private String password2;
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
+    @OneToMany
+    private List<Movie> myLikedMovie;
 
 }

@@ -21,7 +21,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query(value = "select distinct m.* from movies m left join  movie_seance_date_time ms on m.id=ms.movie_id where  ms.seance_date_time>=:start and ms.seance_date_time<=:end", nativeQuery = true)
     List<Movie> findByDay(@Param("start") LocalDateTime localDateTime, @Param("end") LocalDateTime localDateTim);
 
-    List<Movie> findByLanguage(String lang);
+    Page<Movie> findByLanguage(Enum lang,Pageable pageable);
 
     @Query(value = "select * from movies m where name like %:name%", nativeQuery = true)
     Page<Movie> findByName(@Param("name") String name, Pageable pageable);

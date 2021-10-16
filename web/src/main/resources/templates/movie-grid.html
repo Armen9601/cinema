@@ -31,9 +31,7 @@
             <div class="logo"><a href="index.html"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
             <ul class="menu">
                 <li><a href="/">Home</a>
-                    <ul class="submenu">
 
-                    </ul>
                 </li>
                 <li><a href="/viewAll" class="active">movies</a>
                     <ul class="submenu">
@@ -152,13 +150,13 @@
                         All</a></div>
                     <div class="widget-1-body"><h6 class="subtitle">Language</h6>
                         <div class="check-area">
-                            <div class="form-group"><input type="checkbox" name="lang" id="arm"><label
+                            <div class="form-group"><input type="checkbox" name="lang" id="arm" value="arm"><label
                                     for="arm">ARM</label>
                             </div>
-                            <div class="form-group"><input type="checkbox" name="lang" id="rus"><label
+                            <div class="form-group"><input type="checkbox" name="lang" id="rus" value="rus"><label
                                     for="rus">RUS</label>
                             </div>
-                            <div class="form-group"><input type="checkbox" name="lang" id="eng"><label
+                            <div class="form-group"><input type="checkbox" name="lang" id="eng" value="eng"><label
                                     for="eng">ENG</label>
                             </div>
 
@@ -169,7 +167,7 @@
 
                 <div class="widget-1 widget-check">
                     <div class="widget-1-body"><h6 class="subtitle">CATEGORY</h6>
-                        <div class="check-area">
+                        <div class="check-area" id="cat">
                             <div class="form-group"><input type="checkbox" name="thriller" id="thriller"><label
                                     for="thriller">thriller</label>
                             </div>
@@ -208,11 +206,10 @@
                             <div class="left">
                                 <div class="item">
                                     <span class="show">Sort By :</span>
-                                    <select class="select-bar">
-                                        <option value="showing" id="all">all</option>
-                                        <option value="showing" id="now">now showing</option>
-                                        <option value="showing" id="rating">rating</option>
-                                        <option value="showing" id="view">most view</option>
+                                    <select class="select-bar" id="filds">
+                                        <option value="all" id="all">all</option>
+                                        <option value="rating" id="rating">rating</option>
+                                        <option value="popularity" id="view">most view</option>
 
                                     </select>
                                 </div>
@@ -344,20 +341,49 @@
 <script src="../assets/js/viewport.jquery.js"></script>
 <script src="../assets/js/nice-select.js"></script>
 <script src="../assets/js/main.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
 <script>
 
-    $("#rating").click(function (){
+    $("#filds").change(function () {
+        var fild = $(this).val();
+        if (fild === "all") {
+            window.location.href = 'http://localhost:8080/viewAll';
+        } else {
+            window.location.href = 'http://localhost:8080/viewAll?sort=' + $(this).val() + ',desc';
+        }
 
-
-        $.ajax({
-            url:'http://localhost:8080/viewAll?sort=rating.desc',
-            type:'GET',
-            success: function (result){
-                alert('ok');
-            }
-        })
     })
+
+
+    $('#arm').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+            console.log(val)
+
+            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
+
+        }
+
+    });
+    $('#rus').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
+        }
+
+    });
+    $('#eng').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
+        }
+
+    });
+
+
 </script>
 </body>
 </html>

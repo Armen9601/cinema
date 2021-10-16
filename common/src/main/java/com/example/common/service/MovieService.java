@@ -23,7 +23,7 @@ public interface MovieService {
 
     List<Movie> getByCategory(String category);
 
-    List<Movie> getByLanguage(String lang);
+    Page<Movie> getByLanguage(String lang,Pageable pageable);
 
     Set<Movie> getByRating();
 
@@ -44,5 +44,5 @@ public interface MovieService {
 
     Page<Movie> getByName(String name, Pageable pageable);
 
-
+//    List<Movie> filterByTitleLangCategoryRatingUsingCriteriaBuilder(List<String> titles);
 }

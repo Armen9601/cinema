@@ -75,13 +75,14 @@ public class MovieController {
     @GetMapping("/viewAll")
 
     public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable, @RequestParam(value = "search", required = false) String name,
-                            @RequestParam(value = "arm",required = false)String lang) {
+                            @RequestParam(value = "lang",required = false)String lang) {
         Page<Movie> allMovies;
         if (name != null) {
             allMovies = movieService.getByName(name,pageable);
         }
         else if (lang!=null){
-            allMovies= (Page<Movie>) movieService.getByLanguage(lang);
+
+            allMovies=  movieService.getByLanguage(lang,pageable);
         }
         else {
 

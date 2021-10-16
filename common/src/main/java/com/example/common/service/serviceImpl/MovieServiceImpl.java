@@ -3,6 +3,7 @@ package com.example.common.service.serviceImpl;
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
 import com.example.common.entity.Rating;
+import com.example.common.enums.Languages;
 import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
@@ -23,6 +24,12 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,6 +46,8 @@ import java.util.*;
 public class MovieServiceImpl implements MovieService {
     @Value("C:\\Java2021\\cinemas\\web\\src\\main\\resources\\static\\assets\\images\\")
     private String uploadDir;
+    private EntityManager entityManager;
+    private CriteriaBuilder criteriaBuilder;
 
     private final MovieRepository movieRepository;
     private final RatingRepository ratingRepository;
@@ -106,8 +115,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getByLanguage(String lang) {
-        return movieRepository.findByLanguage(lang);
+    public Page<Movie> getByLanguage(String lang, Pageable pageable) {
+
+        Languages languages = Languages.valueOf(lang.toUpperCase(Locale.ROOT));
+        return movieRepository.findByLanguage(languages, pageable);
     }
 
     @Override
@@ -221,4 +232,27 @@ public class MovieServiceImpl implements MovieService {
     public Page<Movie> getByName(String name, Pageable pageable) {
         return movieRepository.findByName(name, pageable);
     }
+
+//    @Override
+//    public List<Movie> filterByTitleLangCategoryRatingUsingCriteriaBuilder(List<String> keys) {
+//
+//        CriteriaQuery<Movie> criteriaQuery = createCriteriaQuery(Movie.class);
+//        Root<Movie> root = criteriaQuery.from(Movie.class);
+//        CriteriaBuilder.In<String> inClause = criteriaBuilder.in(root.get("title"));
+//        for (String key : keys) {
+//            inClause.value(key);
+//        }
+//        criteriaQuery.select(root)
+//                .where(inClause);
+//
+//        TypedQuery<Movie> query = entityManager.createQuery(criteriaQuery);
+//        return query.getResultList();
+//    }
+
+
+
+
+//    private <T> CriteriaQuery<T> createCriteriaQuery(Class<T> klass) {
+//        return criteriaBuilder.createQuery(klass);
+//    }
 }

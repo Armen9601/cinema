@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -19,7 +20,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MovieRepository movieRepository;
-    private final String PASSWORD_PATTERN = "\\w{6,}";
 
 
     @Override
@@ -31,32 +31,22 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    String msg = null;
-    boolean valid = false;
+
     @Override
-    public void addUser(User user) {
+    public boolean addUser(User user) {
 
 
-        if (user.getPassword().length() > 20) {
-            msg = "* Password is too long";
-            valid = false;
+        if (user.getPassword().length() > 20 || user.getPassword().length() < 4 || !user.getPassword().equals(user.getPassword2())) {
+            return false;
 
-        } else if (user.getPassword().length() < 4) {
-            msg = "* Password is too short";
-            valid = false;
-
-        } else if (!user.getPassword().equals(user.getPassword2())) {
-
-            msg = "* Passwords do not match!";
-            valid = false;
-
-        } else if (user.getPassword().equals(user.getPassword2())) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            valid = true;
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+
+        // valid = true;
 
 
+        return true;
     }
 
     @Override

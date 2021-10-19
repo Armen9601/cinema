@@ -21,14 +21,13 @@ public class OnApplicationStartEvent implements ApplicationListener {
 
     @Override
     public void onApplicationEvent(final ApplicationEvent event) {
-        if (!userRepository.findByEmail("admin").isPresent()) {
-
+        if (!userRepository.findByEmail("admin@mail.com").isPresent()) {
 
             userRepository.save(User.builder()
                     .name("admin")
                     .surname("admin")
                     .phoneNumber("111111")
-                    .email("admin")
+                    .email("admin@mail.com")
                     .password(passwordEncoder.encode("admin"))
                     .userType(UserType.ADMIN)
                     .build());

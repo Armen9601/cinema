@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Data
@@ -20,10 +21,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotEmpty(message = "Name is required")
     private String name;
+    @NotEmpty(message = "Surname is required")
     private String surname;
+    @Email
     private String email;
     private String phoneNumber;
+
     private String password;
     @Transient
     private String password2;

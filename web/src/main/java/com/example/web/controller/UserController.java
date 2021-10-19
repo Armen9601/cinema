@@ -5,9 +5,12 @@ import com.example.common.enums.UserType;
 import com.example.common.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +26,12 @@ public class UserController {
 
 
     @PostMapping("/sign-up")
-    public String AddUser(@ModelAttribute User user) {
+    public String AddUser(@ModelAttribute @Valid User user, BindingResult result) {
+       if (result.hasErrors() || !userService.addUser(user)){
+           return "sign-up";
+       }
+
+
         user.setUserType(UserType.USER);
             userService.addUser(user);
 

@@ -1,17 +1,13 @@
 package com.example.common.entity;
 
 
-import com.example.common.enums.Category;
 import com.example.common.enums.FoodCategory;
-import com.example.common.enums.Languages;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
@@ -29,5 +25,6 @@ public class Food {
     private User user;
     private int count;
     private String picUrl;
+    @Enumerated(value = EnumType.STRING)
     private FoodCategory foodCategory;
 }

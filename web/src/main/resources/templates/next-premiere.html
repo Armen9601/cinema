@@ -92,36 +92,9 @@
 <section class="search-ticket-section padding-top pt-lg-0">
     <div class="container">
         <div class="search-tab bg_img" data-background="./assets/images/ticket/ticket-bg01.jpg">
-            <div class="row align-items-center mb--20">
-                <div class="col-lg-6 mb-20">
-                    <div class="search-ticket-header"><h6 class="category">welcome to Boleto</h6>
-                        <h3 class="title">what are you looking for</h3></div>
-                </div>
-                <div class="col-lg-6 mb-20">
-                    <ul class="tab-menu ticket-tab-menu">
-                        <li class="active">
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab01.png" alt="ticket">
-                            </div>
-                            <span>movie</span></li>
-                        <li>
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab02.png" alt="ticket">
-                            </div>
-                            <span>events</span></li>
-                        <li>
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab03.png" alt="ticket">
-                            </div>
-                            <span>sports</span></li>
-                    </ul>
-                </div>
-            </div>
             <div class="tab-area">
                 <div class="tab-item active">
                     <form class="ticket-search-form" action="/viewAll" method="get">
-                        <div class="form-group large"><input type="text" th:value="${param.search}"
-                                                             placeholder="Search fo Movies" name="search">
-                            <button type="submit"><i class="fas fa-search"></i></button>
-                        </div>
-
                         <div class="form-group">
                             <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
                             <span class="type">next premiere date</span><select class="select-bar">
@@ -139,91 +112,12 @@
 <section class="movie-section padding-top padding-bottom">
     <div class="container">
         <div class="row flex-wrap-reverse justify-content-center">
-            <div class="col-sm-10 col-md-8 col-lg-3">
-                <div class="widget-1 widget-banner">
 
-                </div>
-                <div class="widget-1 widget-check">
-                    <div class="widget-header"><h5 class="m-title">Filter By</h5><a href="http://localhost:8080/viewAll"
-                                                                                    class="clear-check">Clear
-                        All</a></div>
-                    <div class="widget-1-body"><h6 class="subtitle">Language</h6>
-                        <div class="check-area">
-                            <div class="form-group"><input type="checkbox" name="lang" id="arm" value="arm"
-                                                           th:checked="${true}"><label
-                                    for="arm">ARM</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="lang" id="rus" value="rus"
-                                                           th:checked="${true}"><label
-                                    for="rus">RUS</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="lang" id="eng" value="eng"
-                                                           th:checked="${param eq'eng'}"><label
-                                    for="eng">ENG</label>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="widget-1 widget-check">
-                    <div class="widget-1-body"><h6 class="subtitle">CATEGORY</h6>
-                        <div class="check-area" id="cat">
-                            <div class="form-group"><input type="checkbox" name="category" id="thriller"
-                                                           value="thriller"><label
-                                    for="thriller">thriller</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="fantasy" value="fantasy"><label
-                                    for="fantasy">fantasy</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="drama"
-                                                           value="drama"><label
-                                    for="drama">drama</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="detective"
-                                                           value="detective"><label
-                                    for="detective">detective</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="action"
-                                                           value="action"><label
-                                    for="action">action</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="comedy"
-                                                           value="comedy"><label
-                                    for="comedy">comedy</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="romance" value="romance"><label
-                                    for="romance">ROMANCE</label>
-                            </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="documentary"
-                                                           value="documentary"><label
-                                    for="documentary">documentary</label>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="widget-1 widget-banner">
-
-                </div>
-            </div>
             <div class="col-lg-9 mb-50 mb-lg-0">
                 <div class="filter-tab tab">
                     <div class="filter-area">
                         <div class="filter-main">
-                            <div class="left">
-                                <div class="item">
-                                    <span class="show">Sort By :</span>
-                                    <select class="select-bar" id="filds">
-                                        <option value="all" id="all">all</option>
-                                        <option value="rating" id="rating">rating</option>
-                                        <option value="popularity" id="view">most view</option>
 
-                                    </select>
-                                </div>
-                            </div>
                             <ul class="grid-button tab-menu">
                                 <li class="active"><i class="fas fa-th"></i></li>
                                 <li><i class="fas fa-bars"></i></li>
@@ -233,7 +127,7 @@
                     <div class="tab-area">
                         <div class="tab-item active">
                             <div class="row mb-10 justify-content-center">
-                                <div class="col-sm-6 col-lg-4" th:each="movie:${movies.content}">
+                                <div class="col-sm-6 col-lg-4" th:each="movie:${movies}">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb"><a
                                                 th:href="@{/movieDetails(id=${movie.getId()})}"><img
@@ -287,13 +181,7 @@
                         </div>
                     </div>
                 </div>
-                <div th:if="${movies.totalPages>0}" class="pagination-area text-center" th:each="page:${pageNumbers}">
-                    <a th:href="@{/viewAll(size=${movies.size}, page=${(page-1)})}" th:text="${page}"
-                       th:class="${page==movies.number+1} ? active"></a>
-                    <!--                        <a-->
-                    <!--                            href="#0">1</a><a href="#0">2</a><a href="#0" class="active">3</a><a href="#0">4</a><a-->
-                    <!--                            href="#0">5</a><a href="#0"><span>Next</span><i class="fas fa-angle-double-right"></i></a>-->
-                </div>
+
             </div>
         </div>
     </div>
@@ -352,129 +240,6 @@
 <script src="../assets/js/nice-select.js"></script>
 <script src="../assets/js/main.js"></script>
 <script>
-
-    $("#filds").change(function () {
-        var fild = $(this).val();
-        if (fild === "all") {
-            window.location.href = 'http://localhost:8080/viewAll';
-        } else {
-            window.location.href = 'http://localhost:8080/viewAll?sort=' + $(this).val() + ',desc';
-        }
-
-    })
-
-
-    $('#arm').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-            console.log(val)
-
-            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
-
-        }
-
-    });
-    $('#rus').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
-        }
-
-    });
-    $('#eng').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
-        }
-
-    });
-    $(".checkbox").on('change', function (e) {
-        var that;
-        that = "#" + e.target.getAttribute("id");
-        if ($(that).prop("checked") === true) {
-            $(that).val("true");
-        }
-        if ($(that).prop("checked") === false) {
-            return $(that).val("false");
-        }
-    });
-
-    $('#thriller').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-
-    });
-    $('#fantasy').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-
-    });
-    $('#comedy').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-
-    });
-    $('#detective').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-
-    });
-    $('#documentary').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-
-    });
-    $('#drama').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-
-    });
-    $('#romance').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-
-    });
-    $('#action').change(function () {
-        if (this.checked) {
-            let val = $(this).val();
-
-
-            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-        }
-    });
-
     $('select').on('change', function (e) {
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;

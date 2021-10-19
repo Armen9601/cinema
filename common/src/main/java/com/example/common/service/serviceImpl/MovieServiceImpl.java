@@ -2,7 +2,9 @@ package com.example.common.service.serviceImpl;
 
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
+import com.example.common.entity.QMovie;
 import com.example.common.entity.Rating;
+import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
 import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
@@ -10,11 +12,11 @@ import com.example.common.repository.RatingRepository;
 import com.example.common.service.MovieService;
 import com.example.common.util.CustomMultipartFile;
 import com.example.common.util.MovieRatingComparator;
+import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,11 +27,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
+import javax.persistence.PersistenceContext;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,6 +37,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 @Service
@@ -46,8 +46,9 @@ import java.util.*;
 public class MovieServiceImpl implements MovieService {
     @Value("C:\\Java2021\\cinemas\\web\\src\\main\\resources\\static\\assets\\images\\")
     private String uploadDir;
-    private EntityManager entityManager;
-    private CriteriaBuilder criteriaBuilder;
+
+    @PersistenceContext
+    private EntityManager em;
 
     private final MovieRepository movieRepository;
     private final RatingRepository ratingRepository;
@@ -110,8 +111,9 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getByCategory(String category) {
-        return movieRepository.findByCategory(category);
+    public Page<Movie> getByCategory(String category, Pageable pageable) {
+        Category category1 = Category.valueOf(category.toUpperCase(Locale.ROOT));
+        return movieRepository.findByCategory(category1, pageable);
     }
 
     @Override
@@ -119,17 +121,6 @@ public class MovieServiceImpl implements MovieService {
 
         Languages languages = Languages.valueOf(lang.toUpperCase(Locale.ROOT));
         return movieRepository.findByLanguage(languages, pageable);
-    }
-
-    @Override
-    public Set<Movie> getByRating() {
-        List<Movie> all = movieRepository.findAll();
-        Set<Movie> movies = new TreeSet<>(new MovieRatingComparator());
-        for (Movie movie : all) {
-            movies.add(movie);
-        }
-
-        return movies;
     }
 
     @Override
@@ -162,8 +153,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getByToDay(LocalDate localDate) {
+    public List<Movie> getByToDay(String local) {
 
+        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        final LocalDate localDate = LocalDate.parse(local, dtf);
         LocalDateTime localDateTime1 = localDate.atTime(LocalTime.MIDNIGHT);
         LocalDateTime localDateTime2 = localDate.atTime(LocalTime.MAX);
         return movieRepository.findByDay(localDateTime1, localDateTime2);
@@ -190,7 +183,7 @@ public class MovieServiceImpl implements MovieService {
 
             if (param.canWriteCompressed()) {
                 param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                param.setCompressionQuality(0.3f);
+                param.setCompressionQuality(0.5f);
             }
             writer.write(null, new IIOImage(image, null, null), param);
 
@@ -209,7 +202,7 @@ public class MovieServiceImpl implements MovieService {
         file.transferTo(image);
 
         BufferedImage bi = ImageIO.read(file.getInputStream());
-        BufferedImage resize = Scalr.resize(bi, 200, 150);
+        BufferedImage resize = Scalr.resize(bi, 250, 400);
 
         compressProductImage(resize, uploadPath, "png");
         return originalFilename;
@@ -233,26 +226,47 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findByName(name, pageable);
     }
 
-//    @Override
-//    public List<Movie> filterByTitleLangCategoryRatingUsingCriteriaBuilder(List<String> keys) {
-//
-//        CriteriaQuery<Movie> criteriaQuery = createCriteriaQuery(Movie.class);
-//        Root<Movie> root = criteriaQuery.from(Movie.class);
-//        CriteriaBuilder.In<String> inClause = criteriaBuilder.in(root.get("title"));
-//        for (String key : keys) {
-//            inClause.value(key);
-//        }
-//        criteriaQuery.select(root)
-//                .where(inClause);
-//
-//        TypedQuery<Movie> query = entityManager.createQuery(criteriaQuery);
-//        return query.getResultList();
-//    }
+    @Override
+    public Page<Movie> getByAll(Pageable pageable, String name, String lang, String category) {
+        Page<Movie> allMovies;
+        if (name != null) {
+            allMovies = getByName(name, pageable);
+        } else if (lang != null) {
+
+            allMovies = getByLanguage(lang, pageable);
+        } else if (lang != null && name != null && category != null) {
+            Languages languages = Languages.valueOf(lang.toUpperCase(Locale.ROOT));
+            Category category1 = Category.valueOf(category.toUpperCase(Locale.ROOT));
+            allMovies = (Page<Movie>) findMovieByParamsQueryDSL(name, languages, category1);
+        } else if (category != null) {
+
+            allMovies = getByCategory(category, pageable);
+        } else {
+
+            allMovies = getAllMovies(pageable);
+        }
 
 
+        return allMovies;
+    }
 
 
-//    private <T> CriteriaQuery<T> createCriteriaQuery(Class<T> klass) {
-//        return criteriaBuilder.createQuery(klass);
-//    }
+    public List<Movie> findMovieByParamsQueryDSL(final String name, final Languages languages, final Category category) {
+        final JPAQuery<Movie> query = new JPAQuery<>(em);
+        final QMovie movie = QMovie.movie;
+
+        return query.from(movie).where(movie.name.eq(name).and(movie.language.eq(languages)).and(movie.category.eq(category))).fetch();
+    }
+
+    @Override
+    public List<LocalDate> local(LocalDate localDate) {
+        List<LocalDate> localDateList = new ArrayList<>();
+        localDateList.add(localDate.plusDays(1));
+        localDateList.add(localDate.plusDays(2));
+        localDateList.add(localDate.plusDays(3));
+        localDateList.add(localDate.plusDays(4));
+
+
+        return localDateList;
+    }
 }

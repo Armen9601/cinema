@@ -21,11 +21,9 @@ public interface MovieService {
 
     Page<Movie> getAllMovies(Pageable pageable);
 
-    List<Movie> getByCategory(String category);
+    Page<Movie> getByCategory(String category, Pageable pageable);
 
     Page<Movie> getByLanguage(String lang,Pageable pageable);
-
-    Set<Movie> getByRating();
 
     Set<Movie> getByPopularity();
 
@@ -34,7 +32,7 @@ public interface MovieService {
     List<Movie> showPreviewsWeek(LocalDate startLocalDate, LocalDate endLocalDate);
 
     List<Movie> getByDay();
-    List<Movie> getByToDay(LocalDate localDate);
+    List<Movie> getByToDay(String localDate);
 
     void deleteMovie(int id);
 
@@ -44,5 +42,7 @@ public interface MovieService {
 
     Page<Movie> getByName(String name, Pageable pageable);
 
-//    List<Movie> filterByTitleLangCategoryRatingUsingCriteriaBuilder(List<String> titles);
+    Page<Movie> getByAll(Pageable pageable,String name,String lang,String category);
+
+    List<LocalDate> local(LocalDate localDate);
 }

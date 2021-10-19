@@ -24,7 +24,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -72,19 +74,8 @@ public class MovieController {
     @GetMapping("/viewAll")
 
     public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable, @RequestParam(value = "search", required = false) String name,
-                            @RequestParam(value = "lang",required = false)String lang) {
-        Page<Movie> allMovies;
-        if (name != null) {
-            allMovies = movieService.getByName(name,pageable);
-        }
-        else if (lang!=null){
-
-            allMovies=  movieService.getByLanguage(lang,pageable);
-        }
-        else {
-
-            allMovies = movieService.getAllMovies(pageable);
-        }
+                            @RequestParam(value = "lang", required = false) String lang, @RequestParam(value = "category", required = false) String category) {
+        Page<Movie> allMovies = movieService.getByAll(pageable, name, lang, category);
         int totalPages = allMovies.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNum = IntStream.rangeClosed(1, totalPages)
@@ -92,22 +83,11 @@ public class MovieController {
                     .collect(Collectors.toList());
             modelMap.addAttribute("pageNumbers", pageNum);
         }
+        modelMap.addAttribute("date", movieService.local(LocalDate.now()));
         modelMap.addAttribute("movies", allMovies);
         return "movie-grid";
     }
 
-//    @GetMapping("/movieList")
-//    public String allMoviesLists(ModelMap modelMap) {
-//        List<Movie> allMovies = movieService.getAllMovies(P);
-//        Set<Movie> byPopularity = movieService.getByPopularity();
-//        Set<Movie> byRating = movieService.getByRating();
-//        List<Movie> byDay = movieService.getByDay();
-//        modelMap.addAttribute("movies", allMovies);
-//        modelMap.addAttribute("byPopularity", byPopularity);
-//        modelMap.addAttribute("byRating", byRating);
-//        modelMap.addAttribute("byDay", byDay);
-//        return "movie-list";
-//    }
 
     @PostMapping("/updateMovieRating")
     public String updateMovieRating(@RequestParam int rating, @RequestParam("id") int movieId) {
@@ -116,11 +96,12 @@ public class MovieController {
         return "redirect:/movieDetails?id=" + movieId;
     }
 
-//    @GetMapping("/search")
-//    public String searchMovieByName(@RequestParam String name, ModelMap modelMap) {
-//        List<Movie> byName = movieService.getByName(name);
-//        modelMap.addAttribute("movies", byName);
-//        return "movie-grid";
-//    }
+    @GetMapping("/nextPremiere")
+    public String searchMovieByName(@RequestParam(value = "date", required = false) String date, ModelMap modelMap) {
+        List<Movie> byDate = movieService.getByToDay(date);
+        modelMap.addAttribute("date", movieService.local(LocalDate.now()));
+        modelMap.addAttribute("movies", byDate);
+        return "next-premiere";
+    }
 
 }

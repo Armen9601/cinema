@@ -2,11 +2,11 @@ package com.example.common.service.serviceImpl;
 
 import com.example.common.entity.Food;
 import com.example.common.enums.FoodCategory;
+import com.example.common.properties.FoodProperties;
 import com.example.common.repository.FoodRepository;
 import com.example.common.service.FoodService;
 import com.example.common.util.CustomMultipartFile;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,31 +20,25 @@ import static com.example.common.service.serviceImpl.MovieServiceImpl.compressIm
 @Service
 @RequiredArgsConstructor
 public class FoodServiceImpl implements FoodService {
-    @Value("C:\\Java2021\\cinemas\\web\\src\\main\\resources\\static\\assets\\images\\foods\\")
-    private String uploadDir;
 
+    private final FoodProperties foodProperties;
     private final MovieServiceImpl movieService;
     private final FoodRepository foodRepository;
 
     @Override
     public void addFood(Food food, MultipartFile multipartFile, String category) throws IOException {
-
-
         if (!multipartFile.isEmpty()) {
             if (multipartFile.getSize() > 1000000) {
                 String png = "intermediate.png";
                 CustomMultipartFile customMultipartFile = new CustomMultipartFile(multipartFile.getBytes(), png);
-                String picUrl = compressImage(customMultipartFile, uploadDir, png);
+                String picUrl = compressImage(customMultipartFile, foodProperties.getFoodImg(), png);
                 food.setPicUrl(picUrl);
             } else {
                 String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-                multipartFile.transferTo(new File(uploadDir + File.separator + picUrl));
+                multipartFile.transferTo(new File(foodProperties.getFoodImg() + File.separator + picUrl));
                 food.setPicUrl(picUrl);
             }
-
         }
-
-
         food.setFoodCategory(FoodCategory.valueOf(category.toUpperCase(Locale.ROOT)));
         foodRepository.save(food);
     }

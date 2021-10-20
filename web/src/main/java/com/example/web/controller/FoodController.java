@@ -1,10 +1,10 @@
 package com.example.web.controller;
 
 import com.example.common.entity.Food;
+import com.example.common.properties.FoodProperties;
 import com.example.common.service.FoodService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,8 +23,8 @@ import java.io.InputStream;
 @Controller
 @RequiredArgsConstructor
 public class FoodController {
-    @Value("C:\\Java2021\\cinemas\\web\\src\\main\\resources\\static\\assets\\images\\foods\\")
-    private String foodImg;
+
+    private final FoodProperties foodProperties;
     private final FoodService foodService;
 
     @GetMapping("/admin/food")
@@ -33,25 +33,23 @@ public class FoodController {
     }
 
     @PostMapping("/addFood")
-    public String addFood(@ModelAttribute Food food, @RequestParam("picture") MultipartFile multipartFile, @RequestParam("category") String category) throws IOException {
-
+    public String addFood(@ModelAttribute Food food, @RequestParam("picture") MultipartFile multipartFile,
+                          @RequestParam("category") String category) throws IOException {
         foodService.addFood(food, multipartFile, category);
-
         return "redirect:/admin/food";
 
     }
 
     @GetMapping("/popcorn")
-    public String movieFood(ModelMap modelMap, @RequestParam(value = "category", required = false) String category) {
-
+    public String movieFood(ModelMap modelMap,
+                            @RequestParam(value = "category", required = false) String category) {
         modelMap.addAttribute("foods", foodService.getFoods(category));
-
         return "popcorn";
     }
 
     @GetMapping("/foodImg")
     void productImage(@RequestParam("foodUrl") String productUrl, HttpServletResponse response) throws IOException {
-        InputStream in = new FileInputStream(foodImg + File.separator + productUrl);
+        InputStream in = new FileInputStream(foodProperties.getFoodImg() + File.separator + productUrl);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
     }

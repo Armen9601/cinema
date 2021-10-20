@@ -2,6 +2,7 @@ package com.example.web.controller;
 
 import com.example.common.entity.Movie;
 import com.example.common.entity.Rating;
+import com.example.common.properties.MovieProperties;
 import com.example.common.service.MovieService;
 import com.example.common.service.RatingService;
 import lombok.RequiredArgsConstructor;
@@ -34,14 +35,12 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class MovieController {
 
-    @Value("C:\\Java2021\\cinemas\\web\\src\\main\\resources\\static\\assets\\images\\")
-    private String movieImg;
+    private final MovieProperties properties;
     private final MovieService movieService;
     private final RatingService ratingService;
 
     @GetMapping("/admin/addMovie")
     public String addMoviePage() {
-
         return "add-movie-page";
     }
 
@@ -50,14 +49,13 @@ public class MovieController {
                            @ModelAttribute("seanceOne") String seanceOne,
                            @ModelAttribute("seanceTwo") String seanceTwo,
                            @ModelAttribute("seanceThree") String seanceThree) throws IOException {
-
         movieService.addMovie(movie, multipartFile, seanceOne, seanceTwo, seanceThree);
         return "redirect:/admin/addMovie";
     }
 
     @GetMapping("/movieImage")
     void productImage(@RequestParam("movieUrl") String productUrl, HttpServletResponse response) throws IOException {
-        InputStream in = new FileInputStream(movieImg + File.separator + productUrl);
+        InputStream in = new FileInputStream(properties.getMovieImg() + File.separator + productUrl);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
     }
@@ -73,8 +71,10 @@ public class MovieController {
 
     @GetMapping("/viewAll")
 
-    public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable, @RequestParam(value = "search", required = false) String name,
-                            @RequestParam(value = "lang", required = false) String lang, @RequestParam(value = "category", required = false) String category) {
+    public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable,
+                            @RequestParam(value = "search", required = false) String name,
+                            @RequestParam(value = "lang", required = false) String lang,
+                            @RequestParam(value = "category", required = false) String category) {
         Page<Movie> allMovies = movieService.getByAll(pageable, name, lang, category);
         int totalPages = allMovies.getTotalPages();
         if (totalPages > 0) {
@@ -91,7 +91,6 @@ public class MovieController {
 
     @PostMapping("/updateMovieRating")
     public String updateMovieRating(@RequestParam int rating, @RequestParam("id") int movieId) {
-
         movieService.updateMovie(movieId, rating);
         return "redirect:/movieDetails?id=" + movieId;
     }

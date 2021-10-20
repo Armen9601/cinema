@@ -6,6 +6,7 @@ import com.example.common.entity.QMovie;
 import com.example.common.entity.Rating;
 import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
+import com.example.common.properties.MovieProperties;
 import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
@@ -15,7 +16,6 @@ import com.example.common.util.MovieRatingComparator;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.imgscalr.Scalr;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,47 +37,39 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
-    @Value("C:\\Java2021\\cinemas\\web\\src\\main\\resources\\static\\assets\\images\\")
-    private String uploadDir;
+
 
     @PersistenceContext
     private EntityManager em;
-
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final MovieRepository movieRepository;
     private final RatingRepository ratingRepository;
     private final ActorRepository actorRepository;
+    private final MovieProperties movieProperties;
 
 
     @Override
-    public Movie addMovie(Movie movie, MultipartFile[] multipartFiles, String seanceOne, String seanceTwo, String seanceThree) throws IOException {
+    public Movie addMovie(Movie movie, MultipartFile[] multipartFiles, String seanceOne,
+                          String seanceTwo, String seanceThree) throws IOException {
         List<String> picUrls = new ArrayList<>();
-
         for (MultipartFile multipartFile : multipartFiles) {
-
             if (!multipartFile.isEmpty()) {
                 String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-
                 String png = "intermediate.png";
-
                 CustomMultipartFile customMultipartFile = new CustomMultipartFile(multipartFile.getBytes(), png);
-                String smallPicUrl = compressImage(customMultipartFile, uploadDir, png);
-                multipartFile.transferTo(new File(uploadDir + File.separator + picUrl));
+                String smallPicUrl = compressImage(customMultipartFile, movieProperties.getMovieImg(), png);
+                multipartFile.transferTo(new File(movieProperties.getMovieImg() + File.separator + picUrl));
                 movie.setPicUrl(picUrl);
-
                 picUrls.add(smallPicUrl);
-
             }
         }
         movie.setPicUrls(picUrls);
         List<LocalDateTime> localDateTimeList = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         localDateTimeList.add(LocalDateTime.parse(seanceOne, formatter));
         localDateTimeList.add(LocalDateTime.parse(seanceTwo, formatter));
         localDateTimeList.add(LocalDateTime.parse(seanceThree, formatter));
@@ -85,7 +77,6 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.save(movie);
         return movie;
     }
-
 
     @Override
     public Movie updateMovie(int movieId, int newRating) {
@@ -101,7 +92,6 @@ public class MovieServiceImpl implements MovieService {
         }
         byId.setRating(movieRating / byMovie_id.size());
         return movieRepository.save(byId);
-
     }
 
     @Override
@@ -118,7 +108,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<Movie> getByLanguage(String lang, Pageable pageable) {
-
         Languages languages = Languages.valueOf(lang.toUpperCase(Locale.ROOT));
         return movieRepository.findByLanguage(languages, pageable);
     }
@@ -135,7 +124,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie findBySeanceTime(LocalDateTime localDateTime) {
-
         return movieRepository.findBySeanceDateTime(localDateTime);
     }
 
@@ -148,15 +136,12 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getByDay() {
         LocalDateTime localDateTime1 = LocalDate.now().atTime(LocalTime.MIDNIGHT);
         LocalDateTime localDateTime2 = LocalDate.now().atTime(LocalTime.MAX);
-
         return movieRepository.findByDay(localDateTime1, localDateTime2);
     }
 
     @Override
     public List<Movie> getByToDay(String local) {
-
-        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        final LocalDate localDate = LocalDate.parse(local, dtf);
+        final LocalDate localDate = LocalDate.parse(local, formatter);
         LocalDateTime localDateTime1 = localDate.atTime(LocalTime.MIDNIGHT);
         LocalDateTime localDateTime2 = localDate.atTime(LocalTime.MAX);
         return movieRepository.findByDay(localDateTime1, localDateTime2);
@@ -167,26 +152,20 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.deleteById(id);
     }
 
-
     public static void compressProductImage(BufferedImage image, String uploadPath, String extension) {
         try {
             File compressedImageFile = new File(uploadPath);
             OutputStream outputStream = new FileOutputStream(compressedImageFile);
-
             Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(extension);
             ImageWriter writer = writers.next();
-
             ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
             writer.setOutput(imageOutputStream);
-
             ImageWriteParam param = writer.getDefaultWriteParam();
-
             if (param.canWriteCompressed()) {
                 param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
                 param.setCompressionQuality(0.5f);
             }
             writer.write(null, new IIOImage(image, null, null), param);
-
             outputStream.close();
             imageOutputStream.close();
             writer.dispose();
@@ -200,10 +179,8 @@ public class MovieServiceImpl implements MovieService {
         String uploadPath = uploadDir + originalFilename;
         File image = new File(uploadPath);
         file.transferTo(image);
-
         BufferedImage bi = ImageIO.read(file.getInputStream());
         BufferedImage resize = Scalr.resize(bi, 250, 400);
-
         compressProductImage(resize, uploadPath, "png");
         return originalFilename;
     }
@@ -232,29 +209,22 @@ public class MovieServiceImpl implements MovieService {
         if (name != null) {
             allMovies = getByName(name, pageable);
         } else if (lang != null) {
-
             allMovies = getByLanguage(lang, pageable);
         } else if (lang != null && name != null && category != null) {
             Languages languages = Languages.valueOf(lang.toUpperCase(Locale.ROOT));
             Category category1 = Category.valueOf(category.toUpperCase(Locale.ROOT));
             allMovies = (Page<Movie>) findMovieByParamsQueryDSL(name, languages, category1);
         } else if (category != null) {
-
             allMovies = getByCategory(category, pageable);
         } else {
-
             allMovies = getAllMovies(pageable);
         }
-
-
         return allMovies;
     }
-
 
     public List<Movie> findMovieByParamsQueryDSL(final String name, final Languages languages, final Category category) {
         final JPAQuery<Movie> query = new JPAQuery<>(em);
         final QMovie movie = QMovie.movie;
-
         return query.from(movie).where(movie.name.eq(name).and(movie.language.eq(languages)).and(movie.category.eq(category))).fetch();
     }
 
@@ -265,8 +235,6 @@ public class MovieServiceImpl implements MovieService {
         localDateList.add(localDate.plusDays(2));
         localDateList.add(localDate.plusDays(3));
         localDateList.add(localDate.plusDays(4));
-
-
         return localDateList;
     }
 }

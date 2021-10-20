@@ -19,9 +19,16 @@ public class TicketController {
     private final TicketsService ticketsService;
 
     @GetMapping("/bookTicket")
-    public String seatPlan(@RequestParam(value = "place",required = false) String place, ModelMap modelMap) {
-        if (place!=null)
-        modelMap.addAttribute("place",place);
+    public String seatPlan(@RequestParam(value = "place",required = false) String place1, ModelMap modelMap) {
+       String place;
+        if (place1!=null){
+            place=place1;
+            modelMap.addAttribute("place",place);
+        }else{
+            place="nothing";
+            modelMap.addAttribute("place",place);
+        }
+
         return "movie-seat-plan";
     }
 

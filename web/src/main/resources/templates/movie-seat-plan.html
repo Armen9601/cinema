@@ -483,11 +483,12 @@
     $("ul.seat--area li.front-seat ul li").click(function () {
         var fild = $(this).text();
         console.log(fild);
-        // if (fild === "ALL") {
-            window.location.href = 'http://localhost:8080/bookTickets?place='+fild;
-        // } else {
-        //     window.location.href = 'http://localhost:8080/popcorn?category=' + fild;
-        // }
+        if (fild === null) {
+            window.location.href = 'http://localhost:8080/bookTicket';
+
+        } else {
+            window.location.href = 'http://localhost:8080/bookTicket?place='+fild;
+        }
 
     })
 </script>

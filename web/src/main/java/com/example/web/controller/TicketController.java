@@ -4,6 +4,7 @@ import com.example.common.service.MovieService;
 import com.example.common.service.TicketsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +19,9 @@ public class TicketController {
     private final TicketsService ticketsService;
 
     @GetMapping("/bookTicket")
-    public String seatPlan() {
-
+    public String seatPlan(@RequestParam(value = "place",required = false) String place, ModelMap modelMap) {
+        if (place!=null)
+        modelMap.addAttribute("place",place);
         return "movie-seat-plan";
     }
 

@@ -478,6 +478,7 @@
     $('select').on('change', function (e) {
         var optionSelected = $("option:selected", this);
         var valueSelected = this.value;
+        if (valueSelected!=='rating')
 
         window.location.href = 'http://localhost:8080/nextPremiere?date=' + valueSelected;
     });

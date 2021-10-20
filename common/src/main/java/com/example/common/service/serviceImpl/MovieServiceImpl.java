@@ -47,6 +47,7 @@ public class MovieServiceImpl implements MovieService {
     @PersistenceContext
     private EntityManager em;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    DateTimeFormatter frm = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final MovieRepository movieRepository;
     private final RatingRepository ratingRepository;
     private final ActorRepository actorRepository;
@@ -141,7 +142,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getByToDay(String local) {
-        final LocalDate localDate = LocalDate.parse(local, formatter);
+        final LocalDate localDate = LocalDate.parse(local,frm);
         LocalDateTime localDateTime1 = localDate.atTime(LocalTime.MIDNIGHT);
         LocalDateTime localDateTime2 = localDate.atTime(LocalTime.MAX);
         return movieRepository.findByDay(localDateTime1, localDateTime2);
@@ -225,7 +226,8 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> findMovieByParamsQueryDSL(final String name, final Languages languages, final Category category) {
         final JPAQuery<Movie> query = new JPAQuery<>(em);
         final QMovie movie = QMovie.movie;
-        return query.from(movie).where(movie.name.eq(name).and(movie.language.eq(languages)).and(movie.category.eq(category))).fetch();
+        return query.from(movie).where(movie.name.eq(name).and(movie.language.eq(languages))
+                .and(movie.category.eq(category))).fetch();
     }
 
     @Override

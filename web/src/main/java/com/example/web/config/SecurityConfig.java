@@ -26,11 +26,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+
+        http.headers().frameOptions().disable()
+                .and()
+                .csrf().disable()
+                .formLogin()
+                .loginPage("/sign-in")
+                .failureUrl("/sign-in?error")
+                .defaultSuccessUrl("/")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/sign-in")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/accessDenied");
+               /* .and()
+                .authorizeRequests()
+                .antMatchers("/sign-in").permitAll()
+                .antMatchers("/**", "/message", "/messages").hasAnyAuthority("employee", "ADMIN")
+                .antMatchers("/companies", "/employee").hasAnyAuthority("ADMIN")
+                .anyRequest().hasAnyAuthority("employee", "ADMIN");*/
+       /* http
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
@@ -42,7 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .and()
                 .formLogin()
-                .loginPage("/sign-in");
+                .loginPage("/sign-in")
+                .defaultSuccessUrl("/");*/
 
     }
 

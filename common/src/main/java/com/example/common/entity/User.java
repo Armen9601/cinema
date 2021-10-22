@@ -28,10 +28,9 @@ public class User {
     @Email
     private String email;
     private String phoneNumber;
-
     private String password;
     @Transient
-    private String password2;
+    private String repeatPassword;
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
     @OneToMany

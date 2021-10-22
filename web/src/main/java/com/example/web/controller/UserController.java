@@ -20,22 +20,17 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/register")
-    public String register(){
+    public String register() {
         return "sign-up";
     }
 
-
     @PostMapping("/sign-up")
     public String AddUser(@ModelAttribute @Valid User user, BindingResult result) {
-       if (result.hasErrors() || !userService.addUser(user)){
-           return "sign-up";
-       }
-
-
+        if (result.hasErrors() || !userService.addUser(user)) {
+            return "sign-up";
+        }
         user.setUserType(UserType.USER);
-            userService.addUser(user);
-
+        userService.addUser(user);
         return "redirect:/";
     }
-
 }

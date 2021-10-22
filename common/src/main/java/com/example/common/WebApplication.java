@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-@ComponentScan({"com.example.common.*", "com.example.web.*"})
+@ComponentScan({"com.example.web.*", "com.example.common.*"})
 @EnableJpaRepositories(basePackages = {"com.example.common.*", "com.example.web.*"})
 @EntityScan("com.example.common.*")
 public class WebApplication {

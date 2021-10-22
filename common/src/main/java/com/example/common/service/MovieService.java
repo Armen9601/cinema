@@ -2,6 +2,7 @@ package com.example.common.service;
 
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
+import com.example.common.util.ResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,15 +24,15 @@ public interface MovieService {
 
     Page<Movie> getByCategory(String category, Pageable pageable);
 
-    Page<Movie> getByLanguage(String lang,Pageable pageable);
+    Page<Movie> getByLanguage(String lang, Pageable pageable);
 
     Set<Movie> getByPopularity();
 
     Movie findBySeanceTime(LocalDateTime localDateTime);
 
-    List<Movie> showPreviewsWeek(LocalDate startLocalDate, LocalDate endLocalDate);
 
     List<Movie> getByDay();
+
     List<Movie> getByToDay(String localDate);
 
     void deleteMovie(int id);
@@ -42,7 +43,7 @@ public interface MovieService {
 
     Page<Movie> getByName(String name, Pageable pageable);
 
-    Page<Movie> getByAll(Pageable pageable,String name,String lang,String category);
+    List<Movie> getByAll(ResponseDto responseDto);
 
     List<LocalDate> local(LocalDate localDate);
 }

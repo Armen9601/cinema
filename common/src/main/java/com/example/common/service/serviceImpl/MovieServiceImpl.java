@@ -11,28 +11,19 @@ import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
 import com.example.common.service.MovieService;
-import com.example.common.util.CustomMultipartFile;
+import com.example.common.util.FileUploadUtil;
 import com.example.common.util.MovieRatingComparator;
+import com.example.common.util.ResponseDto;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
-import org.imgscalr.Scalr;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -60,13 +51,8 @@ public class MovieServiceImpl implements MovieService {
         List<String> picUrls = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
-                String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-                String png = "intermediate.png";
-                CustomMultipartFile customMultipartFile = new CustomMultipartFile(multipartFile.getBytes(), png);
-                String smallPicUrl = compressImage(customMultipartFile, movieProperties.getMovieImg(), png);
-                multipartFile.transferTo(new File(movieProperties.getMovieImg() + File.separator + picUrl));
-                movie.setPicUrl(picUrl);
-                picUrls.add(smallPicUrl);
+                movie.setPicUrl(FileUploadUtil.getPicUrl(multipartFile));
+                picUrls.add(FileUploadUtil.getSmallPicUrl(multipartFile));
             }
         }
         movie.setPicUrls(picUrls);
@@ -97,8 +83,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Page<Movie> getAllMovies(Pageable pageable) {
-        Page<Movie> all = movieRepository.findAll(pageable);
-        return all;
+        return movieRepository.findAll(pageable);
     }
 
     @Override
@@ -129,11 +114,6 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> showPreviewsWeek(LocalDate startLocalDate, LocalDate endLocalDate) {
-        return null;
-    }
-
-    @Override
     public List<Movie> getByDay() {
         LocalDateTime localDateTime1 = LocalDate.now().atTime(LocalTime.MIDNIGHT);
         LocalDateTime localDateTime2 = LocalDate.now().atTime(LocalTime.MAX);
@@ -142,7 +122,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getByToDay(String local) {
-        final LocalDate localDate = LocalDate.parse(local,frm);
+        final LocalDate localDate = LocalDate.parse(local, frm);
         LocalDateTime localDateTime1 = localDate.atTime(LocalTime.MIDNIGHT);
         LocalDateTime localDateTime2 = localDate.atTime(LocalTime.MAX);
         return movieRepository.findByDay(localDateTime1, localDateTime2);
@@ -153,38 +133,6 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.deleteById(id);
     }
 
-    public static void compressProductImage(BufferedImage image, String uploadPath, String extension) {
-        try {
-            File compressedImageFile = new File(uploadPath);
-            OutputStream outputStream = new FileOutputStream(compressedImageFile);
-            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(extension);
-            ImageWriter writer = writers.next();
-            ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
-            writer.setOutput(imageOutputStream);
-            ImageWriteParam param = writer.getDefaultWriteParam();
-            if (param.canWriteCompressed()) {
-                param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                param.setCompressionQuality(0.5f);
-            }
-            writer.write(null, new IIOImage(image, null, null), param);
-            outputStream.close();
-            imageOutputStream.close();
-            writer.dispose();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static String compressImage(MultipartFile file, String uploadDir, String fileName) throws IOException {
-        String originalFilename = System.currentTimeMillis() + "_" + fileName;
-        String uploadPath = uploadDir + originalFilename;
-        File image = new File(uploadPath);
-        file.transferTo(image);
-        BufferedImage bi = ImageIO.read(file.getInputStream());
-        BufferedImage resize = Scalr.resize(bi, 250, 400);
-        compressProductImage(resize, uploadPath, "png");
-        return originalFilename;
-    }
 
     @Override
     public List<Movie> getByActorId(Actor actor) {
@@ -205,29 +153,32 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Page<Movie> getByAll(Pageable pageable, String name, String lang, String category) {
-        Page<Movie> allMovies;
-        if (name != null) {
-            allMovies = getByName(name, pageable);
-        } else if (lang != null) {
-            allMovies = getByLanguage(lang, pageable);
-        } else if (lang != null && name != null && category != null) {
-            Languages languages = Languages.valueOf(lang.toUpperCase(Locale.ROOT));
-            Category category1 = Category.valueOf(category.toUpperCase(Locale.ROOT));
-            allMovies = (Page<Movie>) findMovieByParamsQueryDSL(name, languages, category1);
-        } else if (category != null) {
-            allMovies = getByCategory(category, pageable);
-        } else {
-            allMovies = getAllMovies(pageable);
+    public List<Movie> getByAll(ResponseDto responseDto) {
+        List<Languages> languagesList = new ArrayList<>();
+        List<Category> categoryList = new ArrayList<>();
+        for (String s : responseDto.getLang()) {
+            languagesList.add(Languages.valueOf(s.toUpperCase()));
         }
-        return allMovies;
+        if (languagesList.size() == 0) {
+            languagesList = Arrays.asList(Languages.values());
+
+        }
+        for (String s : responseDto.getCategories()) {
+            categoryList.add(Category.valueOf(s.toUpperCase()));
+        }
+        if (categoryList.size() == 0) {
+
+            categoryList = Arrays.asList(Category.values());
+        }
+        return findMovieByParamsQueryDSL(languagesList, categoryList);
     }
 
-    public List<Movie> findMovieByParamsQueryDSL(final String name, final Languages languages, final Category category) {
+    public List<Movie> findMovieByParamsQueryDSL(final List<Languages> languages,
+                                                 final List<Category> category) {
         final JPAQuery<Movie> query = new JPAQuery<>(em);
         final QMovie movie = QMovie.movie;
-        return query.from(movie).where(movie.name.eq(name).and(movie.language.eq(languages))
-                .and(movie.category.eq(category))).fetch();
+        return query.from(movie).where((movie.language.in(languages))
+                .and(movie.category.in(category))).fetch();
     }
 
     @Override

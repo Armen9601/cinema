@@ -5,38 +5,29 @@ import com.example.common.enums.FoodCategory;
 import com.example.common.properties.FoodProperties;
 import com.example.common.repository.FoodRepository;
 import com.example.common.service.FoodService;
-import com.example.common.util.CustomMultipartFile;
+import com.example.common.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import static com.example.common.service.serviceImpl.MovieServiceImpl.compressImage;
 
 @Service
 @RequiredArgsConstructor
 public class FoodServiceImpl implements FoodService {
 
     private final FoodProperties foodProperties;
-    private final MovieServiceImpl movieService;
     private final FoodRepository foodRepository;
 
     @Override
     public void addFood(Food food, MultipartFile multipartFile, String category) throws IOException {
         if (!multipartFile.isEmpty()) {
-            if (multipartFile.getSize() > 1000000) {
-                String png = "intermediate.png";
-                CustomMultipartFile customMultipartFile = new CustomMultipartFile(multipartFile.getBytes(), png);
-                String picUrl = compressImage(customMultipartFile, foodProperties.getFoodImg(), png);
-                food.setPicUrl(picUrl);
+            if (multipartFile.getSize() > foodProperties.getFileMaxSize()) {
+                food.setPicUrl(FileUploadUtil.getSmallPicUrl(multipartFile));
             } else {
-                String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-                multipartFile.transferTo(new File(foodProperties.getFoodImg() + File.separator + picUrl));
-                food.setPicUrl(picUrl);
+                food.setPicUrl(FileUploadUtil.getPicUrl(multipartFile));
             }
         }
         food.setFoodCategory(FoodCategory.valueOf(category.toUpperCase(Locale.ROOT)));
@@ -51,9 +42,6 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public List<Food> getFoods(String category) {
-        if (category != null) {
-            return getByCategory(category);
-        } else
-            return foodRepository.findAll();
+        return category == null ? foodRepository.findAll() : getByCategory(category);
     }
 }

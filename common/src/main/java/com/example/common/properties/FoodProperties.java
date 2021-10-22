@@ -10,5 +10,6 @@ public class FoodProperties {
 
     private String foodImg;
 
+    private Long fileMaxSize;
 }
 

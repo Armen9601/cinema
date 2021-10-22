@@ -32,25 +32,32 @@ public class FoodController {
         return "addFood";
     }
 
-    @PostMapping("/addFood")
-    public String addFood(@ModelAttribute Food food, @RequestParam("picture") MultipartFile multipartFile,
-                          @RequestParam("category") String category) throws IOException {
-        foodService.addFood(food, multipartFile, category);
-        return "redirect:/admin/food";
-
-    }
-
     @GetMapping("/popcorn")
-    public String movieFood(ModelMap modelMap,
-                            @RequestParam(value = "category", required = false) String category) {
+    public String movieFood(
+            ModelMap modelMap,
+            @RequestParam(value = "category", required = false) String category
+    ) {
         modelMap.addAttribute("foods", foodService.getFoods(category));
         return "popcorn";
     }
 
     @GetMapping("/foodImg")
-    void productImage(@RequestParam("foodUrl") String productUrl, HttpServletResponse response) throws IOException {
+    void productImage(
+            @RequestParam("foodUrl") String productUrl,
+            HttpServletResponse response
+    ) throws IOException {
         InputStream in = new FileInputStream(foodProperties.getFoodImg() + File.separator + productUrl);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
+    }
+
+    @PostMapping("/addFood")
+    public String addFood(
+            @ModelAttribute Food food,
+            @RequestParam("picture") MultipartFile multipartFile,
+            @RequestParam("category") String category
+    ) throws IOException {
+        foodService.addFood(food, multipartFile, category);
+        return "redirect:/admin/food";
     }
 }

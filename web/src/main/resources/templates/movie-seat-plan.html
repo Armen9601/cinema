@@ -115,18 +115,19 @@
 <div class="seat-plan-section padding-bottom padding-top">
     <div class="container">
         <div class="screen-area"><h4 class="screen">screen</h4>
+            <ul >
             <div class="screen-thumb"><img src="./assets/images/movie/screen-thumb.png" alt="movie"></div>
             <h5 class="subtitle">silver plus</h5>
             <div class="screen-wrapper">
                 <ul class="seat-area">
                     <li class="seat-line"><span>A</span>
-                        <ul class="seat--area">
+                        <ul class="seat--area" id="a4">
                             <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num" th:name="place">a1</span></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num" th:name="place">a2</span></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num" th:name="place">a3</span></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num" th:name="place">a4</span></li>
+                                <ul >
+                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num" th:id="a1">a1</span></li>
+                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num" th:id="a2">a2</span></li>
+                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num"th:id="a3">a3</span></li>
+                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"><span class="sit-num"th:id="a4">a4</span></li>
                                 </ul>
                             </li>
                             <li class="front-seat">
@@ -414,6 +415,7 @@
                         <span>h</span></li>
                 </ul>
             </div>
+            </ul>
         </div>
         <div class="proceed-book bg_img" data-background="./assets/images/movie/movie-bg-proceed.jpg">
             <div class="proceed-to-book">
@@ -480,17 +482,41 @@
 <script src="assets/js/nice-select.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-    $("ul.seat--area li.front-seat ul li").click(function () {
-        var fild = $(this).text();
-        console.log(fild);
-        if (fild === null) {
-            window.location.href = 'http://localhost:8080/bookTicket';
+    // $("ul.seat--area li.front-seat ul li").click(function () {
+    //     var fild = $(this).text();
+    //     console.log(fild);
+    //     if (fild === null) {
+    //         window.location.href = 'http://localhost:8080/bookTicket';
+    //
+    //     } else {
+    //         window.location.href = 'http://localhost:8080/bookTicket?place='+fild;
+    //     }
+    //
+    // })
 
-        } else {
-            window.location.href = 'http://localhost:8080/bookTicket?place='+fild;
-        }
+    var responseDto = {
+        place: []
+    }
+    $("#a4").click(function () {
 
+        $.each($("#a4"), function () {
+            responseDto.place.push($(this).find('span.id'));
+        });
+
+
+        console.log(responseDto)
+
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            url: '/bookTicket',
+            data: JSON.stringify(responseDto),
+            success: function (data) {
+                console.log(data)
+            }
     })
+    });
 </script>
 </body>
 </html>

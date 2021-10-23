@@ -143,21 +143,22 @@
                 <div class="widget-1 widget-banner">
 
                 </div>
-                <!--                <form action="/filtrMovies" method="post">-->
                 <div class="widget-1 widget-check">
-                    <div class="widget-header"><h5 class="m-title">Filter By</h5><a
-                            href="http://localhost:8080/viewAll"
-                            class="clear-check">Clear
+                    <div class="widget-header"><h5 class="m-title">Filter By</h5><a href="http://localhost:8080/viewAll"
+                                                                                    class="clear-check">Clear
                         All</a></div>
                     <div class="widget-1-body"><h6 class="subtitle">Language</h6>
                         <div class="check-area">
-                            <div class="form-group"><input type="checkbox" name="lang" id="arm" value="arm"><label
+                            <div class="form-group"><input type="checkbox" name="lang" id="arm" value="arm"
+                                                           th:checked="${true}"><label
                                     for="arm">ARM</label>
                             </div>
-                            <div class="form-group"><input type="checkbox" name="lang" id="rus" value="rus"><label
+                            <div class="form-group"><input type="checkbox" name="lang" id="rus" value="rus"
+                                                           th:checked="${true}"><label
                                     for="rus">RUS</label>
                             </div>
-                            <div class="form-group"><input type="checkbox" name="lang" id="eng" value="eng"><label
+                            <div class="form-group"><input type="checkbox" name="lang" id="eng" value="eng"
+                                                           th:checked="${param eq'eng'}"><label
                                     for="eng">ENG</label>
                             </div>
 
@@ -173,8 +174,7 @@
                                                            value="thriller"><label
                                     for="thriller">thriller</label>
                             </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="fantasy"
-                                                           value="fantasy"><label
+                            <div class="form-group"><input type="checkbox" name="category" id="fantasy" value="fantasy"><label
                                     for="fantasy">fantasy</label>
                             </div>
                             <div class="form-group"><input type="checkbox" name="category" id="drama"
@@ -193,8 +193,7 @@
                                                            value="comedy"><label
                                     for="comedy">comedy</label>
                             </div>
-                            <div class="form-group"><input type="checkbox" name="category" id="romance"
-                                                           value="romance"><label
+                            <div class="form-group"><input type="checkbox" name="category" id="romance" value="romance"><label
                                     for="romance">ROMANCE</label>
                             </div>
                             <div class="form-group"><input type="checkbox" name="category" id="documentary"
@@ -202,11 +201,10 @@
                                     for="documentary">documentary</label>
                             </div>
 
-                            <button class="header-button pr-0" type="submit">Filter</button>
+
                         </div>
                     </div>
                 </div>
-                <!--                </form>-->
                 <div class="widget-1 widget-banner">
 
                 </div>
@@ -234,7 +232,7 @@
                     </div>
                     <div class="tab-area">
                         <div class="tab-item active">
-                            <div class="row mb-10 justify-content-center" id="listMovie">
+                            <div class="row mb-10 justify-content-center">
                                 <div class="col-sm-6 col-lg-4" th:each="movie:${movies.content}">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb"><a
@@ -251,7 +249,7 @@
                             </div>
                         </div>
                         <div class="tab-item">
-                            <div class="movie-area mb-10" id="gridMovie">
+                            <div class="movie-area mb-10">
                                 <div class="movie-list" th:each="movie:${movies}">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb , movie-content bg-one"><a
@@ -261,7 +259,7 @@
                                                 th:href="@{/movieDetails(id=${movie.getId()})}"
                                                 th:text="${movie.name}"></a></h5>
                                             <p class="duration" th:text="${movie.getDuration()}"></p>
-                                            <div class="movie-tags"><a  th:text="${movie.getCategory()}"></a>
+                                            <div class="movie-tags"><a href="#0" th:text="${movie.getCategory()}"></a>
                                             </div>
                                             <div class="book-area">
                                                 <div class="book-ticket">
@@ -269,7 +267,7 @@
                                                         <div class="thumb"><img src="./assets/images/icons/heart.png"
                                                                                 alt="icons"></div>
                                                     </a></div>
-                                                    <div class="react-item mr-auto"><a href="/bookTicket">
+                                                    <div class="react-item mr-auto"><a href="#0">
                                                         <div class="thumb"><img src="./assets/images/icons/book.png"
                                                                                 alt="icons"></div>
                                                         <span>book ticket</span></a></div>
@@ -354,111 +352,136 @@
 <script src="../assets/js/nice-select.js"></script>
 <script src="../assets/js/main.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#filds").change(function () {
-            var fild = $(this).val();
-            if (fild === "all") {
-                window.location.href = 'http://localhost:8080/viewAll';
-            } else {
-                window.location.href = 'http://localhost:8080/viewAll?sort=' + $(this).val() + ',desc';
-            }
 
-        })
-
-        $('select').on('change', function (e) {
-            var optionSelected = $("option:selected", this);
-            var valueSelected = this.value;
-            if (valueSelected !== 'rating')
-
-                window.location.href = 'http://localhost:8080/nextPremiere?date=' + valueSelected;
-        });
-
-
-        var responseDto = {
-            lang: [], categories: []
+    $("#filds").change(function () {
+        var fild = $(this).val();
+        if (fild === "all") {
+            window.location.href = 'http://localhost:8080/viewAll';
+        } else {
+            window.location.href = 'http://localhost:8080/viewAll?sort=' + $(this).val() + ',desc';
         }
-        $("button").click(function () {
 
-            $.each($("input[name='category']:checked"), function () {
-                responseDto.categories.push($(this).val());
-            });
+    })
 
-            $.each($("input[name='lang']:checked"), function () {
-                responseDto.lang.push($(this).val());
-            });
 
-            console.log(responseDto)
+    $('#arm').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+            console.log(val)
 
-            $.ajax({
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                type: 'POST',
-                url: '/viewAll',
-                data: JSON.stringify(responseDto),
-                success: function (data) {
-                    console.log(data)
-                    var list = '';
-                    var grid = '';
-                    data.forEach(item => {
-                        list += `
-                                 <div class="col-sm-6 col-lg-4">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb"><a
-                                                href="/movieDetails?id=${item.id}"><img
-                                                src="/movieImage?movieUrl=${item.picUrl}" alt="movie"></a></div>
-                                        <div class="movie-content bg-one"><h5 class="title m-0"><a
-                                                href="/movieDetails?id=${item.id}"
-                                                >${item.name}</a></h5>
-                                       </div>
-                                    </div>
-                                </div>`
-                        grid += `
-                                  <div class="movie-list">
-                                    <div class="movie-grid">
-                                        <div class="movie-thumb c-thumb , movie-content bg-one"><a
-                                                href="/movieDetails?id=${item.id}"><img
-                                                src="/movieImage?movieUrl=${item.picUrl}" alt="movie"></a></div>
-                                        <div class="movie-content bg-one"><h5 class="title m-0"><a
-                                                href="/movieDetails(id=${item.id}"
-                                               >${item.name}</a></h5>
-                                            <p class="duration">${item.description}</p>
-                                            <div class="movie-tags"><a href="#0" text="${item.category}"></a>
-                                            </div>
-                                            <div class="book-area">
-                                                <div class="book-ticket">
-                                                    <div class="react-item"><a href="#0">
-                                                        <div class="thumb"><img src="./assets/images/icons/heart.png"
-                                                                                alt="icons"></div>
-                                                    </a></div>
-                                                    <div class="react-item mr-auto"><a href="#0">
-                                                        <div class="thumb"><img src="./assets/images/icons/book.png"
-                                                                                alt="icons"></div>
-                                                        <span>book ticket</span></a></div>
-                                                    <div class="react-item"><a href="#0" class="popup-video">
-                                                        <div class="thumb"><img
-                                                                src="./assets/images/icons/play-button.png"
-                                                                alt="icons"></div>
-                                                        <span>watch trailer</span></a></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
 
-                                </div>
-`
-                    })
-                    $('#listMovie').empty().append(list)
-                    $('#gridMovie').empty().append(grid)
-                },
-                failure: function (response) {
-                    $('#result').html(response);
-                }
+        }
 
-            });
+    });
+    $('#rus').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
 
-        });
+
+            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
+        }
+
+    });
+    $('#eng').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?lang=' + val;
+        }
+
+    });
+    $(".checkbox").on('change', function (e) {
+        var that;
+        that = "#" + e.target.getAttribute("id");
+        if ($(that).prop("checked") === true) {
+            $(that).val("true");
+        }
+        if ($(that).prop("checked") === false) {
+            return $(that).val("false");
+        }
     });
 
+    $('#thriller').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+
+    });
+    $('#fantasy').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+
+    });
+    $('#comedy').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+
+    });
+    $('#detective').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+
+    });
+    $('#documentary').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+
+    });
+    $('#drama').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+
+    });
+    $('#romance').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+
+    });
+    $('#action').change(function () {
+        if (this.checked) {
+            let val = $(this).val();
+
+
+            window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+        }
+    });
+
+    $('select').on('change', function (e) {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        if (valueSelected!=='rating')
+
+        window.location.href = 'http://localhost:8080/nextPremiere?date=' + valueSelected;
+    });
 </script>
 </body>
 </html>

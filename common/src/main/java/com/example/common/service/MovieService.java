@@ -2,8 +2,8 @@ package com.example.common.service;
 
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
+import com.example.common.util.ResponseDto;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,25 +15,29 @@ import java.util.Set;
 
 public interface MovieService {
 
-    Movie addMovie(Movie movie, MultipartFile[] multipartFile, String seanceOne, String seanceTwo, String seanceThree) throws IOException;
+    Movie add(
+            Movie movie, MultipartFile[] multipartFile,
+            String seanceOne, String seanceTwo,
+            String seanceThree
+    ) throws IOException;
 
-    Movie updateMovie(int movieId, int rating);
+    Movie update(int movieId, int rating);
 
-    Page<Movie> getAllMovies(Pageable pageable);
+    Page<Movie> getAll(Pageable pageable);
 
-    List<Movie> getByCategory(String category);
+    Page<Movie> getByCategory(String category, Pageable pageable);
 
     Page<Movie> getByLanguage(String lang, Pageable pageable);
 
-    Movie findBySeanceTime(LocalDateTime localDateTime);
+    Set<Movie> getByPopularity();
 
-    List<Movie> showPreviewsWeek(LocalDate startLocalDate, LocalDate endLocalDate);
+    Movie findBySeanceTime(LocalDateTime localDateTime);
 
     List<Movie> getByDay();
 
-    List<Movie> getByToDay(LocalDate localDate);
+    List<Movie> getByToDay(String localDate);
 
-    void deleteMovie(int id);
+    void delete(int id);
 
     List<Movie> getByActorId(Actor actor);
 
@@ -41,5 +45,7 @@ public interface MovieService {
 
     Page<Movie> getByName(String name, Pageable pageable);
 
-//    List<Movie> filterByTitleLangCategoryRatingUsingCriteriaBuilder(List<String> titles);
+    List<Movie> getByAll(ResponseDto responseDto);
+
+    List<LocalDate> local(LocalDate localDate);
 }

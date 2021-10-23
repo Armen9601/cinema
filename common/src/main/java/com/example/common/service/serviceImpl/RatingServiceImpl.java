@@ -15,7 +15,7 @@ public class RatingServiceImpl implements RatingService {
     private final RatingRepository repository;
 
     @Override
-    public List<Rating> getRatingByMovieId(int id) {
+    public List<Rating> getAllByMovieId(int id) {
         return repository.findByMovie_Id(id);
     }
 }

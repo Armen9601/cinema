@@ -1,6 +1,7 @@
 package com.example.common.repository;
 
 import com.example.common.entity.Movie;
+import com.example.common.enums.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
-    List<Movie> findByCategory(String category);
+    Page<Movie> findByCategory(Category category, Pageable pageable);
 
     List<Movie> findByActor_Id(int id);
 
@@ -21,7 +22,7 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query(value = "select distinct m.* from movies m left join  movie_seance_date_time ms on m.id=ms.movie_id where  ms.seance_date_time>=:start and ms.seance_date_time<=:end", nativeQuery = true)
     List<Movie> findByDay(@Param("start") LocalDateTime localDateTime, @Param("end") LocalDateTime localDateTim);
 
-    Page<Movie> findByLanguage(Enum lang,Pageable pageable);
+    Page<Movie> findByLanguage(Enum lang, Pageable pageable);
 
     @Query(value = "select * from movies m where name like %:name%", nativeQuery = true)
     Page<Movie> findByName(@Param("name") String name, Pageable pageable);

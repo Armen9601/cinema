@@ -4,9 +4,11 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties("movie")
-public class MovieProperties {
+@ConfigurationProperties("food")
+public class FoodProperties {
 
-    private String movieImg;
+    private String foodImg;
+    private Long fileMaxSize;
 
 }
+

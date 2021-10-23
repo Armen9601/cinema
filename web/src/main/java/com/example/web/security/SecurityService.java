@@ -17,13 +17,11 @@ public class SecurityService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public CurrentUser loadUserByUsername(String s) throws UsernameNotFoundException {
-        Optional<User> byEmail = userRepository.findByEmail(s);
-        if (!byEmail.isPresent()) {
-            throw new UsernameNotFoundException("User with " + s + " username does not exists");
-            
+    public CurrentUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("User with  %s username does not exists", email));
         }
-
         return new CurrentUser(byEmail.get());
     }
 }

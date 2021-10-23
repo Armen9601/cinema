@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     private final MovieRepository movieRepository;
 
     @Override
-    public void userUpdate(User user, int id) {
+    public void update(User user, int id) {
 
         Movie byId = movieRepository.getById(id);
         List<Movie> myLikedMovie = user.getMyLikedMovie();
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addUser(User user) {
+    public boolean add(User user) {
         if (user.getPassword().length() > 20 || user.getPassword().length() < 4 ||
                 !user.getPassword().equals(user.getRepeatPassword())) {
             return false;
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(int id) {
+    public void deleteById(int id) {
         userRepository.deleteById(id);
     }
 }

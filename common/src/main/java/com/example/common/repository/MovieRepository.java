@@ -13,7 +13,6 @@ import java.util.List;
 
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
-
     Page<Movie> findByCategory(Category category, Pageable pageable);
 
     List<Movie> findByActor_Id(int id);

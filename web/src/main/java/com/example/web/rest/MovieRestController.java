@@ -20,7 +20,6 @@ public class MovieRestController {
     public List<Movie> filterMovies(@RequestBody ResponseDto responseDto) {
         List<Movie> movies = movieService.getByAll(responseDto);
         return movies;
-
     }
 
 }

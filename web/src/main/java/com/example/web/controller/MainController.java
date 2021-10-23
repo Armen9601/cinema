@@ -12,6 +12,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class MainController {
+
     private final MovieService movieService;
 
     @GetMapping("/")
@@ -21,11 +22,9 @@ public class MainController {
         return "index";
     }
 
-
     @GetMapping("/sign-in")
     public String login(){
         return "sign-in";
     }
-
 
 }

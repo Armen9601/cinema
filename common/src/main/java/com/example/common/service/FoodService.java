@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface FoodService {
 
-    void addFood(Food food, MultipartFile multipartFile, String category) throws IOException;
+    void add(Food food, MultipartFile multipartFile, String category) throws IOException;
 
     List<Food> getByCategory(String category);
 
-    List<Food> getFoods(String category);
+    List<Food> getAll(String category);
 }

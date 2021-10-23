@@ -37,7 +37,7 @@ public class FoodController {
             ModelMap modelMap,
             @RequestParam(value = "category", required = false) String category
     ) {
-        modelMap.addAttribute("foods", foodService.getFoods(category));
+        modelMap.addAttribute("foods", foodService.getAll(category));
         return "popcorn";
     }
 
@@ -57,7 +57,7 @@ public class FoodController {
             @RequestParam("picture") MultipartFile multipartFile,
             @RequestParam("category") String category
     ) throws IOException {
-        foodService.addFood(food, multipartFile, category);
+        foodService.add(food, multipartFile, category);
         return "redirect:/admin/food";
     }
 }

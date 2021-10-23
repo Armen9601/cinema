@@ -14,7 +14,6 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-
 public class UserController {
 
     private final UserService userService;
@@ -26,11 +25,12 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public String AddUser(@ModelAttribute @Valid User user, BindingResult result) {
-        if (result.hasErrors() || !userService.addUser(user)) {
+        if (result.hasErrors() || !userService.add(user)) {
             return "sign-up";
         }
         user.setUserType(UserType.USER);
-        userService.addUser(user);
+        userService.add(user);
         return "redirect:/";
     }
+
 }

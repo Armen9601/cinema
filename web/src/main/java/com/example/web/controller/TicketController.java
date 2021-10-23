@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequiredArgsConstructor
 public class TicketController {
+
     private final MovieService movieService;
 
     @GetMapping("/seat")

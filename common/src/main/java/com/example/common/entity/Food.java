@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "food")
 public class Food {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -27,4 +28,5 @@ public class Food {
     private String picUrl;
     @Enumerated(value = EnumType.STRING)
     private FoodCategory foodCategory;
+
 }

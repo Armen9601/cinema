@@ -56,7 +56,7 @@ public class MovieController {
     @GetMapping("/viewAll")
     public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable,
                             @RequestParam(value = "search", required = false) String name) {
-        Page<Movie> allMovies = name == null ? movieService.getAllMovies(pageable) :
+        Page<Movie> allMovies = name == null ? movieService.getAll(pageable) :
                 movieService.getByName(name, pageable);
         if (allMovies.getTotalPages() > 0) {
             List<Integer> pageNum = IntStream.rangeClosed(1, allMovies.getTotalPages())
@@ -85,7 +85,7 @@ public class MovieController {
             @RequestParam int rating,
             @RequestParam("id") int movieId
     ) {
-        movieService.updateMovie(movieId, rating);
+        movieService.update(movieId, rating);
         return "redirect:/movieDetails?id=" + movieId;
     }
 
@@ -95,7 +95,7 @@ public class MovieController {
                            @ModelAttribute("seanceOne") String seanceOne,
                            @ModelAttribute("seanceTwo") String seanceTwo,
                            @ModelAttribute("seanceThree") String seanceThree) throws IOException {
-        movieService.addMovie(movie, multipartFile, seanceOne, seanceTwo, seanceThree);
+        movieService.add(movie, multipartFile, seanceOne, seanceTwo, seanceThree);
         return "redirect:/admin/addMovie";
     }
 }

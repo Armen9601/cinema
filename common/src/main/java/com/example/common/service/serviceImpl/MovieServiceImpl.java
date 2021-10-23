@@ -28,45 +28,53 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
+
+import static com.example.common.util.DateUtil.dateTimeFormatterWithDate;
+import static com.example.common.util.DateUtil.dateTimeFormatterWithDateAndTime;
 
 @Service
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
 
-
     @PersistenceContext
     private EntityManager em;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    DateTimeFormatter frm = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final MovieRepository movieRepository;
     private final RatingRepository ratingRepository;
     private final ActorRepository actorRepository;
     private final MovieProperties movieProperties;
-
+    private final FileUploadUtil fileUploadUtil;
 
     @Override
-    public Movie addMovie(Movie movie, MultipartFile[] multipartFiles, String seanceOne,
-                          String seanceTwo, String seanceThree) throws IOException {
+    public Movie add(
+            Movie movie, MultipartFile[] multipartFiles,
+            String seanceOne, String seanceTwo, String seanceThree
+    ) throws IOException {
         List<String> picUrls = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
-                movie.setPicUrl(FileUploadUtil.getPicUrl(multipartFile));
-                picUrls.add(FileUploadUtil.getSmallPicUrl(multipartFile));
+                movie.setPicUrl(fileUploadUtil.getPicUrl(multipartFile));
+                picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile));
             }
         }
         movie.setPicUrls(picUrls);
         List<LocalDateTime> localDateTimeList = new ArrayList<>();
-        localDateTimeList.add(LocalDateTime.parse(seanceOne, formatter));
-        localDateTimeList.add(LocalDateTime.parse(seanceTwo, formatter));
-        localDateTimeList.add(LocalDateTime.parse(seanceThree, formatter));
+        DateTimeFormatter dateTimeFormatter = dateTimeFormatterWithDateAndTime();
+        localDateTimeList.add(LocalDateTime.parse(seanceOne, dateTimeFormatter));
+        localDateTimeList.add(LocalDateTime.parse(seanceTwo, dateTimeFormatter));
+        localDateTimeList.add(LocalDateTime.parse(seanceThree, dateTimeFormatter));
         movie.setSeanceDateTime(localDateTimeList);
         movieRepository.save(movie);
         return movie;
     }
 
     @Override
-    public Movie updateMovie(int movieId, int newRating) {
+    public Movie update(int movieId, int newRating) {
         Movie byId = movieRepository.getById(movieId);
         Rating rat = new Rating();
         rat.setRating(newRating);
@@ -82,7 +90,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Page<Movie> getAllMovies(Pageable pageable) {
+    public Page<Movie> getAll(Pageable pageable) {
         return movieRepository.findAll(pageable);
     }
 
@@ -102,9 +110,7 @@ public class MovieServiceImpl implements MovieService {
     public Set<Movie> getByPopularity() {
         List<Movie> all = movieRepository.findAll();
         Set<Movie> movies = new TreeSet<>(new MovieRatingComparator());
-        for (Movie movie : all) {
-            movies.add(movie);
-        }
+        movies.addAll(all);
         return movies;
     }
 
@@ -122,17 +128,16 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getByToDay(String local) {
-        final LocalDate localDate = LocalDate.parse(local, frm);
+        final LocalDate localDate = LocalDate.parse(local, dateTimeFormatterWithDate());
         LocalDateTime localDateTime1 = localDate.atTime(LocalTime.MIDNIGHT);
         LocalDateTime localDateTime2 = localDate.atTime(LocalTime.MAX);
         return movieRepository.findByDay(localDateTime1, localDateTime2);
     }
 
     @Override
-    public void deleteMovie(int id) {
+    public void delete(int id) {
         movieRepository.deleteById(id);
     }
-
 
     @Override
     public List<Movie> getByActorId(Actor actor) {
@@ -173,8 +178,10 @@ public class MovieServiceImpl implements MovieService {
         return findMovieByParamsQueryDSL(languagesList, categoryList);
     }
 
-    public List<Movie> findMovieByParamsQueryDSL(final List<Languages> languages,
-                                                 final List<Category> category) {
+    public List<Movie> findMovieByParamsQueryDSL(
+            final List<Languages> languages,
+            final List<Category> category
+    ) {
         final JPAQuery<Movie> query = new JPAQuery<>(em);
         final QMovie movie = QMovie.movie;
         return query.from(movie).where((movie.language.in(languages))

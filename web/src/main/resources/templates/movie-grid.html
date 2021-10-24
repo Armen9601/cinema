@@ -33,14 +33,9 @@
                 <li><a href="/">Home</a>
 
                 </li>
-                <li><a href="/viewAll" class="active">movies</a>
+                <li><a href="/user/viewAll" class="active">movies</a>
                     <ul class="submenu">
-                        <li><a href="movie-details.html">Movie Details</a></li>
-                        <li><a href="movie-details-2.html">Movie Details 2</a></li>
-                        <li><a href="movie-ticket-plan.html">Movie Ticket Plan</a></li>
-                        <li><a href="movie-seat-plan.html">Movie Seat Plan</a></li>
-                        <li><a href="movie-checkout.html">Movie Checkout</a></li>
-                        <li><a href="popcorn.html">Movie Food</a></li>
+                        <li><a href="/popcorn">Movie Food</a></li>
                     </ul>
                 </li>
                 <li><a href="#0">events</a>
@@ -100,7 +95,7 @@
             </div>
             <div class="tab-area">
                 <div class="tab-item active">
-                    <form class="ticket-search-form" action="/viewAll" method="get">
+                    <form class="ticket-search-form" action="/user/viewAll" method="get">
                         <div class="form-group large"><input type="text" th:value="${param.search}"
                                                              placeholder="Search fo Movies" name="search">
                             <button type="submit"><i class="fas fa-search"></i></button>
@@ -186,7 +181,7 @@
                                     for="documentary">documentary</label>
                             </div>
 
-                            <button class="header-button pr-0" type="submit">Filter</button>
+                            <button class="header-button pr-0" type="submit" style="color: black">Filter</button>
                         </div>
                     </div>
                 </div>
@@ -223,7 +218,7 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb"><a
                                                 th:href="@{/user/movieDetails(id=${movie.getId()})}"><img
-                                                th:src="@{/movieImage(movieUrl=${movie.picUrl})}" alt="movie"></a></div>
+                                                style="height: 200px;width: 300px "   th:src="@{/movieImage(movieUrl=${movie.picUrl})}" alt="movie"></a></div>
                                         <div class="movie-content bg-one"><h5 class="title m-0"><a
                                                 th:href="@{/user/movieDetails(id=${movie.getId()})}"
                                                 th:text="${movie.name}"></a></h5>
@@ -240,7 +235,7 @@
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb , movie-content bg-one"><a
                                                 th:href="@{/user/movieDetails(id=${movie.getId()})}"><img
-                                                th:src="@{/movieImage(movieUrl=${movie.picUrl})}" alt="movie"></a></div>
+                                                style="height: 300px;width: 800px "    th:src="@{/movieImage(movieUrl=${movie.picUrl})}" alt="movie"></a></div>
                                         <div class="movie-content bg-one"><h5 class="title m-0"><a
                                                 th:href="@{/user/movieDetails(id=${movie.getId()})}"
                                                 th:text="${movie.name}"></a></h5>
@@ -343,8 +338,11 @@
             var fild = $(this).val();
             if (fild === "all") {
                 window.location.href = 'http://localhost:8080/user/viewAll';
-            } else {
+            } else if (fild==="rating"){
                 window.location.href = 'http://localhost:8080/user/viewAll?sort=' + $(this).val() + ',desc';
+            }else{
+                window.location.href = 'http://localhost:8080/user/viewAll?sort=' + $(this).val() + ',desc';
+
             }
 
         })
@@ -352,9 +350,9 @@
         $('select').on('change', function (e) {
             var optionSelected = $("option:selected", this);
             var valueSelected = this.value;
-            if (valueSelected !== 'rating')
+            if (valueSelected !== 'rating'&& valueSelected !== 'popularity')
 
-                window.location.href = 'http://localhost:8080/nextPremiere?date=' + valueSelected;
+                window.location.href = 'http://localhost:8080/user/nextPremiere?date=' + valueSelected;
         });
 
 

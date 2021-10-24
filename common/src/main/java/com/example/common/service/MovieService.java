@@ -5,6 +5,7 @@ import com.example.common.entity.Movie;
 import com.example.common.util.ResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -46,6 +47,8 @@ public interface MovieService {
     Page<Movie> getByName(String name, Pageable pageable);
 
     List<Movie> getByAll(ResponseDto responseDto);
+
+    Slice<Movie> findFirst3(Pageable pageable);
 
     List<LocalDate> local(LocalDate localDate);
 }

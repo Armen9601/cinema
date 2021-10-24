@@ -11,6 +11,7 @@ import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
 import com.example.common.service.MovieService;
+import com.example.common.util.CustomMultipartFile;
 import com.example.common.util.FileUploadUtil;
 import com.example.common.util.MovieRatingComparator;
 import com.example.common.util.ResponseDto;
@@ -56,11 +57,10 @@ public class MovieServiceImpl implements MovieService {
             String seanceOne, String seanceTwo, String seanceThree
     ) throws IOException {
         List<String> picUrls = new ArrayList<>();
+        movie.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFiles[0],true));
         for (MultipartFile multipartFile : multipartFiles) {
-            if (!multipartFile.isEmpty()) {
-                movie.setPicUrl(fileUploadUtil.getPicUrl(multipartFile));
-                picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile));
-            }
+            picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile,true));
+
         }
         movie.setPicUrls(picUrls);
         List<LocalDateTime> localDateTimeList = new ArrayList<>();

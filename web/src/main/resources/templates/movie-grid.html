@@ -28,7 +28,7 @@
 <header class="header-section">
     <div class="container">
         <div class="header-wrapper">
-            <div class="logo"><a href="index.html"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
+            <div class="logo"><a href="index.html"><img src="../assets/images/logo/logo.png" alt="logo"></a></div>
             <ul class="menu">
                 <li><a href="/">Home</a>
 
@@ -83,7 +83,7 @@
     </div>
 </header><!-- ==========Header-Section========== --><!-- ==========Banner-Section========== -->
 <section class="banner-section">
-    <div class="banner-bg bg_img bg-fixed" data-background="./assets/images/banner/banner02.jpg"></div>
+    <div class="banner-bg bg_img bg-fixed" data-background="../assets/images/banner/banner02.jpg"></div>
     <div class="container">
         <div class="banner-content"><h1 class="title bold">get <span class="color-theme">movie</span>tickets</h1>
             <p>Buy movie tickets in advance, find movie times watch trailers, read movie reviews and much more</p></div>
@@ -91,27 +91,11 @@
 </section><!-- ==========Banner-Section========== --><!-- ==========Ticket-Search========== -->
 <section class="search-ticket-section padding-top pt-lg-0">
     <div class="container">
-        <div class="search-tab bg_img" data-background="./assets/images/ticket/ticket-bg01.jpg">
+        <div class="search-tab bg_img" data-background="../assets/images/ticket/ticket-bg01.jpg">
             <div class="row align-items-center mb--20">
                 <div class="col-lg-6 mb-20">
                     <div class="search-ticket-header"><h6 class="category">welcome to Boleto</h6>
                         <h3 class="title">what are you looking for</h3></div>
-                </div>
-                <div class="col-lg-6 mb-20">
-                    <ul class="tab-menu ticket-tab-menu">
-                        <li class="active">
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab01.png" alt="ticket">
-                            </div>
-                            <span>movie</span></li>
-                        <li>
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab02.png" alt="ticket">
-                            </div>
-                            <span>events</span></li>
-                        <li>
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab03.png" alt="ticket">
-                            </div>
-                            <span>sports</span></li>
-                    </ul>
                 </div>
             </div>
             <div class="tab-area">
@@ -123,7 +107,7 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
+                            <div class="thumb"><img src="../assets/images/ticket/date.png" alt="ticket"></div>
                             <span class="type">next premiere date</span><select class="select-bar">
                             <option th:each="dat:${date}" th:value="${dat}" th:text="${dat}" name="date"></option>
                         </select></div>
@@ -238,10 +222,10 @@
                                 <div class="col-sm-6 col-lg-4" th:each="movie:${movies.content}">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb"><a
-                                                th:href="@{/movieDetails(id=${movie.getId()})}"><img
+                                                th:href="@{/user/movieDetails(id=${movie.getId()})}"><img
                                                 th:src="@{/movieImage(movieUrl=${movie.picUrl})}" alt="movie"></a></div>
                                         <div class="movie-content bg-one"><h5 class="title m-0"><a
-                                                th:href="@{/movieDetails(id=${movie.getId()})}"
+                                                th:href="@{/user/movieDetails(id=${movie.getId()})}"
                                                 th:text="${movie.name}"></a></h5>
 
                                         </div>
@@ -255,10 +239,10 @@
                                 <div class="movie-list" th:each="movie:${movies}">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb , movie-content bg-one"><a
-                                                th:href="@{/movieDetails(id=${movie.getId()})}"><img
+                                                th:href="@{/user/movieDetails(id=${movie.getId()})}"><img
                                                 th:src="@{/movieImage(movieUrl=${movie.picUrl})}" alt="movie"></a></div>
                                         <div class="movie-content bg-one"><h5 class="title m-0"><a
-                                                th:href="@{/movieDetails(id=${movie.getId()})}"
+                                                th:href="@{/user/movieDetails(id=${movie.getId()})}"
                                                 th:text="${movie.name}"></a></h5>
                                             <p class="duration" th:text="${movie.getDuration()}"></p>
                                             <div class="movie-tags"><a  th:text="${movie.getCategory()}"></a>
@@ -266,16 +250,16 @@
                                             <div class="book-area">
                                                 <div class="book-ticket">
                                                     <div class="react-item"><a href="#0">
-                                                        <div class="thumb"><img src="./assets/images/icons/heart.png"
+                                                        <div class="thumb"><img src="../assets/images/icons/heart.png"
                                                                                 alt="icons"></div>
                                                     </a></div>
                                                     <div class="react-item mr-auto"><a href="#0">
-                                                        <div class="thumb"><img src="./assets/images/icons/book.png"
+                                                        <div class="thumb"><img src="../assets/images/icons/book.png"
                                                                                 alt="icons"></div>
                                                         <span>book ticket</span></a></div>
                                                     <div class="react-item"><a href="#0" class="popup-video">
                                                         <div class="thumb"><img
-                                                                src="./assets/images/icons/play-button.png"
+                                                                src="../assets/images/icons/play-button.png"
                                                                 alt="icons"></div>
                                                         <span>watch trailer</span></a></div>
                                                 </div>
@@ -290,7 +274,7 @@
                     </div>
                 </div>
                 <div th:if="${movies.totalPages>0}" class="pagination-area text-center" th:each="page:${pageNumbers}">
-                    <a th:href="@{/viewAll(size=${movies.size}, page=${(page-1)})}" th:text="${page}"
+                    <a th:href="@{/user/viewAll(size=${movies.size}, page=${(page-1)})}" th:text="${page}"
                        th:class="${page==movies.number+1} ? active"></a>
                     <!--                        <a-->
                     <!--                            href="#0">1</a><a href="#0">2</a><a href="#0" class="active">3</a><a href="#0">4</a><a-->
@@ -303,7 +287,7 @@
 <footer class="footer-section">
     <div class="newslater-section padding-bottom">
         <div class="container">
-            <div class="newslater-container bg_img" data-background="./assets/images/newslater/newslater-bg01.jpg">
+            <div class="newslater-container bg_img" data-background="../assets/images/newslater/newslater-bg01.jpg">
                 <div class="newslater-wrapper"><h5 class="cate">subscribe to Boleto</h5>
                     <h3 class="title">to get exclusive benifits</h3>
                     <form class="newslater-form"><input type="text" placeholder="Your Email Address">
@@ -315,7 +299,7 @@
     </div>
     <div class="container">
         <div class="footer-top">
-            <div class="logo"><a href="index-1.html"><img src="./assets/images/footer/footer-logo.png" alt="footer"></a>
+            <div class="logo"><a href="index-1.html"><img src="../assets/images/footer/footer-logo.png" alt="footer"></a>
             </div>
             <ul class="social-icons">
                 <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
@@ -358,9 +342,9 @@
         $("#filds").change(function () {
             var fild = $(this).val();
             if (fild === "all") {
-                window.location.href = 'http://localhost:8080/viewAll';
+                window.location.href = 'http://localhost:8080/user/viewAll';
             } else {
-                window.location.href = 'http://localhost:8080/viewAll?sort=' + $(this).val() + ',desc';
+                window.location.href = 'http://localhost:8080/user/viewAll?sort=' + $(this).val() + ',desc';
             }
 
         })
@@ -393,7 +377,7 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 type: 'POST',
-                url: '/viewAll',
+                url: '/user/viewAll',
                 data: JSON.stringify(responseDto),
                 success: function (data) {
                     console.log(data)
@@ -404,10 +388,10 @@
                                  <div class="col-sm-6 col-lg-4">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb"><a
-                                                href="/movieDetails?id=${item.id}"><img
+                                                href="/user/movieDetails?id=${item.id}"><img
                                                 src="/movieImage?movieUrl=${item.picUrl}" alt="movie"></a></div>
                                         <div class="movie-content bg-one"><h5 class="title m-0"><a
-                                                href="/movieDetails?id=${item.id}"
+                                                href="/user/movieDetails?id=${item.id}"
                                                 >${item.name}</a></h5>
                                        </div>
                                     </div>
@@ -416,10 +400,10 @@
                                   <div class="movie-list">
                                     <div class="movie-grid">
                                         <div class="movie-thumb c-thumb , movie-content bg-one"><a
-                                                href="/movieDetails?id=${item.id}"><img
+                                                href="/user/movieDetails?id=${item.id}"><img
                                                 src="/movieImage?movieUrl=${item.picUrl}" alt="movie"></a></div>
                                         <div class="movie-content bg-one"><h5 class="title m-0"><a
-                                                href="/movieDetails(id=${item.id}"
+                                                href="/user/movieDetails(id=${item.id}"
                                                >${item.name}</a></h5>
                                             <p class="duration">${item.description}</p>
                                             <div class="movie-tags"><a href="#0" text="${item.category}"></a>
@@ -427,16 +411,16 @@
                                             <div class="book-area">
                                                 <div class="book-ticket">
                                                     <div class="react-item"><a href="#0">
-                                                        <div class="thumb"><img src="./assets/images/icons/heart.png"
+                                                        <div class="thumb"><img src="../assets/images/icons/heart.png"
                                                                                 alt="icons"></div>
                                                     </a></div>
                                                     <div class="react-item mr-auto"><a href="#0">
-                                                        <div class="thumb"><img src="./assets/images/icons/book.png"
+                                                        <div class="thumb"><img src="../assets/images/icons/book.png"
                                                                                 alt="icons"></div>
                                                         <span>book ticket</span></a></div>
                                                     <div class="react-item"><a href="#0" class="popup-video">
                                                         <div class="thumb"><img
-                                                                src="./assets/images/icons/play-button.png"
+                                                                src="../assets/images/icons/play-button.png"
                                                                 alt="icons"></div>
                                                         <span>watch trailer</span></a></div>
                                                 </div>

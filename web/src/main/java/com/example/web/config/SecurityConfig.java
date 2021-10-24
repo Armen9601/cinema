@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .formLogin()
                 .loginPage("/sign-in")
+                .permitAll()
                 .failureUrl("/sign-in?error")
                 .defaultSuccessUrl("/")
                 .and()
@@ -41,13 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/sign-in")
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/accessDenied");
-               /* .and()
+                .accessDeniedPage("/accessDenied")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/sign-in").permitAll()
-                .antMatchers("/**", "/message", "/messages").hasAnyAuthority("employee", "ADMIN")
-                .antMatchers("/companies", "/employee").hasAnyAuthority("ADMIN")
-                .anyRequest().hasAnyAuthority("employee", "ADMIN");*/
+                .antMatchers("/user/*").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/admin/*").hasAnyAuthority("ADMIN")
+                .anyRequest().hasAnyAuthority("USER", "ADMIN");
        /* http
                 .csrf().disable()
                 .authorizeRequests()
@@ -66,10 +66,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**");
-        web.ignoring().antMatchers("/static/**");
-        web.ignoring().antMatchers("/css/**");
-        web.ignoring().antMatchers("/js/**");
+    public void configure(WebSecurity webSecurity) {
+        webSecurity.ignoring().antMatchers("/resources/**");
+        webSecurity.ignoring().antMatchers("/css/**");
+        webSecurity.ignoring().antMatchers("/images/**");
+        webSecurity.ignoring().antMatchers("/js/**");
+        webSecurity.ignoring().antMatchers("/assets/**");
+        webSecurity.ignoring().antMatchers("/plugins/**");
+        webSecurity.ignoring().antMatchers("/pages/**");
+        webSecurity.ignoring().antMatchers("/web/**");
     }
-}
+
+    }

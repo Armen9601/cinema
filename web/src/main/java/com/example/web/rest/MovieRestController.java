@@ -16,7 +16,7 @@ public class MovieRestController {
 
     private final MovieService movieService;
 
-    @PostMapping("/viewAll")
+    @PostMapping("/user/viewAll")
     public List<Movie> filterMovies(@RequestBody ResponseDto responseDto) {
         List<Movie> movies = movieService.getByAll(responseDto);
         return movies;

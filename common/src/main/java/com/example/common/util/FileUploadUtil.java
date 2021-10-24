@@ -3,6 +3,7 @@ package com.example.common.util;
 import com.example.common.properties.MovieProperties;
 import lombok.RequiredArgsConstructor;
 import org.imgscalr.Scalr;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,9 @@ import java.util.Iterator;
 @RequiredArgsConstructor
 @Component
 public class FileUploadUtil {
+
+    @Value("${movie.movieImg}")
+    String movieImg;
 
     private final MovieProperties movieProperties;
 
@@ -46,28 +50,26 @@ public class FileUploadUtil {
         }
     }
 
-    public String compressImage(MultipartFile file, String uploadDir, String fileName) throws IOException {
+    public String compressImage(MultipartFile file, String uploadDir, String fileName, boolean isResize) throws IOException {
         String originalFilename = System.currentTimeMillis() + "_" + fileName;
         String uploadPath = uploadDir + originalFilename;
         File image = new File(uploadPath);
         file.transferTo(image);
         BufferedImage bi = ImageIO.read(file.getInputStream());
-        BufferedImage resize = Scalr.resize(bi, 250, 400);
-        compressProductImage(resize, uploadPath, "png");
+        if (isResize) {
+            BufferedImage resize = Scalr.resize(bi, 250, 400);
+            compressProductImage(resize, uploadPath, "png");
+        }
         return originalFilename;
     }
 
-    public String getSmallPicUrl(MultipartFile multipartFile) throws IOException {
+    public String getSmallPicUrl(MultipartFile multipartFile,boolean isResize) throws IOException {
         String png = "intermediate.png";
         CustomMultipartFile customMultipartFile = new CustomMultipartFile(multipartFile.getBytes(), png);
-        return compressImage(customMultipartFile, movieProperties.getMovieImg(), png);
+        return compressImage(customMultipartFile, movieProperties.getMovieImg(), png,isResize);
     }
 
-    public String getPicUrl(MultipartFile multipartFile) throws IOException {
-        String picUrl = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-        multipartFile.transferTo(new File(movieProperties.getMovieImg() + File.separator + picUrl));
-        return picUrl;
-    }
+
 }
 
 

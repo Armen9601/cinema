@@ -7,7 +7,7 @@ public class DateUtil {
     private DateUtil() {
     }
 
-    private static final String FORMAT_WITH_DATE_AND_TIME = "yyyy-MM-dd HH:mm:ss";
+    private static final String FORMAT_WITH_DATE_AND_TIME = "yyyy-MM-dd'T'HH:mm";
     private static final String FORMAT_WITH_DATE = "yyyy-MM-dd";
 
     public static DateTimeFormatter dateTimeFormatterWithDateAndTime() {

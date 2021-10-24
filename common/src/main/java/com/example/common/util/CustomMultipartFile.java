@@ -7,15 +7,10 @@ import java.io.*;
 public class CustomMultipartFile implements MultipartFile {
 
     private final byte[] fileContent;
-
     private String fileName;
-
     private String contentType;
-
     private File file;
-
     private String destPath = System.getProperty("java.io.tmpdir");
-
     private FileOutputStream fileOutputStream;
 
     public CustomMultipartFile(byte[] fileData, String name) {
@@ -30,14 +25,6 @@ public class CustomMultipartFile implements MultipartFile {
         fileOutputStream = new FileOutputStream(dest);
         fileOutputStream.write(fileContent);
     }
-
-//    public void clearOutStreams() throws IOException {
-//        if (null != fileOutputStream) {
-//            fileOutputStream.flush();
-//            fileOutputStream.close();
-//            file.deleteOnExit();
-//        }
-//    }
 
     @Override
     public String getName() {

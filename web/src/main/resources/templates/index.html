@@ -29,22 +29,15 @@
 <header class="header-section">
     <div class="container">
         <div class="header-wrapper">
-            <div class="logo"><a href="index.html"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
+            <div class="logo"><a href="/"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
             <ul class="menu">
-                <li><a href="#0" class="active">Home</a>
-                    <ul class="submenu">
-                        <li><a href="#0" class="active">Home One</a></li>
-                    </ul>
+                <li><a href="/" class="active">Home</a>
                 </li>
-                <li><a href="#0">movies</a>
+                <li><a href="/user/viewAll">movies</a>
                     <ul class="submenu">
-                        <li><a href="movie-details.html">Movie Details</a></li>
-                        <li><a href="movie-details-2.html">Movie Details 2</a></li>
-                        <li><a href="movie-ticket-plan.html">Movie Ticket Plan</a></li>
-                        <li><a href="movie-seat-plan.html">Movie Seat Plan</a></li>
-                        <li><a href="movie-checkout.html">Movie Checkout</a></li>
-                        <li><a href="popcorn.html">Movie Food</a></li>
+                        <li><a href="/popcorn">Movie Food</a></li>
                         <li><a href="/admin/addMovie">Add Movie</a></li>
+                        <li><a href="/admin/food">Add Food</a></li>
                     </ul>
                 </li>
                 <li><a href="#0">events</a>
@@ -68,8 +61,8 @@
                     <ul class="submenu">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="apps-download.html">Apps Download</a></li>
-                        <li><a href="sign-in.html">Sign In</a></li>
-                        <li><a href="sign-up.html">Sign Up</a></li>
+                        <li><a href="/sign-in">Sign In</a></li>
+                        <li><a href="/register">Sign Up</a></li>
                         <li><a href="404.html">404</a></li>
                     </ul>
                 </li>
@@ -80,7 +73,7 @@
                     </ul>
                 </li>
                 <li><a href="contact.html">contact</a></li>
-                <li class="header-button pr-0"><a href="sign-up.html">join us</a></li>
+                <li class="header-button pr-0"><a href="/logout">log out</a></li>
             </ul>
             <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
         </div>
@@ -91,7 +84,7 @@
     <div class="container">
         <div class="banner-content"><h1 class="title  cd-headline clip"><span class="d-block">book your</span>tickets
             for<span class="color-theme cd-words-wrapper p-0 m-0"><b
-                    class="is-visible">Movie</b><b>Event</b><b>Sport</b></span></h1>
+                    class="is-visible">Movie</b></span></h1>
             <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p></div>
     </div>
 </section><!-- ==========Banner-Section========== --><!-- ==========Ticket-Search========== -->
@@ -101,76 +94,7 @@
             <div class="row align-items-center mb--20">
                 <div class="col-lg-6 mb-20">
                     <div class="search-ticket-header"><h6 class="category">welcome to Boleto</h6>
-                        <h3 class="title">what are you looking for</h3></div>
-                </div>
-                <div class="col-lg-6 mb-20">
-                    <ul class="tab-menu ticket-tab-menu">
-                        <li class="active">
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab01.png" alt="ticket">
-                            </div>
-                            <span>movie</span></li>
-                        <li>
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab02.png" alt="ticket">
-                            </div>
-                            <span>events</span></li>
-                        <li>
-                            <div class="tab-thumb"><img src="./assets/images/ticket/ticket-tab03.png" alt="ticket">
-                            </div>
-                            <span>sports</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="tab-area">
-                <div class="tab-item active">
-                    <form class="ticket-search-form">
-                        <div class="form-group large"><input type="text" placeholder="Search for Movies">
-                            <button type="submit"><i class="fas fa-search"></i></button>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
-                            <span class="type">date</span><select class="select-bar" name="date">
-                            <option value="26-12-19">23/10/2020</option>
-                            <option value="26-12-19">24/10/2020</option>
-                            <option value="26-12-19">25/10/2020</option>
-                            <option value="26-12-19">26/10/2020</option>
-                        </select></div>
-
-                    </form>
-                </div>
-                <div class="tab-item">
-                    <form class="ticket-search-form">
-                        <div class="form-group large"><input type="text" placeholder="Search for Events">
-                            <button type="submit"><i class="fas fa-search"></i></button>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
-                            <span class="type">date</span><select class="select-bar">
-                            <option value="26-12-19">23/10/2020</option>
-                            <option value="26-12-19">24/10/2020</option>
-                            <option value="26-12-19">25/10/2020</option>
-                            <option value="26-12-19">26/10/2020</option>
-                        </select></div>
-
-                    </form>
-                </div>
-                <div class="tab-item">
-                    <form class="ticket-search-form">
-                        <div class="form-group large"><input type="text" placeholder="Search fo Sports">
-                            <button type="submit"><i class="fas fa-search"></i></button>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="thumb"><img src="./assets/images/ticket/date.png" alt="ticket"></div>
-                            <span class="type">date</span><select class="select-bar">
-                            <option value="26-12-19">23/10/2020</option>
-                            <option value="26-12-19">24/10/2020</option>
-                            <option value="26-12-19">25/10/2020</option>
-                            <option value="26-12-19">26/10/2020</option>
-                        </select></div>
-
-                    </form>
+                        <h3 class="title">we can find hear new movies</h3></div>
                 </div>
             </div>
         </div>
@@ -187,14 +111,17 @@
             <div class="col-lg-9">
                 <div class="article-section padding-bottom" >
                     <div class="section-header-1"><h2 class="title">premiere</h2><a class="view-all"
-                                                                                  href="/viewAll">View All</a>
+                                                                                 th:href="@{/user/nextPremiere(date=${day})}">View All</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
                         <div class="col-sm-6 col-lg-4" th:each="movies:${allMovies}">
                             <div class="movie-grid">
-                                <div class="movie-thumb c-thumb"><a th:href="@{/movieDetails(id=${movies.getId()})}"><img
-                                        th:src="@{/movieImage(movieUrl=${movies.picUrl})}"  alt="movie"></a></div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a th:href="@{/movieDetails(id=${movies.getId()})}" th:text="${movies.name}"></a></h5>
+                                <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${movies.getId()})}"><img
+                                        style="height: 200px;width: 300px "   th:src="@{/movieImage(movieUrl=${movies.picUrl})}" alt="event"></a>
+                                    <div class="event-date"><h6 class="date-title" th:text="${day.getDayOfMonth()}"></h6><span th:text="${day.getMonth()}"></span></div>
+                                </div>
+                                <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${movies.getId()})}"></a></div>
+                                <div class="movie-content bg-one"><h5 class="title m-0"><a th:href="@{/user/movieDetails(id=${movies.getId()})}" th:text="${movies.name}"></a></h5>
 
                                 </div>
                             </div>
@@ -203,84 +130,16 @@
                     </div>
                 </div>
                 <div class="article-section padding-bottom">
-                    <div class="section-header-1"><h2 class="title">events</h2><a class="view-all" href="events.html">View
+                    <div class="section-header-1"><h2 class="title">events</h2><a class="view-all" href="/user/viewAll">View
                         All</a></div>
                     <div class="row mb-30-none justify-content-center">
-                        <div class="col-sm-6 col-lg-4">
+                        <div class="col-sm-6 col-lg-4" th:each="mov:${all}">
                             <div class="event-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/event/event01.jpg" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
+                                <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${mov.getId()})}"><img
+                                   style="height: 200px;width: 300px "     th:src="@{/movieImage(movieUrl=${mov.picUrl})}" alt="event"></a>
                                 </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">Digital Economy
+                                <div class="movie-content bg-one"><h5 class="title m-0"><a  th:href="@{/user/movieDetails(id=${mov.getId()})}" th:text="${mov.name}" a>Digital Economy
                                     Conference 2020</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="event-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/event/event02.jpg" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">web design
-                                    conference 2020</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="event-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/event/event03.jpg" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">digital thinkers
-                                    meetup</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="article-section">
-                    <div class="section-header-1"><h2 class="title">sports</h2><a class="view-all" href="sports.html">View
-                        All</a></div>
-                    <div class="row mb-30-none justify-content-center">
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="sports-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/sports/sports01.jpg" alt="sports"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">football league
-                                    tournament</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="sports-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/sports/sports02.jpg" alt="sports"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">world cricket
-                                    league 2020</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="sports-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/sports/sports03.jpg" alt="sports"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">basket ball
-                                    tournament 2020</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
                                 </div>
                             </div>
                         </div>

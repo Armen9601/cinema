@@ -23,5 +23,7 @@ public class Comment {
     private User user;
     private int likeCount;
     private int disLikeCount;
+    @ManyToOne
+    private Movie movie;
 
 }

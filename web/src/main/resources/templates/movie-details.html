@@ -6,17 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/odometer.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/flaticon.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/odometer.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../assets/css/nice-select.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
     <title>Boleto - Online Ticket Booking Website HTML Template</title></head>
 
 <body><!-- ==========Preloader========== -->
@@ -31,7 +31,7 @@
 <header class="header-section">
     <div class="container">
         <div class="header-wrapper">
-            <div class="logo"><a href="/"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
+            <div class="logo"><a href="/"><img src="../assets/images/logo/logo.png" alt="logo"></a></div>
             <ul class="menu">
                 <li><a href="/">Home</a>
 
@@ -85,18 +85,19 @@
         </div>
     </div>
 </header><!-- ==========Header-Section========== --><!-- ==========Banner-Section========== -->
-<section class="details-banner bg_img" >
+<section class="details-banner bg_img">
     <div class="container">
         <div class="details-banner-wrapper">
-            <div class="details-banner-thumb"><img th:src="@{/movieImage(movieUrl=${movie.getPicUrl()})}"alt="movie"><a
+            <div class="details-banner-thumb"><img th:src="@{/movieImage(movieUrl=${movie.getPicUrl()})}" alt="movie"><a
                     href="https://www.youtube.com/watch?v=Othd8W8o3t0" class="video-popup"></a></div>
             <div class="details-banner-content offset-lg-3"><h3 class="title" th:text="${movie.name}"></h3>
                 <div class="tags"><a th:text="${movie.getLanguage()}"></a>
                 </div>
-                <a href="#0" class="button" th:text="${movie.getCategory()}"></a>
+                <a class="button" id="category" th:value="${movie.getCategory()}" th:text="${movie.getCategory()}"></a>
                 <div class="social-and-duration">
                     <div class="duration-area">
-                        <div class="item"><i class="far fa-clock"></i><span th:text="${movie.getDuration()}"></span></div>
+                        <div class="item"><i class="far fa-clock"></i><span th:text="${movie.getDuration()}"></span>
+                        </div>
                     </div>
                     <ul class="social-share">
                         <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
@@ -117,21 +118,22 @@
 
                 <div class="item">
                     <div class="item-header">
-                        <form th:action="@{/updateMovieRating(id=${movie.getId()})}" method="post" >
+                        <form th:action="@{/updateMovieRating(id=${movie.getId()})}" method="post">
                             <div class="rating-area">
-<!--                                    th:each="rating:${ratings}" th:if="${rating.user.equals(curentUser)}" -->
+                                <!--                                    th:each="rating:${ratings}" th:if="${rating.user.equals(curentUser)}" -->
 
-                            <input  type="submit" id="star-5" name="rating" value=5>
-                            <label for="star-5" title="Оценка «5»"></label>
-                            <input type="submit" id="star-4" name="rating" value="4">
-                            <label for="star-4" title="Оценка «4»"></label>
-                            <input type="submit" id="star-3" name="rating" value="3">
-                            <label for="star-3" title="Оценка «3»"></label>
-                            <input type="submit" id="star-2" name="rating" value="2">
-                            <label for="star-2" title="Оценка «2»"></label>
-                            <input type="submit" id="star-1" name="rating" value="1">
-                            <label for="star-1" title="Оценка «1»"></label>
-                        </div></form>
+                                <input type="submit" id="star-5" name="rating" value=5>
+                                <label for="star-5" title="Оценка «5»"></label>
+                                <input type="submit" id="star-4" name="rating" value="4">
+                                <label for="star-4" title="Оценка «4»"></label>
+                                <input type="submit" id="star-3" name="rating" value="3">
+                                <label for="star-3" title="Оценка «3»"></label>
+                                <input type="submit" id="star-2" name="rating" value="2">
+                                <label for="star-2" title="Оценка «2»"></label>
+                                <input type="submit" id="star-1" name="rating" value="1">
+                                <label for="star-1" title="Оценка «1»"></label>
+                            </div>
+                        </form>
 
                         <h5 class="title" th:text="${movie.getRating()}"></h5></div>
                     <p>Movie Rating</p></div>
@@ -156,7 +158,7 @@
                         </ul>
                         <div class="tab-area">
                             <div class="tab-item active">
-                                <div class="item"><h5 class="sub-title" >Description</h5>
+                                <div class="item"><h5 class="sub-title">Description</h5>
                                     <p th:text="${movie.getDescription()}"></p></div>
                                 <div class="item">
                                     <div class="header"><h5 class="sub-title">Actors</h5>
@@ -170,14 +172,14 @@
                                     <div class="casting-slider owl-carousel">
                                         <div class="cast-item">
                                             <div class="cast-thumb"><a href="#0"><img
-                                                    src="./assets/images/cast/cast01.jpg" alt="cast"></a></div>
+                                                    src="../assets/images/cast/cast01.jpg" alt="cast"></a></div>
                                             <div class="cast-content"><h6 class="cast-title"><a href="#0">Bill Hader</a>
                                             </h6><span class="cate">actor</span>
                                                 <p>As Richie Tozier</p></div>
                                         </div>
                                         <div class="cast-item">
                                             <div class="cast-thumb"><a href="#0"><img
-                                                    src="./assets/images/cast/cast02.jpg" alt="cast"></a></div>
+                                                    src="../assets/images/cast/cast02.jpg" alt="cast"></a></div>
                                             <div class="cast-content"><h6 class="cast-title"><a href="#0">nora hardy</a>
                                             </h6><span class="cate">actor</span>
                                                 <p>As raven</p></div>
@@ -191,7 +193,7 @@
                                         </div>
                                         <div class="cast-item">
                                             <div class="cast-thumb"><a href="#0"><img
-                                                    src="./assets/images/cast/cast04.jpg" alt="cast"></a></div>
+                                                    src="../assets/images/cast/cast04.jpg" alt="cast"></a></div>
                                             <div class="cast-content"><h6 class="cast-title"><a href="#0">josh
                                                 potter</a></h6><span class="cate">actor</span>
                                                 <p>As quicksilver</p></div>
@@ -210,13 +212,13 @@
                                     <div class="casting-slider-two owl-carousel">
                                         <div class="cast-item">
                                             <div class="cast-thumb"><a href="#0"><img
-                                                    src="./assets/images/cast/cast05.jpg" alt="cast"></a></div>
+                                                    src="../assets/images/cast/cast05.jpg" alt="cast"></a></div>
                                             <div class="cast-content"><h6 class="cast-title"><a href="#0">pete
                                                 warren</a></h6><span class="cate">actor</span></div>
                                         </div>
                                         <div class="cast-item">
                                             <div class="cast-thumb"><a href="#0"><img
-                                                    src="./assets/images/cast/cast06.jpg" alt="cast"></a></div>
+                                                    src="../assets/images/cast/cast06.jpg" alt="cast"></a></div>
                                             <div class="cast-content"><h6 class="cast-title"><a href="#0">howard
                                                 bass</a></h6><span class="cate">executive producer</span></div>
                                         </div>
@@ -386,18 +388,27 @@
         </div>
     </div>
 </footer><!-- ==========Newslater-Section========== -->
-<script src="assets/js/jquery-3.3.1.min.js"></script>
-<script src="assets/js/modernizr-3.6.0.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<script src="assets/js/magnific-popup.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/wow.min.js"></script>
-<script src="assets/js/countdown.min.js"></script>
-<script src="assets/js/odometer.min.js"></script>
-<script src="assets/js/viewport.jquery.js"></script>
-<script src="assets/js/nice-select.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<script src="../assets/js/modernizr-3.6.0.min.js"></script>
+<script src="../assets/js/plugins.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/isotope.pkgd.min.js"></script>
+<script src="../assets/js/magnific-popup.min.js"></script>
+<script src="../assets/js/owl.carousel.min.js"></script>
+<script src="../assets/js/wow.min.js"></script>
+<script src="../assets/js/countdown.min.js"></script>
+<script src="../assets/js/odometer.min.js"></script>
+<script src="../assets/js/viewport.jquery.js"></script>
+<script src="../assets/js/nice-select.js"></script>
+<script src="../assets/js/main.js"></script>
+<script>
+    $('#category').click(function () {
+        let val = $(this).text();
+
+        window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+
+
+    });
+</script>
 </body>
 </html>

@@ -19,6 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "movies")
 public class Movie {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -42,8 +43,5 @@ public class Movie {
     private List<Actor> actor;
     @Enumerated(value = EnumType.STRING)
     private Languages language;
-
-
-
 
 }

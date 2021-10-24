@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface RatingService {
 
-    List<Rating> getRatingByMovieId(int id);
+    List<Rating> getAllByMovieId(int id);
 
 }

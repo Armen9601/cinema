@@ -1,5 +1,7 @@
 package com.example.common.entity;
 
+
+import com.example.common.enums.FoodCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,16 +14,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "rating")
-public class Rating {
+@Table(name = "food")
+public class Food {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int rating;
-    @ManyToOne
-    private Movie movie;
+    private String name;
+    private double price;
     @ManyToOne
     private User user;
+    private int count;
+    private String picUrl;
+    @Enumerated(value = EnumType.STRING)
+    private FoodCategory foodCategory;
 
 }

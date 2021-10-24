@@ -26,11 +26,7 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public void add(Food food, MultipartFile multipartFile, String category) throws IOException {
         if (!multipartFile.isEmpty()) {
-            if (multipartFile.getSize() > foodProperties.getFileMaxSize()) {
-                food.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFile));
-            } else {
-                food.setPicUrl(fileUploadUtil.getPicUrl(multipartFile));
-            }
+            food.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFile,false));
         }
         food.setFoodCategory(FoodCategory.valueOf(category.toUpperCase(Locale.ROOT)));
         foodRepository.save(food);

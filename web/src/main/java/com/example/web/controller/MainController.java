@@ -2,6 +2,7 @@ package com.example.web.controller;
 
 import com.example.common.entity.Movie;
 import com.example.common.service.MovieService;
+import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,4 +28,8 @@ public class MainController {
         return "sign-in";
     }
 
+    @GetMapping("/accessDenied")
+    public String acsses() {
+        return "404";
+    }
 }

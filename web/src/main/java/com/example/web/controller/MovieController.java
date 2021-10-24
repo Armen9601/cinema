@@ -46,14 +46,14 @@ public class MovieController {
         IOUtils.copy(in, response.getOutputStream());
     }
 
-    @GetMapping("/movieDetails")
+    @GetMapping("/user/movieDetails")
     public String moviePage(@RequestParam("id") Movie movie, ModelMap modelMap) {
         Movie byId = movieService.getById(movie);
         modelMap.addAttribute("movie", byId);
         return "movie-details";
     }
 
-    @GetMapping("/viewAll")
+    @GetMapping("/user/viewAll")
     public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable,
                             @RequestParam(value = "search", required = false) String name) {
         Page<Movie> allMovies = name == null ? movieService.getAll(pageable) :
@@ -69,7 +69,7 @@ public class MovieController {
         return "movie-grid";
     }
 
-    @GetMapping("/nextPremiere")
+    @GetMapping("/user/nextPremiere")
     public String searchMovieByName(
             @RequestParam(value = "date", required = false) String date,
             ModelMap modelMap
@@ -86,7 +86,7 @@ public class MovieController {
             @RequestParam("id") int movieId
     ) {
         movieService.update(movieId, rating);
-        return "redirect:/movieDetails?id=" + movieId;
+        return "redirect:/user/movieDetails?id=" + movieId;
     }
 
     @PostMapping("/admin/addMovie")

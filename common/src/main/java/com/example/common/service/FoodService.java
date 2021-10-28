@@ -13,4 +13,6 @@ public interface FoodService {
     List<Food> getByCategory(String category);
 
     List<Food> getAll(String category);
+
+    List<Food> getAllFoods();
 }

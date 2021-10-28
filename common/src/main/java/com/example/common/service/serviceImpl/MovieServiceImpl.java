@@ -7,6 +7,7 @@ import com.example.common.entity.Rating;
 import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
 import com.example.common.properties.MovieProperties;
+
 import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
@@ -16,14 +17,17 @@ import com.example.common.util.MovieRatingComparator;
 import com.example.common.util.ResponseDto;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -49,6 +53,8 @@ public class MovieServiceImpl implements MovieService {
     private final ActorRepository actorRepository;
     private final MovieProperties movieProperties;
     private final FileUploadUtil fileUploadUtil;
+
+    private String uplodPath="D:\\lessons\\WEB\\cinema\\rest\\src\\main\\resources\\upload";
 
     @Override
     public Movie add(
@@ -197,4 +203,63 @@ public class MovieServiceImpl implements MovieService {
         localDateList.add(localDate.plusDays(4));
         return localDateList;
     }
+
+
+
+    /*--------------Rest---------*/
+
+    @Override
+    public List<Movie> getAllMovie() {
+        return movieRepository.findAll();
+    }
+
+    @Override
+    public Movie save(Movie movie) {
+        return movieRepository.save(movie);
+    }
+
+    @Override
+    public Movie getByIndex(int index) {
+        return movieRepository.getById(index);
+    }
+
+
+
+
+    @Override
+    public Movie updateMovieByPic(int movieId, MultipartFile[] multipartFiles, String seanceOne, String seanceTwo, String seanceThree) throws IOException {
+        List<String> picUrls = new ArrayList<>();
+        Movie movie = movieRepository.getById(movieId);
+        for (MultipartFile multipartFile : multipartFiles) {
+            if (!multipartFile.isEmpty()) {
+                String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
+                String path = uplodPath + File.separator + fileName;
+                File file = new File(path);
+                multipartFile.transferTo(file);
+                movie.setPicUrl(fileName);
+                picUrls.add(fileName);
+            }
+
+        }
+        movie.setPicUrls(picUrls);
+        List<LocalDateTime> localDateTimeList = new ArrayList<>();
+        DateTimeFormatter dateTimeFormatter = dateTimeFormatterWithDateAndTime();
+        localDateTimeList.add(LocalDateTime.parse(seanceOne, dateTimeFormatter));
+        localDateTimeList.add(LocalDateTime.parse(seanceTwo, dateTimeFormatter));
+        localDateTimeList.add(LocalDateTime.parse(seanceThree, dateTimeFormatter));
+        movie.setSeanceDateTime(localDateTimeList);
+        movieRepository.save(movie);
+        return movie;
+    }
+
+    @Override
+    public void downloadPicByName(String fileName, HttpServletResponse response) throws IOException {
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        InputStream in = new FileInputStream(uplodPath+File.separator+fileName);
+        IOUtils.copy(in, response.getOutputStream());
+    }
+
+
+
+
 }

@@ -13,6 +13,8 @@
         <module>common</module>
     </modules>
 
+
+
     <name>cinema</name>
 
     <parent>
@@ -37,6 +39,7 @@
             <artifactId>commons-lang</artifactId>
             <version>${commons.lang.version}</version>
         </dependency>
+
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>

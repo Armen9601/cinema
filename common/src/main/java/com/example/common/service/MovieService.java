@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -48,4 +49,20 @@ public interface MovieService {
     List<Movie> getByAll(ResponseDto responseDto);
 
     List<LocalDate> local(LocalDate localDate);
+
+    /*-------------Rest methode------------*/
+
+    List<Movie> getAllMovie();
+
+    Movie updateMovieByPic(
+            int movieId, MultipartFile[] multipartFile,
+            String seanceOne, String seanceTwo,
+            String seanceThree
+    ) throws IOException;
+
+    Movie save(Movie movie);
+
+    Movie getByIndex(int index);
+
+    void downloadPicByName(String fileName, HttpServletResponse response) throws IOException;
 }

@@ -48,4 +48,9 @@ public class FoodServiceImpl implements FoodService {
                 ? foodRepository.findAll()
                 : getByCategory(category);
     }
+
+    @Override
+    public List<Food> getAllFoods() {
+        return null;
+    }
 }

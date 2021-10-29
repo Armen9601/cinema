@@ -24,13 +24,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
         FoodProperties.class,
         MovieProperties.class
 })
-
 public class RestApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(RestApplication.class, args);
 
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

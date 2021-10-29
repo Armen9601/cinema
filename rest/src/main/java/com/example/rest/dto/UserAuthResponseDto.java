@@ -13,4 +13,5 @@ public class UserAuthResponseDto {
 
     private String token;
     private UserDto userDto;
+
 }

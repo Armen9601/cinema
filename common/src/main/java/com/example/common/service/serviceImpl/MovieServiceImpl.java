@@ -54,7 +54,7 @@ public class MovieServiceImpl implements MovieService {
     private final MovieProperties movieProperties;
     private final FileUploadUtil fileUploadUtil;
 
-    private String uplodPath="D:\\lessons\\WEB\\cinema\\rest\\src\\main\\resources\\upload";
+    private String uplodPath = "D:\\lessons\\WEB\\cinema\\rest\\src\\main\\resources\\upload";
 
     @Override
     public Movie add(
@@ -204,10 +204,6 @@ public class MovieServiceImpl implements MovieService {
         return localDateList;
     }
 
-
-
-    /*--------------Rest---------*/
-
     @Override
     public List<Movie> getAllMovie() {
         return movieRepository.findAll();
@@ -222,9 +218,6 @@ public class MovieServiceImpl implements MovieService {
     public Movie getByIndex(int index) {
         return movieRepository.getById(index);
     }
-
-
-
 
     @Override
     public Movie updateMovieByPic(int movieId, MultipartFile[] multipartFiles, String seanceOne, String seanceTwo, String seanceThree) throws IOException {
@@ -255,11 +248,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void downloadPicByName(String fileName, HttpServletResponse response) throws IOException {
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        InputStream in = new FileInputStream(uplodPath+File.separator+fileName);
+        InputStream in = new FileInputStream(uplodPath + File.separator + fileName);
         IOUtils.copy(in, response.getOutputStream());
     }
-
-
-
-
 }

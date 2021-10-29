@@ -12,9 +12,9 @@ public interface UserService {
     boolean add(User user);
 
     void deleteById(int id);
-    /*-----Rest--------*/
 
     List<User> getAllUsers();
+
     Optional<User> findByEmail(String email);
 
 }

@@ -50,8 +50,6 @@ public interface MovieService {
 
     List<LocalDate> local(LocalDate localDate);
 
-    /*-------------Rest methode------------*/
-
     List<Movie> getAllMovie();
 
     Movie updateMovieByPic(

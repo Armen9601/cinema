@@ -12,16 +12,16 @@ import java.util.Optional;
 
 @Service
 public class CurrentUserDetailServiceImpl implements UserDetailsService {
+
     @Autowired
     private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         Optional<User> user = userService.findByEmail(s);
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("Username not found");
         }
-
         return new CurrentUser(user.get());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.common.util;
+package com.example.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,9 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlaceResponseDto {
+public class ResponseDto {
 
-    List<String> place;
+    List<String> categories;
+    List<String> lang;
 
 }

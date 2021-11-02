@@ -5,12 +5,15 @@ import com.example.common.enums.FoodCategory;
 import com.example.common.properties.FoodProperties;
 import com.example.common.repository.FoodRepository;
 import com.example.common.service.FoodService;
+import com.example.common.dto.BasketDto;
 import com.example.common.util.FileUploadUtil;
+import com.example.common.dto.FoodDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +29,7 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public void add(Food food, MultipartFile multipartFile, String category) throws IOException {
         if (!multipartFile.isEmpty()) {
-            food.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFile,false));
+            food.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFile, false));
         }
         food.setFoodCategory(FoodCategory.valueOf(category.toUpperCase(Locale.ROOT)));
         foodRepository.save(food);
@@ -44,4 +47,36 @@ public class FoodServiceImpl implements FoodService {
                 ? foodRepository.findAll()
                 : getByCategory(category);
     }
+
+    @Override
+    public void addFoodInSession(int foodId, int count, String name, HttpSession httpSession) {
+        FoodDto foodDto = new FoodDto(foodId, count, name);
+
+        BasketDto basketDto = ((BasketDto) httpSession.getAttribute("basket"));
+        if (basketDto.getFoods().size() == 0) {
+            basketDto.getFoods().add(foodDto);
+        } else if (basketDto.getFoods().stream().anyMatch(o -> o.getName().equals(name))) {
+            FoodDto foodDto1 = basketDto.getFoods().stream().filter(o -> o.getName().equals(name)).findFirst().get();
+            foodDto1.setCount(foodDto1.getCount()+count);
+        } else {
+            basketDto.getFoods().add(foodDto);
+        }
+
+    }
+
+    @Override
+    public int totalPrice(HttpSession httpSession) {
+        BasketDto basketDto = ((BasketDto) httpSession.getAttribute("basket"));
+        int foodTotalPrice=0;
+        int placeTotalPrice=basketDto.getMyPlaces().size()*12;
+        if (basketDto.getFoods().size()>0){
+            for (FoodDto food : basketDto.getFoods()) {
+                foodTotalPrice+=(foodRepository.getById(food.getId()).getPrice()*food.getCount());
+            }
+        }
+        return foodTotalPrice+placeTotalPrice;
+    }
+
 }
+
+

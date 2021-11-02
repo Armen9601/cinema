@@ -13,7 +13,7 @@ import com.example.common.repository.RatingRepository;
 import com.example.common.service.MovieService;
 import com.example.common.util.FileUploadUtil;
 import com.example.common.util.MovieRatingComparator;
-import com.example.common.util.ResponseDto;
+import com.example.common.dto.ResponseDto;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -148,8 +148,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getById(Movie movie) {
-        return movieRepository.getById(movie.getId());
+    public Movie getById(int movieId) {
+        Movie byId = movieRepository.getById(movieId);
+        List<LocalDateTime> seanceDateTime = byId.getSeanceDateTime();
+        seanceDateTime.removeIf(localDateTime -> localDateTime.isBefore(LocalDateTime.now()));
+        return byId;
     }
 
     @Override

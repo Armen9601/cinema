@@ -2,7 +2,7 @@ package com.example.common.service;
 
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
-import com.example.common.util.ResponseDto;
+import com.example.common.dto.ResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -42,7 +42,7 @@ public interface MovieService {
 
     List<Movie> getByActorId(Actor actor);
 
-    Movie getById(Movie movie);
+    Movie getById(int movieId);
 
     Page<Movie> getByName(String name, Pageable pageable);
 

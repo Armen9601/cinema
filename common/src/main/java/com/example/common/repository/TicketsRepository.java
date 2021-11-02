@@ -10,4 +10,6 @@ public interface TicketsRepository extends JpaRepository<Tickets,Integer> {
 
 
     List<Tickets> findBySeanceTime(LocalDateTime seanceTime);
+
+    boolean existsByPlace(String place);
 }

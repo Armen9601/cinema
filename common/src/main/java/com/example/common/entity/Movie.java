@@ -43,5 +43,6 @@ public class Movie {
     private List<Actor> actor;
     @Enumerated(value = EnumType.STRING)
     private Languages language;
+    private String thriller;
 
 }

@@ -48,7 +48,7 @@ public class MovieController {
 
     @GetMapping("/user/movieDetails")
     public String moviePage(@RequestParam("id") Movie movie, ModelMap modelMap) {
-        Movie byId = movieService.getById(movie);
+        Movie byId = movieService.getById(movie.getId());
         modelMap.addAttribute("movie", byId);
         return "movie-details";
     }

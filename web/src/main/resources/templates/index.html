@@ -33,7 +33,7 @@
             <ul class="menu">
                 <li><a href="/" class="active">Home</a>
                 </li>
-                <li><a href="/viewAll">movies</a>
+                <li><a href="/user/viewAll">movies</a>
                     <ul class="submenu">
                         <li><a href="/popcorn">Movie Food</a></li>
                         <li><a href="/admin/addMovie">Add Movie</a></li>
@@ -73,7 +73,7 @@
                     </ul>
                 </li>
                 <li><a href="contact.html">contact</a></li>
-                <li class="header-button pr-0"><a href="/register">join us</a></li>
+                <li class="header-button pr-0"><a href="/logout">log out</a></li>
             </ul>
             <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
         </div>
@@ -111,14 +111,14 @@
             <div class="col-lg-9">
                 <div class="article-section padding-bottom" >
                     <div class="section-header-1"><h2 class="title">premiere</h2><a class="view-all"
-                                                                                  href="/user/viewAll">View All</a>
+                                                                                 th:href="@{/user/nextPremiere(date=${day})}">View All</a>
                     </div>
                     <div class="row mb-30-none justify-content-center">
                         <div class="col-sm-6 col-lg-4" th:each="movies:${allMovies}">
                             <div class="movie-grid">
                                 <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${movies.getId()})}"><img
-                                        th:src="@{/movieImage(movieUrl=${movies.picUrl})}" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title"">28</h6><span>Dec</span></div>
+                                        style="height: 200px;width: 300px "   th:src="@{/movieImage(movieUrl=${movies.picUrl})}" alt="event"></a>
+                                    <div class="event-date"><h6 class="date-title" th:text="${day.getDayOfMonth()}"></h6><span th:text="${day.getMonth()}"></span></div>
                                 </div>
                                 <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${movies.getId()})}"></a></div>
                                 <div class="movie-content bg-one"><h5 class="title m-0"><a th:href="@{/user/movieDetails(id=${movies.getId()})}" th:text="${movies.name}"></a></h5>
@@ -130,42 +130,16 @@
                     </div>
                 </div>
                 <div class="article-section padding-bottom">
-                    <div class="section-header-1"><h2 class="title">events</h2><a class="view-all" href="events.html">View
+                    <div class="section-header-1"><h2 class="title">ALL Movies</h2><a class="view-all" href="/user/viewAll">View
                         All</a></div>
                     <div class="row mb-30-none justify-content-center">
-                        <div class="col-sm-6 col-lg-4">
+                        <div class="col-sm-6 col-lg-4" th:each="mov:${all}">
                             <div class="event-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/event/event01.jpg" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
+                                <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${mov.getId()})}"><img
+                                   style="height: 200px;width: 300px "     th:src="@{/movieImage(movieUrl=${mov.picUrl})}" alt="event"></a>
                                 </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">Digital Economy
+                                <div class="movie-content bg-one"><h5 class="title m-0"><a  th:href="@{/user/movieDetails(id=${mov.getId()})}" th:text="${mov.name}" a>Digital Economy
                                     Conference 2020</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="event-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/event/event02.jpg" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">web design
-                                    conference 2020</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="event-grid">
-                                <div class="movie-thumb c-thumb"><a href="#0"><img
-                                        src="./assets/images/event/event03.jpg" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title">28</h6><span>Dec</span></div>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a href="#0">digital thinkers
-                                    meetup</a></h5>
-                                    <div class="movie-rating-percent"><span>327 Montague Street</span></div>
                                 </div>
                             </div>
                         </div>

@@ -31,14 +31,9 @@
             <ul class="menu">
                 <li><a href="/">Home</a>
                 </li>
-                <li><a href="/viewAll">movies</a>
+                <li><a href="/user/viewAll">movies</a>
                     <ul class="submenu">
-                        <li><a href="movie-details.html">Movie Details</a></li>
-                        <li><a href="movie-details-2.html">Movie Details 2</a></li>
-                        <li><a href="movie-ticket-plan.html">Movie Ticket Plan</a></li>
-                        <li><a href="movie-seat-plan.html">Movie Seat Plan</a></li>
-                        <li><a href="#0" class="active">Movie Checkout</a></li>
-                        <li><a href="popcorn.html">Movie Food</a></li>
+                        <li><a href="/popcorn">Movie Food</a></li>
                     </ul>
                 </li>
                 <li><a href="#0">events</a>
@@ -73,7 +68,7 @@
                     </ul>
                 </li>
                 <li><a href="contact.html">contact</a></li>
-                <li class="header-button pr-0"><a href="/">Sign out</a></li>
+                <li class="header-button pr-0"><a href="/logout">Sign out</a></li>
             </ul>
             <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
         </div>
@@ -101,40 +96,53 @@
                           enctype="multipart/form-data">
                         <div class="form-group"><input type="text" name="name" placeholder="Movie Name"></div>
                         <div class="form-group"><input type="text" name="duration" placeholder="Duration "></div>
-                        <div class="form-group"><input type="text" name="category" placeholder="category "></div>
+                        <div class="form-group"><input type="text" name="thriller" placeholder="thrillerUrl"></div>
+
+                        <div class="form-group"><select  name="category" style="color: black; background-color: #184687">
+                            <option value="THRILLER">THRILLER</option>
+                            <option value="FANTASY">FANTASY</option>
+                            <option value="DRAMA">DRAMA</option>
+                            <option value="DETECTIVE">DETECTIVE</option>
+                            <option value="ACTION">ACTION</option>
+                            <option value="COMEDY">COMEDY</option>
+                            <option value="ROMANCE">ROMANCE</option>
+                            <option value="DOCUMENTARY">DOCUMENTARY</option>
+                        </select>
+                        </div>
                         <div class="form-group"><input type="text" name="description" placeholder="description"></div>
-                        <div class="form-group"><input type="text" name="language" placeholder="language"></div>
+                        <div class="form-group"><select  name="language" style="color: black; background-color: #184687">
+                            <option value="ARM">ARM</option>
+                            <option value="RUS">RUS</option>
+                            <option value="ENG">ENG</option>
+                        </select></div>
                         <h6 style="margin-top: 70px; margin-right: 16px">YYYY-MM-dd hh:mm:ss</h6>
-                        <div class="container" style="display: inline-block">
-                            <div>
+                        <div class="container">
                             <div class="page-title-area" style="margin-top: 30px">
                                 <h5>seance 1</h5>
-                                <div class="item date-item"><input type="text"  name="seanceOne" s>
-                                </input></div>
-
+                                <div class="item date-item"><input type="datetime-local"  name="seanceOne">
+                                </div>
                             </div>
                         </div>
 
-                        <div class="container" style="display: inline-block">
+                        <div class="container">
                             <div class="page-title-area" style="margin-top: 30px">
                                 <h5>seance 2</h5>
-                                <div class="item date-item"><input  type="text"
+                                <div class="item date-item"><input  type="datetime-local"
                                                                    name="seanceTwo" style="margin-left: 200px">
                                 </div>
                             </div>
                         </div>
-                            <div class="container" style="display: inline-block">
+                            <div class="container">
                                 <div class="page-title-area" style="margin-top: 30px">
                                     <h5>seance 3</h5>
-                                    <div class="item date-item"><input type="text" name="seanceThree">
+                                    <div class="item date-item"><input type="datetime-local" name="seanceThree">
 
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <label>
 
-                            <div class="form-group" style="margin-top: 30px"><i></i>Browse<input type="file" multiple
+                            <div class="form-group" style="margin-top: 30px; color: red">Photos<input type="file" multiple
                                                                                                  style="display: none;"
                                                                                                  name="picture" size="1"
                                                                                                  class="custom-button"><br>

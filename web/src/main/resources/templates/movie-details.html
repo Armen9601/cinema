@@ -79,7 +79,7 @@
                     </ul>
                 </li>
                 <li><a href="contact.html">contact</a></li>
-                <li class="header-button pr-0"><a href="sign-up.html">join us</a></li>
+                <li class="header-button pr-0"><a href="/logout">sign out</a></li>
             </ul>
             <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
         </div>
@@ -88,8 +88,9 @@
 <section class="details-banner bg_img">
     <div class="container">
         <div class="details-banner-wrapper">
-            <div class="details-banner-thumb"><img th:src="@{/movieImage(movieUrl=${movie.getPicUrl()})}" alt="movie"><a
-                    href="https://www.youtube.com/watch?v=Othd8W8o3t0" class="video-popup"></a></div>
+            <div class="details-banner-thumb"><img style="width: 260px; height: 150px" th:src="@{/movieImage(movieUrl=${movie.getPicUrl()})}" alt="movie"><a
+                    th:href="${movie.getThriller()}" class="video-popup"><img
+                    src="../assets/images/movie/video-button.png" alt="movie"></a></div>
             <div class="details-banner-content offset-lg-3"><h3 class="title" th:text="${movie.name}"></h3>
                 <div class="tags"><a th:text="${movie.getLanguage()}"></a>
                 </div>
@@ -138,7 +139,7 @@
                         <h5 class="title" th:text="${movie.getRating()}"></h5></div>
                     <p>Movie Rating</p></div>
             </div>
-            <a href="#0" class="custom-button">book tickets</a></div>
+            <a  if="" th:style="${movie.getSeanceDateTime().size()==0?'display: none':'display: auto'}" th:href="@{/bookTicket(movieId=${movie.getId()})}" class="custom-button">book tickets</a></div>
     </div>
 </section><!-- ==========Book-Section========== --><!-- ==========Movie-Section========== -->
 <section class="movie-details-section padding-top padding-bottom">

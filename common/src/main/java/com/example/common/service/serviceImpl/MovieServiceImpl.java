@@ -11,14 +11,14 @@ import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
 import com.example.common.service.MovieService;
-import com.example.common.util.CustomMultipartFile;
 import com.example.common.util.FileUploadUtil;
 import com.example.common.util.MovieRatingComparator;
-import com.example.common.util.ResponseDto;
+import com.example.common.dto.ResponseDto;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,9 +57,9 @@ public class MovieServiceImpl implements MovieService {
             String seanceOne, String seanceTwo, String seanceThree
     ) throws IOException {
         List<String> picUrls = new ArrayList<>();
-        movie.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFiles[0],true));
+        movie.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFiles[0], true));
         for (MultipartFile multipartFile : multipartFiles) {
-            picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile,true));
+            picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile, true));
 
         }
         movie.setPicUrls(picUrls);
@@ -148,8 +148,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getById(Movie movie) {
-        return movieRepository.getById(movie.getId());
+    public Movie getById(int movieId) {
+        Movie byId = movieRepository.getById(movieId);
+        List<LocalDateTime> seanceDateTime = byId.getSeanceDateTime();
+        seanceDateTime.removeIf(localDateTime -> localDateTime.isBefore(LocalDateTime.now()));
+        return byId;
     }
 
     @Override
@@ -161,15 +164,15 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getByAll(ResponseDto responseDto) {
         List<Languages> languagesList = new ArrayList<>();
         List<Category> categoryList = new ArrayList<>();
-        for (String s : responseDto.getLang()) {
-            languagesList.add(Languages.valueOf(s.toUpperCase()));
+        for (String lang : responseDto.getLang()) {
+            languagesList.add(Languages.valueOf(lang.toUpperCase()));
         }
         if (languagesList.size() == 0) {
             languagesList = Arrays.asList(Languages.values());
 
         }
-        for (String s : responseDto.getCategories()) {
-            categoryList.add(Category.valueOf(s.toUpperCase()));
+        for (String category : responseDto.getCategories()) {
+            categoryList.add(Category.valueOf(category.toUpperCase()));
         }
         if (categoryList.size() == 0) {
 
@@ -178,12 +181,17 @@ public class MovieServiceImpl implements MovieService {
         return findMovieByParamsQueryDSL(languagesList, categoryList);
     }
 
+    public Slice<Movie> findFirst3(Pageable pageable) {
+        return movieRepository.findTop3ByCategory(Category.COMEDY, pageable);
+    }
+
     public List<Movie> findMovieByParamsQueryDSL(
             final List<Languages> languages,
             final List<Category> category
     ) {
         final JPAQuery<Movie> query = new JPAQuery<>(em);
         final QMovie movie = QMovie.movie;
+
         return query.from(movie).where((movie.language.in(languages))
                 .and(movie.category.in(category))).fetch();
     }
@@ -191,6 +199,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<LocalDate> local(LocalDate localDate) {
         List<LocalDate> localDateList = new ArrayList<>();
+        localDateList.add(LocalDate.now());
         localDateList.add(localDate.plusDays(1));
         localDateList.add(localDate.plusDays(2));
         localDateList.add(localDate.plusDays(3));

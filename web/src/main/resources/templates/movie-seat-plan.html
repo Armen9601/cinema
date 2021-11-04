@@ -30,23 +30,9 @@
         <div class="header-wrapper">
             <div class="logo"><a href="index.html"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
             <ul class="menu">
-                <li><a href="#0">Home</a>
-                    <ul class="submenu">
-                        <li><a href="index.html">Home One</a></li>
-                        <li><a href="index-2.html">Home Two</a></li>
-                    </ul>
+                <li><a href="/">Home</a>
                 </li>
-                <li><a href="#0" class="active">movies</a>
-                    <ul class="submenu">
-                        <li><a href="movie-grid.html">Movie Grid</a></li>
-                        <li><a href="movie-list.html">Movie List</a></li>
-                        <li><a href="movie-details.html">Movie Details</a></li>
-                        <li><a href="movie-details-2.html">Movie Details 2</a></li>
-                        <li><a href="movie-ticket-plan.html">Movie Ticket Plan</a></li>
-                        <li><a href="#0" class="active">Movie Seat Plan</a></li>
-                        <li><a href="movie-checkout.html">Movie Checkout</a></li>
-                        <li><a href="popcorn.html">Movie Food</a></li>
-                    </ul>
+                <li><a href="/user/viewAll" class="active">movies</a>
                 </li>
                 <li><a href="#0">events</a>
                     <ul class="submenu">
@@ -81,7 +67,7 @@
                     </ul>
                 </li>
                 <li><a href="contact.html">contact</a></li>
-                <li class="header-button pr-0"><a href="sign-up.html">join us</a></li>
+                <li class="header-button pr-0"><a href="/logout">Log Out</a></li>
             </ul>
             <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
         </div>
@@ -90,8 +76,8 @@
 <section class="details-banner hero-area bg_img seat-plan-banner" data-background="./assets/images/banner/banner04.jpg">
     <div class="container">
         <div class="details-banner-wrapper">
-            <div class="details-banner-content style-two"><h3 class="title">Venus</h3>
-                <div class="tags"><a href="#0">City Walk</a><a href="#0">English - 2D</a></div>
+            <div class="details-banner-content style-two"><h3 class="title" th:text="${movie.name}"></h3>
+                <div class="tags"><a th:href="@{/user/movieDetails(id=${movie.getId()})}">Details</a></div>
             </div>
         </div>
     </div>
@@ -99,246 +85,389 @@
 <section class="page-title bg-one">
     <div class="container">
         <div class="page-title-area">
-            <div class="item md-order-1"><a href="movie-ticket-plan.html" class="custom-button back-button"><i
+            <div class="item md-order-1"><a th:href="@{/user/movieDetails(id=${movie.getId()})}"
+                                            class="custom-button back-button"><i
                     class="flaticon-double-right-arrows-angles"></i>back</a></div>
-            <div class="item date-item"><span class="date">MON, SEP 09 2020</span><select class="select-bar">
-                <option value="sc1">09:40</option>
-                <option value="sc2">13:45</option>
-                <option value="sc3">15:45</option>
-                <option value="sc4">19:50</option>
-            </select></div>
-            <div class="item"><h5 class="title">05:00</h5>
-                <p>Mins Left</p></div>
+            <div class="item date-item"><span class="date"
+                                              th:text="${movie.getSeanceDateTime().get(seance==null?0:seance).getMonth()+' '+movie.getSeanceDateTime().get(seance==null?0:seance).getDayOfMonth()}"></span>
+                <select class="select-bar" id="seance">
+
+
+                    <option th:id="${time}" th:each="time,stat:${movie.getSeanceDateTime()}" th:value="${stat}"
+                            th:text="${time.getHour()+':'+time.getMinute()}"
+                            th:selected="${seance == stat.index}"
+                            th:attr="index=${'/bookTicket?movieId='+movie.id+'&seance='+stat.index},val=${time}"
+                            name="seance"></option>
+
+
+                </select></div>
         </div>
     </div>
 </section><!-- ==========Page-Title========== --><!-- ==========Movie-Section========== -->
 <div class="seat-plan-section padding-bottom padding-top">
     <div class="container">
         <div class="screen-area"><h4 class="screen">screen</h4>
-            <div class="screen-thumb"><img src="./assets/images/movie/screen-thumb.png" alt="movie"></div>
-            <h5 class="subtitle">silver plus</h5>
-            <div class="screen-wrapper">
-                <ul class="seat-area">
-                    <li class="seat-line"><span>G</span>
-                        <ul class="seat--area">
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span>G</span></li>
-                    <li class="seat-line"><span>f</span>
-                        <ul class="seat--area">
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat seat-free"><img src="./assets/images/movie/seat01-free.png"
-                                                                           alt="seat"><span class="sit-num" th:text="">f7</span>
-                                    </li>
-                                    <li class="single-seat seat-free"><img src="./assets/images/movie/seat01-free.png"
-                                                                           alt="seat"><span class="sit-num" >f8</span>
-                                    </li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat seat-free"><img src="./assets/images/movie/seat01-free.png"
-                                                                           alt="seat"><span class="sit-num">f9</span>
-                                    </li>
-                                    <li class="single-seat seat-free"><img src="./assets/images/movie/seat01-free.png"
-                                                                           alt="seat"><span class="sit-num">f10</span>
-                                    </li>
-                                    <li class="single-seat seat-free"><img src="./assets/images/movie/seat01-free.png"
-                                                                           alt="seat"><span class="sit-num">f11</span>
-                                    </li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat01.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span>f</span></li>
-                </ul>
-            </div>
-            <h5 class="subtitle">silver plus</h5>
-            <div class="screen-wrapper">
-                <ul class="seat-area couple">
-                    <li class="seat-line"><span>e</span>
-                        <ul class="seat--area">
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span>e</span></li>
-                    <li class="seat-line"><span>d</span>
-                        <ul class="seat--area">
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-booked.png" alt="seat"><span
-                                            class="sit-num">D7 D8</span></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span>d</span></li>
-                    <li class="seat-line"><span>c</span>
-                        <ul class="seat--area">
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">f11 f12</span></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span>c</span></li>
-                    <li class="seat-line"><span>b</span>
-                        <ul class="seat--area">
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">b7 b8</span></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                    <li class="single-seat"><img src="./assets/images/movie/seat02.png" alt="seat"></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span>b</span></li>
-                    <li class="seat-line"><span>a</span>
-                        <ul class="seat--area">
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">a1 a2</span></li>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">a3 a4</span></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">a5 a6</span></li>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">a7 a8</span></li>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">a9 a10</span></li>
-                                </ul>
-                            </li>
-                            <li class="front-seat">
-                                <ul>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">a11</span></li>
-                                    <li class="single-seat seat-free-two"><img
-                                            src="./assets/images/movie/seat02-free.png" alt="seat"><span
-                                            class="sit-num">a12</span></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <span>a</span></li>
-                </ul>
-            </div>
+            <ul>
+                <div class="screen-thumb"><img src="./assets/images/movie/screen-thumb.png" alt="movie"></div>
+                <h5 class="subtitle">silver plus</h5>
+                <div class="screen-wrapper">
+                    <ul class="seat-area">
+                        <li class="seat-line"><span>A</span>
+                            <ul class="seat--area" id="a">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:each="str:${new String[]{'a1','a2','a3','a4'}}"
+                                            th:id="${str}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat"
+                                            th:each="str:${new String[]{'a5','a6','a7','a8','a9','a10'}}"
+                                            th:id="${str}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}"></span></li>
+
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'a11','a12','a13','a14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>A</span></li>
+                        <li class="seat-line"><span>B</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'b1','b2','b3','b4'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'b5','b6','b7','b8','b9','b10'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'b11','b12','b13','b14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>B</span></li>
+                    </ul>
+                </div>
+
+                <div class="screen-wrapper">
+                    <ul class="seat-area">
+                        <li class="seat-line"><span>C</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'c1','c2','c3','c4'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                    class="front-seat">
+                                    <ul>
+                                        <li class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'c5','c6','c7','c8','c9','c10'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                    class="front-seat">
+                                    <ul>
+                                        <li class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'c11','c12','c13','c14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>C</span></li>
+                        <li class="seat-line"><span>D</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'d1','d2','d3','d4'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'d5','d6','d7','d8','d9','d10'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'d11','d12','d13','d14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>D</span></li>
+                    </ul>
+                </div>
+                <div class="screen-wrapper">
+                    <ul class="seat-area">
+                        <li class="seat-line"><span>E</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'e1','e2','e3','e4'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'e5','e6','e7','e8','e9','e10'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'e11','e12','e13','e14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>E</span></li>
+                        <li class="seat-line"><span>F</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'f1','f2','f3','f4'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'f5','f6','f7','f8','f9','f10'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'f11','f12','f13','f14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>f</span></li>
+                    </ul>
+                </div>
+                <div class="screen-wrapper">
+                    <ul class="seat-area">
+                        <li class="seat-line"><span>G</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'g1','g2','g3','g4'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'g5','g6','g7','g8','g9','g10'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'g11','g12','g13','g14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>G</span></li>
+                        <li class="seat-line"><span>H</span>
+                            <ul class="seat--area">
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'h1','h2','h3','h4'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'h5','h6','h7','h8','h9','h10'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="front-seat">
+                                    <ul>
+                                        <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
+                                            class="single-seat" th:id="${str}"
+                                            th:each="str:${new String[]{'h11','h12','h13','h14'}}">
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                                 alt="seat">
+                                            <span class="sit-num" th:text="${str}">
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <span>h</span></li>
+                    </ul>
+                </div>
+            </ul>
         </div>
-        <div class="proceed-book bg_img" data-background="./assets/images/movie/movie-bg-proceed.jpg">
+        <div class="proceed-book bg_img" data-background="../assets/images/movie/movie-bg-proceed.jpg">
+
             <div class="proceed-to-book">
                 <div class="book-item"><span>You have Choosed Seat</span>
-                    <h3 class="title">d9, d10</h3></div>
+                    <h6 class="title" id="choos" th:name="place"></h6></div>
                 <div class="book-item"><span>total price</span>
-                    <h3 class="title">$150</h3></div>
-                <div class="book-item"><a href="movie-checkout.html" class="custom-button">proceed</a></div>
+                    <h3 class="title" id="pr">0$</h3></div>
+                <div class="book-item">
+                    <form action="/buy-ticket" method="post">
+                        <div id="buyTicket"></div>
+                        <div id="places"></div>
+                        <!--                        <span th:each="num:${#numbers.sequence( 1, 9, 1)}">-->
+                        <button id="buyButton"
+                                class="custom-button">Buy
+                        </button>
+                        <!--                        </spa>-->
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
@@ -396,5 +525,80 @@
 <script src="assets/js/viewport.jquery.js"></script>
 <script src="assets/js/nice-select.js"></script>
 <script src="assets/js/main.js"></script>
+<script th:inline="javascript">
+    $('#buyButton').hide()
+    var responseDto = {
+        place: [],
+        localDateTime: '',
+        movieId: ''
+    }
+    responseDto.movieId = /*[[${movie.getId()}]]*/;
+    responseDto.localDateTime =/*[[${movie.getSeanceDateTime().get(seance==null?0:seance)}]]*/;
+    console.log(responseDto.localDateTime, "DEFAULT>>>>>>>>>>>")
+
+    var placeResponseDto = []
+    $('select').on('change', function (e) {
+        var valueSelected = $(this).attr('val');
+        console.log(valueSelected)
+        console.log($("#seance option:selected").attr('index'));
+        responseDto.localDateTime = new Date(valueSelected);
+        location.href = $("#seance option:selected").attr('index')
+
+        $('#buyTicket').empty().append(`
+            <input type="hidden" name="seance" value="${new Date(responseDto.localDateTime)}">
+            <input type="hidden" name="movieId" value="${responseDto.movieId}">
+            `)
+    });
+
+    var inputs = '';
+    $(".single-seat").click(function () {
+
+
+        let text = $(this).attr("id");
+
+        if (placeResponseDto.filter(f => f === text).length === 0) {
+            placeResponseDto.push(text);
+            $(this).find("img").attr("src", "./assets/images/movie/seat01-free.png")
+        } else {
+            placeResponseDto = placeResponseDto.filter(f => f !== text)
+            $(this).find("img").attr("src", "./assets/images/movie/seat01.png")
+        }
+        var list = '';
+        var price = '';
+        var inputs = '';
+
+        list += `
+
+
+     <h6 class="title" name="place">${placeResponseDto}</h6>`
+
+        $('#choos').empty().append(list)
+
+        price += `
+        <h3 class="title">${placeResponseDto.length * 12}$</h3>
+        `
+        responseDto.place = placeResponseDto
+
+        placeResponseDto.forEach(res => {
+            inputs += `
+            <input type="hidden" name="myPlace" value="${res}">
+            `
+        })
+
+        $('#pr').empty().append(price)
+
+        $('#places').empty().append(inputs)
+        if (placeResponseDto.length > 0) {
+            $('#buyButton').show()
+        } else $('#buyButton').hide()
+
+
+    });
+    $('#buyTicket').append(`
+            <input type="hidden" name="seance" value="${new Date(responseDto.localDateTime)}">
+            <input type="hidden" name="movieId" value="${responseDto.movieId}">
+            `)
+
+</script>
 </body>
 </html>

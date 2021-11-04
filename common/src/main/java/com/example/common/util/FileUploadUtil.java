@@ -68,8 +68,6 @@ public class FileUploadUtil {
         CustomMultipartFile customMultipartFile = new CustomMultipartFile(multipartFile.getBytes(), png);
         return compressImage(customMultipartFile, movieProperties.getMovieImg(), png,isResize);
     }
-
-
 }
 
 

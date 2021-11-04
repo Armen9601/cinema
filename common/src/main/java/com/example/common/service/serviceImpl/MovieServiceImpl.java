@@ -164,15 +164,15 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getByAll(ResponseDto responseDto) {
         List<Languages> languagesList = new ArrayList<>();
         List<Category> categoryList = new ArrayList<>();
-        for (String s : responseDto.getLang()) {
-            languagesList.add(Languages.valueOf(s.toUpperCase()));
+        for (String lang : responseDto.getLang()) {
+            languagesList.add(Languages.valueOf(lang.toUpperCase()));
         }
         if (languagesList.size() == 0) {
             languagesList = Arrays.asList(Languages.values());
 
         }
-        for (String s : responseDto.getCategories()) {
-            categoryList.add(Category.valueOf(s.toUpperCase()));
+        for (String category : responseDto.getCategories()) {
+            categoryList.add(Category.valueOf(category.toUpperCase()));
         }
         if (categoryList.size() == 0) {
 

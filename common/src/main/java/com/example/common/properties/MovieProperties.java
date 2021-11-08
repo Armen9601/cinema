@@ -9,5 +9,4 @@ public class MovieProperties {
 
     private String movieImg;
 
-
 }

@@ -36,7 +36,6 @@ public class UserEndpoint {
             userDtos.add(userDto);
         }
         return userDtos;
-        //return userService.findAllUserDto();
     }
 
     @PostMapping("/sign-up")

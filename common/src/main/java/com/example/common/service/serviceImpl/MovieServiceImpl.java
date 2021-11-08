@@ -7,7 +7,6 @@ import com.example.common.entity.Rating;
 import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
 import com.example.common.properties.MovieProperties;
-
 import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
@@ -27,17 +26,15 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static com.example.common.util.DateUtil.dateTimeFormatterWithDate;
 import static com.example.common.util.DateUtil.dateTimeFormatterWithDateAndTime;
@@ -54,7 +51,6 @@ public class MovieServiceImpl implements MovieService {
     private final MovieProperties movieProperties;
     private final FileUploadUtil fileUploadUtil;
 
-    private String uplodPath = "D:\\lessons\\WEB\\cinema\\rest\\src\\main\\resources\\upload";
 
     @Override
     public Movie add(
@@ -225,12 +221,8 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieRepository.getById(movieId);
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
-                String fileName = System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename();
-                String path = uplodPath + File.separator + fileName;
-                File file = new File(path);
-                multipartFile.transferTo(file);
-                movie.setPicUrl(fileName);
-                picUrls.add(fileName);
+                movie.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFiles[0]));
+                picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile));
             }
 
         }
@@ -248,7 +240,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void downloadPicByName(String fileName, HttpServletResponse response) throws IOException {
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        InputStream in = new FileInputStream(uplodPath + File.separator + fileName);
+        InputStream in = new FileInputStream(movieProperties.getMovieImg() + File.separator + fileName);
         IOUtils.copy(in, response.getOutputStream());
     }
 }

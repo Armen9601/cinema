@@ -6,6 +6,7 @@ import com.example.common.repository.MovieRepository;
 import com.example.common.repository.UserRepository;
 import com.example.common.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MovieRepository movieRepository;
+    private final ModelMapper mapper;
 
     @Override
     public void update(User user, int id) {
@@ -53,4 +55,5 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
 }

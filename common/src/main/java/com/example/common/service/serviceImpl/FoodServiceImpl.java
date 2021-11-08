@@ -68,7 +68,6 @@ public class FoodServiceImpl implements FoodService {
     public List<Food> getAllFoods() {
         return null;
     }
-}
 
     @Override
     public int totalPrice(HttpSession httpSession) {

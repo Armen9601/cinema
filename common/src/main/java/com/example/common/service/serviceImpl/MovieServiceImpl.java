@@ -230,8 +230,8 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = movieRepository.getById(movieId);
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
-                movie.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFiles[0]));
-                picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile));
+                movie.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFiles[0], true));
+                picUrls.add(fileUploadUtil.getSmallPicUrl(multipartFile, true));
             }
 
         }

@@ -77,4 +77,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/web/**");
     }
 
-    }
+}

@@ -27,8 +27,6 @@ public class TicketsServicelmpl implements TicketsService {
     private final MovieService movieService;
     private final EmailService emailService;
 
-
-
     @SneakyThrows
     @Override
     public void addTicket(HttpSession httpSession, User user, Locale locale) {

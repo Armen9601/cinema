@@ -1,13 +1,13 @@
 package com.example.common.service.serviceImpl;
 
+import com.example.common.dto.BasketDto;
+import com.example.common.dto.FoodDto;
 import com.example.common.entity.Food;
 import com.example.common.enums.FoodCategory;
 import com.example.common.properties.FoodProperties;
 import com.example.common.repository.FoodRepository;
 import com.example.common.service.FoodService;
-import com.example.common.dto.BasketDto;
 import com.example.common.util.FileUploadUtil;
-import com.example.common.dto.FoodDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -56,8 +56,8 @@ public class FoodServiceImpl implements FoodService {
         if (basketDto.getFoods().size() == 0) {
             basketDto.getFoods().add(foodDto);
         } else if (basketDto.getFoods().stream().anyMatch(o -> o.getName().equals(name))) {
-            FoodDto foodDto1 = basketDto.getFoods().stream().filter(o -> o.getName().equals(name)).findFirst().get();
-            foodDto1.setCount(foodDto1.getCount()+count);
+            FoodDto food = basketDto.getFoods().stream().filter(o -> o.getName().equals(name)).findFirst().get();
+            food.setCount(food.getCount() + count);
         } else {
             basketDto.getFoods().add(foodDto);
         }
@@ -67,14 +67,14 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public int totalPrice(HttpSession httpSession) {
         BasketDto basketDto = ((BasketDto) httpSession.getAttribute("basket"));
-        int foodTotalPrice=0;
-        int placeTotalPrice=basketDto.getMyPlaces().size()*12;
-        if (basketDto.getFoods().size()>0){
+        int foodTotalPrice = 0;
+        int placeTotalPrice = basketDto.getMyPlaces().size() * 12;
+        if (basketDto.getFoods().size() > 0) {
             for (FoodDto food : basketDto.getFoods()) {
-                foodTotalPrice+=(foodRepository.getById(food.getId()).getPrice()*food.getCount());
+                foodTotalPrice += (foodRepository.getById(food.getId()).getPrice() * food.getCount());
             }
         }
-        return foodTotalPrice+placeTotalPrice;
+        return foodTotalPrice + placeTotalPrice;
     }
 
 }

@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -21,10 +19,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user, int id) {
-
         Movie byId = movieRepository.getById(id);
-        List<Movie> myLikedMovie = user.getMyLikedMovie();
-
+        if (user.getMyLikedMovie().contains(byId)){
+            user.getMyLikedMovie().remove(byId);
+        }else {
+            user.getMyLikedMovie().add(byId);
+        }
+        userRepository.save(user);
     }
 
     @Override

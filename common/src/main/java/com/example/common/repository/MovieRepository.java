@@ -28,6 +28,8 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     @Query(value = "select * from movies m where name like %:name%", nativeQuery = true)
     Page<Movie> findByName(@Param("name") String name, Pageable pageable);
 
-    Slice<Movie> findTop3ByCategory(Category category,Pageable pageable);
+    List<Movie> findTop3OByOrderByRatingDesc();
+
+
 
 }

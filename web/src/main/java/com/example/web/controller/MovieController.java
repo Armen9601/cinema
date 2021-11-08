@@ -3,12 +3,14 @@ package com.example.web.controller;
 import com.example.common.entity.Movie;
 import com.example.common.properties.MovieProperties;
 import com.example.common.service.MovieService;
+import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +57,7 @@ public class MovieController {
 
     @GetMapping("/user/viewAll")
     public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable,
-                            @RequestParam(value = "search", required = false) String name) {
+                            @RequestParam(value = "search", required = false) String name, @AuthenticationPrincipal CurrentUser currentUser) {
         Page<Movie> allMovies = name == null ? movieService.getAll(pageable) :
                 movieService.getByName(name, pageable);
         if (allMovies.getTotalPages() > 0) {
@@ -66,6 +68,7 @@ public class MovieController {
         }
         modelMap.addAttribute("date", movieService.local(LocalDate.now()));
         modelMap.addAttribute("movies", allMovies);
+        modelMap.addAttribute("user", currentUser.getUser());
         return "movie-grid";
     }
 

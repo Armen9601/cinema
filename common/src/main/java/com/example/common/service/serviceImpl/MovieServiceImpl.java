@@ -181,8 +181,8 @@ public class MovieServiceImpl implements MovieService {
         return findMovieByParamsQueryDSL(languagesList, categoryList);
     }
 
-    public Slice<Movie> findFirst3(Pageable pageable) {
-        return movieRepository.findTop3ByCategory(Category.COMEDY, pageable);
+    public List<Movie> findTop3OByOrderByRatingDesc() {
+        return movieRepository.findTop3OByOrderByRatingDesc();
     }
 
     public List<Movie> findMovieByParamsQueryDSL(

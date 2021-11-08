@@ -24,7 +24,7 @@ public class MainController {
     public String home(ModelMap modelMap, Pageable pageable) {
         List<Movie> allMovies = movieService.getByDay();
         LocalDate now = LocalDate.now();
-        Slice<Movie> all = movieService.findFirst3(pageable);
+        List<Movie> all = movieService.findTop3OByOrderByRatingDesc();
         modelMap.addAttribute("allMovies", allMovies);
         modelMap.addAttribute("all", all);
         modelMap.addAttribute("day", now);

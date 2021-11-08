@@ -48,7 +48,7 @@ public interface MovieService {
 
     List<Movie> getByAll(ResponseDto responseDto);
 
-    Slice<Movie> findFirst3(Pageable pageable);
+    List<Movie> findTop3OByOrderByRatingDesc();
 
     List<LocalDate> local(LocalDate localDate);
 }

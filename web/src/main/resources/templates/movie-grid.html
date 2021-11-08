@@ -235,19 +235,11 @@
                                             </div>
                                             <div class="book-area">
                                                 <div class="book-ticket">
-                                                    <div class="react-item"><a href="#0">
-                                                        <div class="thumb"><img src="../assets/images/icons/heart.png"
+                                                    <div class="react-item"><a th:href="@{/user/likeMovie(id=${movie.getId()})}">
+                                                        <div class="thumb"><img
+                                                                th:src="${user.getMyLikedMovie().contains(movie)?'../assets/images/icons/red-heart.png':'../assets/images/icons/heart.png'}"
                                                                                 alt="icons"></div>
                                                     </a></div>
-                                                    <div class="react-item mr-auto"><a href="#0">
-                                                        <div class="thumb"><img src="../assets/images/icons/book.png"
-                                                                                alt="icons"></div>
-                                                        <span>book ticket</span></a></div>
-                                                    <div class="react-item"><a href="#0" class="popup-video">
-                                                        <div class="thumb"><img
-                                                                src="../assets/images/icons/play-button.png"
-                                                                alt="icons"></div>
-                                                        <span>watch trailer</span></a></div>
                                                 </div>
                                             </div>
                                         </div>

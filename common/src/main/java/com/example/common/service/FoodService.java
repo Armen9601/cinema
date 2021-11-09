@@ -18,4 +18,6 @@ public interface FoodService {
     void addFoodInSession(int foodId, int count, String name, HttpSession httpSession);
 
     int totalPrice(HttpSession httpSession);
+
+    List<Food> getAllFoods();
 }

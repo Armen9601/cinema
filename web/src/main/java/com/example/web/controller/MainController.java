@@ -2,9 +2,7 @@ package com.example.web.controller;
 
 import com.example.common.entity.Movie;
 import com.example.common.service.MovieService;
-import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;

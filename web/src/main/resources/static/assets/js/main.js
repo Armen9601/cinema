@@ -23,6 +23,7 @@
         })
     });
     a(document).ready(function () {
+
         a(".select-bar").niceSelect();
         a(".video-popup").magnificPopup({type: "iframe",});
         a("body").each(function () {

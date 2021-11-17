@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void update(User user, int like);
+    boolean addOrRemove(User user, int like);
 
     boolean add(User user);
 
@@ -17,5 +17,7 @@ public interface UserService {
     List<User> getAllUsers();
 
     Optional<User> findByEmail(String email);
+
+//    boolean movieIsExist
 
 }

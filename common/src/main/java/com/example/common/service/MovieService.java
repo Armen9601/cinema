@@ -1,8 +1,10 @@
 package com.example.common.service;
 
+import com.example.common.dto.MovieDto;
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
 import com.example.common.dto.ResponseDto;
+import com.example.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -25,7 +27,7 @@ public interface MovieService {
 
     Movie update(int movieId, int rating);
 
-    Page<Movie> getAll(Pageable pageable);
+    Page<MovieDto> getAll(Pageable pageable, User user);
 
     Page<Movie> getByCategory(String category, Pageable pageable);
 
@@ -41,15 +43,13 @@ public interface MovieService {
 
     void delete(int id);
 
-    List<Movie> getByActorId(Actor actor);
-
     Movie getById(int movieId);
 
-    Page<Movie> getByName(String name, Pageable pageable);
+    Page<MovieDto> getByName(String name, Pageable pageable,User user);
 
     List<Movie> getByAll(ResponseDto responseDto);
 
-    Slice<Movie> findFirst3(Pageable pageable);
+    List<Movie> findTop3OByOrderByRatingDesc();
 
     List<LocalDate> local(LocalDate localDate);
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="top">
+    <div class="container">
+        <div class="header-wrapper">
+            <div class="logo"><a href="/"><img src="../assets/images/logo/logo.png" alt="logo"></a></div>
+            <ul class="menu">
+                <li><a href="/" class="active">Home</a>
+                </li>
+                <li><a href="/user/viewAll">movies</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/addMovie" th:style="${user==null || user.getUser().getUserType().name()=='USER' ?'display:none':'display:auto'}">Add Movie</a></li>
+                        <li><a href="/admin/food" th:style="${user==null || user.getUser().getUserType().name()=='USER' ?'display:none':'display:auto'}">Add Food</a></li>
+                    </ul>
+                </li>
+                <li><a href="/user/myLikedMovie">My Liked Movies</a>
+                </li>
+                <li><a href="/about">About Us</a>
+                </li>
+                <li><a href="/blog">blog</a>
+                </li>
+                <li><a href="/contact">contact</a></li>
+                <li class="header-button pr-0"><a th:href="${user==null?'/sign-in':'/logout'}" th:text="${user==null?'join us':'log out'}"></a></li>
+            </ul>
+            <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

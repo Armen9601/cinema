@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/odometer.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/animate.css">
+    <link rel="stylesheet" href="../assets/css/flaticon.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/odometer.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="../assets/css/nice-select.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
     <title>Boleto - Online Ticket Booking Website HTML Template</title></head>
 <body><!-- ==========Preloader========== -->
 <div class="preloader">
@@ -26,58 +26,14 @@
 <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a><!-- ==========Overlay========== -->
 <!-- ==========Header-Section========== -->
 <header class="header-section">
-    <div class="container">
-        <div class="header-wrapper">
-            <div class="logo"><a href="index.html"><img src="./assets/images/logo/logo.png" alt="logo"></a></div>
-            <ul class="menu">
-                <li><a href="/">Home</a>
-                </li>
-                <li><a href="/user/viewAll" class="active">movies</a>
-                </li>
-                <li><a href="#0">events</a>
-                    <ul class="submenu">
-                        <li><a href="events.html">Events</a></li>
-                        <li><a href="event-details.html">Event Details</a></li>
-                        <li><a href="event-speaker.html">Event Speaker</a></li>
-                        <li><a href="event-ticket.html">Event Ticket</a></li>
-                        <li><a href="event-checkout.html">Event Checkout</a></li>
-                    </ul>
-                </li>
-                <li><a href="#0">sports</a>
-                    <ul class="submenu">
-                        <li><a href="sports.html">Sports</a></li>
-                        <li><a href="sport-details.html">Sport Details</a></li>
-                        <li><a href="sports-ticket.html">Sport Ticket</a></li>
-                        <li><a href="sports-checkout.html">Sport Checkout</a></li>
-                    </ul>
-                </li>
-                <li><a href="#0">pages</a>
-                    <ul class="submenu">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="apps-download.html">Apps Download</a></li>
-                        <li><a href="sign-in.html">Sign In</a></li>
-                        <li><a href="sign-up.html">Sign Up</a></li>
-                        <li><a href="404.html">404</a></li>
-                    </ul>
-                </li>
-                <li><a href="#0">blog</a>
-                    <ul class="submenu">
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="blog-details.html">Blog Single</a></li>
-                    </ul>
-                </li>
-                <li><a href="contact.html">contact</a></li>
-                <li class="header-button pr-0"><a href="/logout">Log Out</a></li>
-            </ul>
-            <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
-        </div>
-    </div>
+    <div th:include="/fragments/top-part:: top"></div>
+
 </header><!-- ==========Header-Section========== --><!-- ==========Banner-Section========== -->
-<section class="details-banner hero-area bg_img seat-plan-banner" data-background="./assets/images/banner/banner04.jpg">
+<section class="details-banner hero-area bg_img seat-plan-banner" data-background="../assets/images/banner/banner04.jpg">
     <div class="container">
         <div class="details-banner-wrapper">
             <div class="details-banner-content style-two"><h3 class="title" th:text="${movie.name}"></h3>
-                <div class="tags"><a th:href="@{/user/movieDetails(id=${movie.getId()})}">Details</a></div>
+                <div class="tags"><a th:href="@{/movieDetails(id=${movie.getId()})}">Details</a></div>
             </div>
         </div>
     </div>
@@ -85,7 +41,7 @@
 <section class="page-title bg-one">
     <div class="container">
         <div class="page-title-area">
-            <div class="item md-order-1"><a th:href="@{/user/movieDetails(id=${movie.getId()})}"
+            <div class="item md-order-1"><a th:href="@{/movieDetails(id=${movie.getId()})}"
                                             class="custom-button back-button"><i
                     class="flaticon-double-right-arrows-angles"></i>back</a></div>
             <div class="item date-item"><span class="date"
@@ -96,7 +52,7 @@
                     <option th:id="${time}" th:each="time,stat:${movie.getSeanceDateTime()}" th:value="${stat}"
                             th:text="${time.getHour()+':'+time.getMinute()}"
                             th:selected="${seance == stat.index}"
-                            th:attr="index=${'/bookTicket?movieId='+movie.id+'&seance='+stat.index},val=${time}"
+                            th:attr="index=${'/user/bookTicket?movieId='+movie.id+'&seance='+stat.index},val=${time}"
                             name="seance"></option>
 
 
@@ -108,7 +64,7 @@
     <div class="container">
         <div class="screen-area"><h4 class="screen">screen</h4>
             <ul>
-                <div class="screen-thumb"><img src="./assets/images/movie/screen-thumb.png" alt="movie"></div>
+                <div class="screen-thumb"><img src="../assets/images/movie/screen-thumb.png" alt="movie"></div>
                 <h5 class="subtitle">silver plus</h5>
                 <div class="screen-wrapper">
                     <ul class="seat-area">
@@ -119,7 +75,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:each="str:${new String[]{'a1','a2','a3','a4'}}"
                                             th:id="${str}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -132,7 +88,7 @@
                                             class="single-seat"
                                             th:each="str:${new String[]{'a5','a6','a7','a8','a9','a10'}}"
                                             th:id="${str}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}"></span></li>
 
@@ -143,7 +99,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'a11','a12','a13','a14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -159,7 +115,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'b1','b2','b3','b4'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -171,7 +127,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'b5','b6','b7','b8','b9','b10'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -183,7 +139,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'b11','b12','b13','b14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -204,7 +160,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'c1','c2','c3','c4'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -216,7 +172,7 @@
                                     <ul>
                                         <li class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'c5','c6','c7','c8','c9','c10'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -228,7 +184,7 @@
                                     <ul>
                                         <li class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'c11','c12','c13','c14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -244,7 +200,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'d1','d2','d3','d4'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -256,7 +212,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'d5','d6','d7','d8','d9','d10'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -268,7 +224,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'d11','d12','d13','d14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -288,7 +244,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'e1','e2','e3','e4'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -300,7 +256,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'e5','e6','e7','e8','e9','e10'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -312,7 +268,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'e11','e12','e13','e14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -328,7 +284,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'f1','f2','f3','f4'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -340,7 +296,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'f5','f6','f7','f8','f9','f10'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -352,7 +308,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'f11','f12','f13','f14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -372,7 +328,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'g1','g2','g3','g4'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -384,7 +340,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'g5','g6','g7','g8','g9','g10'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -396,7 +352,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'g11','g12','g13','g14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -412,7 +368,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'h1','h2','h3','h4'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -424,7 +380,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'h5','h6','h7','h8','h9','h10'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -436,7 +392,7 @@
                                         <li th:style="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'pointer-events: none':'pointer-events: auto'}"
                                             class="single-seat" th:id="${str}"
                                             th:each="str:${new String[]{'h11','h12','h13','h14'}}">
-                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'./assets/images/movie/seat01-free.png':'./assets/images/movie/seat01.png'}"
+                                            <img th:src="${@ticketsServicelmpl.findBySeanceTime(movie.getSeanceDateTime().get(seance==null?0:seance)).contains(str)?'../assets/images/movie/seat01-free.png':'../assets/images/movie/seat01.png'}"
                                                  alt="seat">
                                             <span class="sit-num" th:text="${str}">
                                         </span>
@@ -475,7 +431,7 @@
 <footer class="footer-section">
     <div class="newslater-section padding-bottom">
         <div class="container">
-            <div class="newslater-container bg_img" data-background="./assets/images/newslater/newslater-bg01.jpg">
+            <div class="newslater-container bg_img" data-background="../assets/images/newslater/newslater-bg01.jpg">
                 <div class="newslater-wrapper"><h5 class="cate">subscribe to Boleto</h5>
                     <h3 class="title">to get exclusive benifits</h3>
                     <form class="newslater-form"><input type="text" placeholder="Your Email Address">
@@ -487,14 +443,14 @@
     </div>
     <div class="container">
         <div class="footer-top">
-            <div class="logo"><a href="index-1.html"><img src="./assets/images/footer/footer-logo.png" alt="footer"></a>
+            <div class="logo"><a href="/"><img src="../assets/images/footer/footer-logo.png" alt="footer"></a>
             </div>
             <ul class="social-icons">
-                <li><a href="#0"><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#0" class="active"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="#0"><i class="fab fa-pinterest-p"></i></a></li>
-                <li><a href="#0"><i class="fab fa-google"></i></a></li>
-                <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com/?lang=ru" class="active"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://www.pinterest.com/"><i class="fab fa-pinterest-p"></i></a></li>
+                <li><a href="https://www.google.ru/"><i class="fab fa-google"></i></a></li>
+                <li><a href="https://www.instagram.com/?hl=ru"><i class="fab fa-instagram"></i></a></li>
             </ul>
         </div>
         <div class="footer-bottom">
@@ -502,8 +458,7 @@
                 <div class="left"><p>Copyright © 2020.All Rights Reserved By <a href="http://www.bootstrapmb.com/">Boleto </a>
                 </p></div>
                 <ul class="links">
-                    <li><a href="#0">About</a></li>
-                    <li><a href="#0">Terms Of Use</a></li>
+                    <li><a href="/about">About</a></li>
                     <li><a href="#0">Privacy Policy</a></li>
                     <li><a href="#0">FAQ</a></li>
                     <li><a href="#0">Feedback</a></li>
@@ -512,19 +467,19 @@
         </div>
     </div>
 </footer><!-- ==========Newslater-Section========== -->
-<script src="assets/js/jquery-3.3.1.min.js"></script>
-<script src="assets/js/modernizr-3.6.0.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<script src="assets/js/magnific-popup.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/wow.min.js"></script>
-<script src="assets/js/countdown.min.js"></script>
-<script src="assets/js/odometer.min.js"></script>
-<script src="assets/js/viewport.jquery.js"></script>
-<script src="assets/js/nice-select.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<script src="../assets/js/modernizr-3.6.0.min.js"></script>
+<script src="../assets/js/plugins.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/isotope.pkgd.min.js"></script>
+<script src="../assets/js/magnific-popup.min.js"></script>
+<script src="../assets/js/owl.carousel.min.js"></script>
+<script src="../assets/js/wow.min.js"></script>
+<script src="../assets/js/countdown.min.js"></script>
+<script src="../assets/js/odometer.min.js"></script>
+<script src="../assets/js/viewport.jquery.js"></script>
+<script src="../assets/js/nice-select.js"></script>
+<script src="../assets/js/main.js"></script>
 <script th:inline="javascript">
     $('#buyButton').hide()
     var responseDto = {
@@ -558,10 +513,10 @@
 
         if (placeResponseDto.filter(f => f === text).length === 0) {
             placeResponseDto.push(text);
-            $(this).find("img").attr("src", "./assets/images/movie/seat01-free.png")
+            $(this).find("img").attr("src", "../assets/images/movie/seat01-free.png")
         } else {
             placeResponseDto = placeResponseDto.filter(f => f !== text)
-            $(this).find("img").attr("src", "./assets/images/movie/seat01.png")
+            $(this).find("img").attr("src", "../assets/images/movie/seat01.png")
         }
         var list = '';
         var price = '';

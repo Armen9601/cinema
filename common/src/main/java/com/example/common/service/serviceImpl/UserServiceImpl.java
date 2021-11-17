@@ -6,7 +6,6 @@ import com.example.common.repository.MovieRepository;
 import com.example.common.repository.UserRepository;
 import com.example.common.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +19,19 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MovieRepository movieRepository;
-    private final ModelMapper mapper;
 
     @Override
-    public void update(User user, int id) {
+    public boolean addOrRemove(User user, int id) {
+        boolean isRemove = false;
         Movie byId = movieRepository.getById(id);
-        if (user.getMyLikedMovie().contains(byId)){
-            user.getMyLikedMovie().remove(byId);
-        }else {
+        if (user.getMyLikedMovie().stream().anyMatch(m -> m.getId() == byId.getId())) {
+            user.getMyLikedMovie().removeIf(m -> m.getId() == id);
+        } else {
             user.getMyLikedMovie().add(byId);
+            isRemove = true;
         }
         userRepository.save(user);
+        return isRemove;
     }
 
     @Override

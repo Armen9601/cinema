@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/jquery.animatedheadline.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
     <title>Boleto - Online Ticket Booking Website HTML Template</title></head>
@@ -28,78 +27,55 @@
 <!-- ==========Header-Section========== -->
 <header class="header-section">
     <div th:include="/fragments/top-part:: top"></div>
-
 </header><!-- ==========Header-Section========== --><!-- ==========Banner-Section========== -->
-<section class="banner-section">
-    <div class="banner-bg bg_img bg-fixed" data-background="./assets/images/banner/banner01.jpg"></div>
+<section class="details-banner bg_img" data-background="./assets/images/banner/banner03.jpg">
     <div class="container">
-        <div class="banner-content"><h1 class="title  cd-headline clip"><span class="d-block">book your</span>tickets
-            for<span class="color-theme cd-words-wrapper p-0 m-0"><b
-                    class="is-visible">Movie</b></span></h1>
-            <p>Safe, secure, reliable ticketing.Your ticket to live entertainment!</p></div>
-    </div>
-</section><!-- ==========Banner-Section========== --><!-- ==========Ticket-Search========== -->
-<section class="search-ticket-section padding-top pt-lg-0">
-    <div class="container">
-        <div class="search-tab bg_img" data-background="./assets/images/ticket/ticket-bg01.jpg">
-            <div class="row align-items-center mb--20">
-                <div class="col-lg-6 mb-20">
-                    <div class="search-ticket-header"><h6 class="category">welcome to Boleto</h6>
-                        <h3 class="title">we can find hear new movies</h3></div>
-                </div>
+        <div class="details-banner-wrapper">
+            <div class="details-banner-thumb"><img th:src="@{/actorImg(actorUrl=${actor.picUrl})}" alt="movie"></div>
+            <div class="details-banner-content offset-lg-3"><h3 class="title" th:text="${actor.name+' '+actor.surname}"></h3>
+                <a class="button" th:style="${user==null || user.getUser().getUserType().name()=='USER' ?'display:none':'display:auto'}"  th:href="@{/admin/deleteActor(id=${actor.id},movieId=${movie})}" >Delete</a>
+
             </div>
         </div>
     </div>
-</section><!-- ==========Ticket-Search========== --><!-- ==========Movie-Main-Section========== -->
-<section class="movie-section padding-top padding-bottom bg-two">
+</section><!-- ==========Banner-Section========== --><!-- ==========Book-Section========== -->
+<section class="book-section bg-one">
+    <div class="container"></div>
+
+</section><!-- ==========Book-Section========== --><!-- ==========Movie-Section========== -->
+<section class="movie-details-section padding-top padding-bottom">
     <div class="container">
-        <div class="row flex-wrap-reverse justify-content-center">
-            <div class="col-lg-3 col-sm-10  mt-50 mt-lg-0">
-                <div class="widget-1 widget-banner">
-                    <div class="widget-1-body"></div>
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="article-section padding-bottom" >
-                    <div class="section-header-1"><h2 class="title">premiere</h2><a class="view-all"
-                                                                                 th:href="@{/nextPremiere(date=${day})}">View All</a>
-                    </div>
-                    <div class="row mb-30-none justify-content-center">
-                        <div class="col-sm-6 col-lg-4" th:each="movies:${allMovies}">
-                            <div class="movie-grid">
-                                <div class="movie-thumb c-thumb"><a th:href="@{/movieDetails(id=${movies.getId()})}"><img
-                                        style="height: 200px;width: 300px "   th:src="@{/movieImage(movieUrl=${movies.picUrl})}" alt="event"></a>
-                                    <div class="event-date"><h6 class="date-title" th:text="${day.getDayOfMonth()}"></h6><span th:text="${day.getMonth()}"></span></div>
-                                </div>
-                                <div class="movie-thumb c-thumb"><a th:href="@{/movieDetails(id=${movies.getId()})}"></a></div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a th:href="@{/movieDetails(id=${movies.getId()})}" th:text="${movies.name}"></a></h5>
+        <div class="row justify-content-center flex-wrap-reverse mb--50">
 
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="article-section padding-bottom">
-                    <div class="section-header-1"><h2 class="title">ALL Movies</h2><a class="view-all" href="/user/viewAll">View
-                        All</a></div>
-                    <div class="row mb-30-none justify-content-center">
-                        <div class="col-sm-6 col-lg-4" th:each="mov:${all}">
-                            <div class="event-grid">
-                                <div class="movie-thumb c-thumb"><a th:href="@{/movieDetails(id=${mov.getId()})}"><img
-                                   style="height: 200px;width: 300px "     th:src="@{/movieImage(movieUrl=${mov.picUrl})}" alt="event"></a>
-                                </div>
-                                <div class="movie-content bg-one"><h5 class="title m-0"><a  th:href="@{/movieDetails(id=${mov.getId()})}" th:text="${mov.name}" a>Digital Economy
-                                    Conference 2020</a></h5>
-                                </div>
+            <div class="col-lg-9 mb-50">
+                <div class="tab summery-review">
+                        <ul class="tab-menu">
+                            <li class="newslater-form" style="color: red">biography </li>
+                        </ul>
+                        <div class="tab-area">
+                            <div class="tab-item">
+                                <div class="item">
+                                    <p th:text="${actor.getBiography()}"></p></div>
                             </div>
                         </div>
                     </div>
+                <div class="item">
+                    <div class="header"><h5 class="sub-title">Movies</h5>
+                    </div>
+                    <div class="casting-slider owl-carousel" >
+                        <div class="cast-item" th:each="movies:${actor.getMovie()}">
+                            <div class="cast-thumb"><a th:href="@{/movieDetails(id=${movies.id})}"><img style="height: 109px"
+                                                                                                        th:src="@{/movieImage(movieUrl=${movies.picUrl})}" alt="cast"></a></div>
+                            <div class="cast-content"><h6 class="cast-title" th:text="${movies.name}"><a th:href="@{/movieDetails(id=${movies.id})}"></a>
+                            </h6></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                </div>
+
         </div>
     </div>
-</section><!-- ==========Movie-Main-Section========== --><!-- ==========Newslater-Section========== -->
+</section><!-- ==========Movie-Section========== --><!-- ==========Newslater-Section========== -->
 <footer class="footer-section">
     <div class="newslater-section padding-bottom">
         <div class="container">
@@ -143,7 +119,6 @@
 <script src="assets/js/modernizr-3.6.0.min.js"></script>
 <script src="assets/js/plugins.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/heandline.js"></script>
 <script src="assets/js/isotope.pkgd.min.js"></script>
 <script src="assets/js/magnific-popup.min.js"></script>
 <script src="assets/js/owl.carousel.min.js"></script>

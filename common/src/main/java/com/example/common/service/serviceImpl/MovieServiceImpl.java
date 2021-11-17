@@ -1,9 +1,11 @@
 package com.example.common.service.serviceImpl;
 
+import com.example.common.dto.MovieDto;
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
 import com.example.common.entity.QMovie;
 import com.example.common.entity.Rating;
+import com.example.common.entity.User;
 import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
 import com.example.common.properties.MovieProperties;
@@ -18,6 +20,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
@@ -92,9 +95,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Page<Movie> getAll(Pageable pageable) {
-        return movieRepository.findAll(pageable);
+    public Page<MovieDto> getAll(Pageable pageable, User user) {
+        Page<Movie> allMovies = movieRepository.findAll(pageable);
+        return movieDtos(allMovies,user,pageable) ;
     }
+
+
 
     @Override
     public Page<Movie> getByCategory(String category, Pageable pageable) {
@@ -142,14 +148,6 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public List<Movie> getByActorId(Actor actor) {
-        if (actor != null) {
-            return movieRepository.findByActor_Id(actor.getId());
-        }
-        return null;
-    }
-
-    @Override
     public Movie getById(int movieId) {
         Movie byId = movieRepository.getById(movieId);
         List<LocalDateTime> seanceDateTime = byId.getSeanceDateTime();
@@ -158,8 +156,10 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Page<Movie> getByName(String name, Pageable pageable) {
-        return movieRepository.findByName(name, pageable);
+    public Page<MovieDto> getByName(String name, Pageable pageable,User user) {
+        Page<Movie> byName = movieRepository.findByName(name, pageable);
+        return movieDtos(byName,user,pageable);
+
     }
 
     @Override
@@ -251,5 +251,22 @@ public class MovieServiceImpl implements MovieService {
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         InputStream in = new FileInputStream(movieProperties.getMovieImg() + File.separator + fileName);
         IOUtils.copy(in, response.getOutputStream());
+    }
+
+    private Page<MovieDto> movieDtos(Page<Movie> allMovies,User user,Pageable pageable){
+        List<MovieDto> movieDtos=new ArrayList<>();
+        allMovies.stream().forEach(item->{
+            boolean b = user.getMyLikedMovie().stream().anyMatch(like -> item.getId() == like.getId());
+            MovieDto movieDto=new MovieDto();
+            movieDto.setLiked(b);
+            movieDto.setCategory(item.getCategory());
+            movieDto.setDuration(item.getDuration());
+            movieDto.setId(item.getId());
+            movieDto.setName(item.getName());
+            movieDto.setPicUrl(item.getPicUrl());
+            movieDtos.add(movieDto);
+        });
+        Page<MovieDto> movieDtoPage=new PageImpl<>(movieDtos,pageable,allMovies.getTotalPages());
+        return movieDtoPage;
     }
 }

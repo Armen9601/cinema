@@ -16,8 +16,6 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     Page<Movie> findByCategory(Category category, Pageable pageable);
 
-    List<Movie> findByActor_Id(int id);
-
     Movie findBySeanceDateTime(LocalDateTime localDateTime);
 
     @Query(value = "select distinct m.* from movies m left join  movie_seance_date_time ms on m.id=ms.movie_id where  ms.seance_date_time>=:start and ms.seance_date_time<=:end", nativeQuery = true)

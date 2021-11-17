@@ -5,9 +5,11 @@ import com.example.common.properties.FoodProperties;
 import com.example.common.service.FoodService;
 import com.example.common.service.MovieService;
 import com.example.common.dto.BasketDto;
+import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,24 +34,26 @@ public class FoodController {
     private final MovieService movieService;
 
     @GetMapping("/admin/food")
-    public String addFoodPage() {
+    public String addFoodPage(@AuthenticationPrincipal CurrentUser currentUser) {
         return "addFood";
     }
 
     @GetMapping("/popcorn")
     public String movieFood(
+            @AuthenticationPrincipal CurrentUser currentUser,
             ModelMap modelMap,
             HttpSession httpSession,
             @RequestParam(value = "category", required = false) String category
     ) {
         BasketDto basketDto = ((BasketDto) httpSession.getAttribute("basket"));
         if (basketDto == null) {
-            return "redirect:/user/viewAll";
+            return "redirect:/viewAll";
         }
         modelMap.addAttribute("foods", foodService.getAll(category));
         modelMap.addAttribute("basketDto", basketDto);
         modelMap.addAttribute("movie", movieService.getById(basketDto.getMovieId()));
         modelMap.addAttribute("total", foodService.totalPrice(httpSession));
+        modelMap.addAttribute("user", currentUser);
         return "popcorn";
     }
 

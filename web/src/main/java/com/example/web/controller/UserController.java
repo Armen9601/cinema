@@ -1,10 +1,8 @@
 package com.example.web.controller;
 
-import com.example.common.entity.Movie;
 import com.example.common.entity.User;
 import com.example.common.enums.UserType;
-import com.example.common.repository.MovieRepository;
-import com.example.common.service.MovieService;
+import com.example.common.service.EmailService;
 import com.example.common.service.UserService;
 import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +22,23 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
-    private final MovieService movieService;
+    private final EmailService emailService;
 
     @GetMapping("/register")
     public String register() {
         return "sign-up";
+    }
+
+    @GetMapping("/user/myLikedMovie")
+    public String myLikedMovie(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
+        modelMap.addAttribute("movies",currentUser.getUser().getMyLikedMovie());
+        return "my-liked-movie";
+    }
+
+    @GetMapping("/sendMessage")
+    public String sendMessage(@RequestParam String name,@RequestParam String message) {
+        emailService.sendSimpleMessage("2021JavaForTest@gmail.com", name, message);
+        return "redirect:/contact";
     }
 
     @PostMapping("/sign-up")
@@ -40,17 +50,4 @@ public class UserController {
         userService.add(user);
         return "redirect:/";
     }
-
-    @GetMapping("/myLikedMovie")
-    public String myLikedMovie(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        modelMap.addAttribute("movie",currentUser.getUser().getMyLikedMovie());
-        return "myLikedMovie";
-    }
-
-    @GetMapping("/user/likeMovie")
-    public String likeMovie(@RequestParam("id") int movieId, @AuthenticationPrincipal CurrentUser currentUser) {
-        userService.update(currentUser.getUser(),movieId);
-        return "redirect:/user/viewAll";
-    }
-
 }

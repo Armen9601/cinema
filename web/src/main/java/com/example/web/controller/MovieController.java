@@ -1,7 +1,9 @@
 package com.example.web.controller;
 
+import com.example.common.dto.MovieDto;
 import com.example.common.entity.Movie;
 import com.example.common.properties.MovieProperties;
+import com.example.common.service.ActorService;
 import com.example.common.service.MovieService;
 import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
@@ -35,31 +37,41 @@ public class MovieController {
 
     private final MovieProperties properties;
     private final MovieService movieService;
+    private final ActorService actorService;
 
     @GetMapping("/admin/addMovie")
-    public String addMoviePage() {
+    public String addMoviePage(@AuthenticationPrincipal CurrentUser currentUser,
+    ModelMap modelMap) {
+        modelMap.addAttribute("user", currentUser.getUser());
         return "add-movie-page";
     }
 
     @GetMapping("/movieImage")
-    void productImage(@RequestParam("movieUrl") String productUrl, HttpServletResponse response) throws IOException {
+    void productImage(@RequestParam("movieUrl") String productUrl,
+                      HttpServletResponse response
+                      ) throws IOException {
         InputStream in = new FileInputStream(properties.getMovieImg() + File.separator + productUrl);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
     }
 
-    @GetMapping("/user/movieDetails")
-    public String moviePage(@RequestParam("id") Movie movie, ModelMap modelMap) {
+    @GetMapping("/movieDetails")
+    public String moviePage(@RequestParam("id") Movie movie,
+                            @AuthenticationPrincipal CurrentUser currentUser,
+                            ModelMap modelMap
+                           ) {
         Movie byId = movieService.getById(movie.getId());
         modelMap.addAttribute("movie", byId);
+        modelMap.addAttribute("user", currentUser);
         return "movie-details";
     }
 
     @GetMapping("/user/viewAll")
     public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable,
-                            @RequestParam(value = "search", required = false) String name, @AuthenticationPrincipal CurrentUser currentUser) {
-        Page<Movie> allMovies = name == null ? movieService.getAll(pageable) :
-                movieService.getByName(name, pageable);
+                            @RequestParam(value = "search", required = false) String name,
+                            @AuthenticationPrincipal CurrentUser currentUser) {
+        Page<MovieDto> allMovies = name == null ? movieService.getAll(pageable, currentUser.getUser()) :
+                movieService.getByName(name, pageable, currentUser.getUser());
         if (allMovies.getTotalPages() > 0) {
             List<Integer> pageNum = IntStream.rangeClosed(1, allMovies.getTotalPages())
                     .boxed()
@@ -72,24 +84,26 @@ public class MovieController {
         return "movie-grid";
     }
 
-    @GetMapping("/user/nextPremiere")
+    @GetMapping("/nextPremiere")
     public String searchMovieByName(
             @RequestParam(value = "date", required = false) String date,
+            @AuthenticationPrincipal CurrentUser currentUser,
             ModelMap modelMap
     ) {
         List<Movie> byDate = movieService.getByToDay(date);
         modelMap.addAttribute("date", movieService.local(LocalDate.now()));
         modelMap.addAttribute("movies", byDate);
+        modelMap.addAttribute("user", currentUser);
         return "next-premiere";
     }
 
-    @PostMapping("/updateMovieRating")
+    @PostMapping("/user/updateMovieRating")
     public String updateMovieRating(
             @RequestParam int rating,
             @RequestParam("id") int movieId
     ) {
         movieService.update(movieId, rating);
-        return "redirect:/user/movieDetails?id=" + movieId;
+        return "redirect:/movieDetails?id=" + movieId;
     }
 
     @PostMapping("/admin/addMovie")

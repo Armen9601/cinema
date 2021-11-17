@@ -88,7 +88,8 @@
 <section class="details-banner bg_img">
     <div class="container">
         <div class="details-banner-wrapper">
-            <div class="details-banner-thumb"><img style="width: 260px; height: 150px" th:src="@{/movieImage(movieUrl=${movie.getPicUrl()})}" alt="movie"><a
+            <div class="details-banner-thumb"><img style="width: 260px; height: 150px"
+                                                   th:src="@{/movieImage(movieUrl=${movie.getPicUrl()})}" alt="movie"><a
                     th:href="${movie.getThriller()}" class="video-popup"><img
                     src="../assets/images/movie/video-button.png" alt="movie"></a></div>
             <div class="details-banner-content offset-lg-3"><h3 class="title" th:text="${movie.name}"></h3>
@@ -139,7 +140,8 @@
                         <h5 class="title" th:text="${movie.getRating()}"></h5></div>
                     <p>Movie Rating</p></div>
             </div>
-            <a  if="" th:style="${movie.getSeanceDateTime().size()==0?'display: none':'display: auto'}" th:href="@{/bookTicket(movieId=${movie.getId()})}" class="custom-button">book tickets</a></div>
+            <a if="" th:style="${movie.getSeanceDateTime().size()==0?'display: none':'display: auto'}"
+               th:href="@{/bookTicket(movieId=${movie.getId()})}" class="custom-button">book tickets</a></div>
     </div>
 </section><!-- ==========Book-Section========== --><!-- ==========Movie-Section========== -->
 <section class="movie-details-section padding-top padding-bottom">
@@ -154,8 +156,8 @@
                     </div>
                     <div class="tab summery-review">
                         <ul class="tab-menu">
-                            <li class="active">summery</li>
-                            <li>user review <span>147</span></li>
+                            <li class="active">actors</li>
+                            <li>comments<span>147</span></li>
                         </ul>
                         <div class="tab-area">
                             <div class="tab-item active">
@@ -201,146 +203,67 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="item">
-                                    <div class="header"><h5 class="sub-title">crew</h5>
-                                        <div class="navigation">
-                                            <div class="cast-prev-2"><i class="flaticon-double-right-arrows-angles"></i>
-                                            </div>
-                                            <div class="cast-next-2"><i class="flaticon-double-right-arrows-angles"></i>
-                                            </div>
-                                        </div>
+
+
+                                <form action="/admin/addActor" method="get">
+                                    <div>
+                                        <input type="submit" value="Add Actor"></input>
+                                        <input type="hidden" th:value="${movie.getId()}" name="movieId"></input>
                                     </div>
-                                    <div class="casting-slider-two owl-carousel">
-                                        <div class="cast-item">
-                                            <div class="cast-thumb"><a href="#0"><img
-                                                    src="../assets/images/cast/cast05.jpg" alt="cast"></a></div>
-                                            <div class="cast-content"><h6 class="cast-title"><a href="#0">pete
-                                                warren</a></h6><span class="cate">actor</span></div>
-                                        </div>
-                                        <div class="cast-item">
-                                            <div class="cast-thumb"><a href="#0"><img
-                                                    src="../assets/images/cast/cast06.jpg" alt="cast"></a></div>
-                                            <div class="cast-content"><h6 class="cast-title"><a href="#0">howard
-                                                bass</a></h6><span class="cate">executive producer</span></div>
-                                        </div>
-                                        <div class="cast-item">
-                                            <div class="cast-thumb"><a href="#0"><img
-                                                    src="./assets/images/cast/cast07.jpg" alt="cast"></a></div>
-                                            <div class="cast-content"><h6 class="cast-title"><a href="#0">naomi
-                                                smith</a></h6><span class="cate">producer</span></div>
-                                        </div>
-                                        <div class="cast-item">
-                                            <div class="cast-thumb"><a href="#0"><img
-                                                    src="./assets/images/cast/cast08.jpg" alt="cast"></a></div>
-                                            <div class="cast-content"><h6 class="cast-title"><a href="#0">tom
-                                                martinez</a></h6><span class="cate">producer</span></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
+
+
+                            <!--comment-->
                             <div class="tab-item">
-                                <div class="movie-review-item">
+                                <h6>add comments</h6>
+                                <form action="/addComment" method="post">
+                                    <input type="text" placeholder="enter your comment" name="text">
+                                    <input type="hidden" name="movieId" th:value="${movie.getId()}">
+                                    <input type="submit" value="add comment">
+                                </form>
+
+
+                                <div class="movie-review-item" th:each="comment : ${comments.content}">
                                     <div class="author">
-                                        <div class="thumb"><a href="#0"><img src="./assets/images/cast/cast02.jpg"
+                                        <div class="thumb"><a href="#0"><img src="../assets/images/cast/cast02.jpg"
                                                                              alt="cast"></a></div>
-                                        <div class="movie-review-info"><span class="reply-date">13 Days Ago</span><h6
-                                                class="subtitle"><a href="#0">minkuk seo</a></h6><span><i
-                                                class="fas fa-check"></i>verified review</span></div>
+                                        <div class="movie-review-info"><h6 class="subtitle"
+                                                                           th:text="${comment.user.getName +  ' ' + comment.user.getSurname()}"></h6>
+                                        </div>
                                     </div>
                                     <div class="movie-review-content">
-                                        <div class="review"><i class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i></div>
-                                        <h6 class="cont-title">Awesome Movie</h6>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat
-                                            enim non ante egestas vehicula. Suspendisse potenti. Fusce malesuada
-                                            fringilla lectus venenatis porttitor.</p>
-                                        <div class="review-meta"><a href="#0"><i
-                                                class="flaticon-hand"></i><span>8</span></a><a href="#0"
-                                                                                               class="dislike"><i
-                                                class="flaticon-dont-like-symbol"></i><span>0</span></a><a href="#0">
-                                            Report Abuse</a></div>
+                                        <div><span th:text="${comment.getText()}"></span></div>
+                                        <div class="review-meta">
+
+                                            <a onclick="return false;" th:href="${comment.getId()}"
+                                               class="flaticon-hand">
+                                                    <span th:id="${'comment' + comment.id}"
+                                                          th:text="${comment.getLikes().size()}"></span></a>
+
+                                            <a class="flaticon-dont-like-symbol"
+                                               onclick="return false;" th:href="${comment.getId()}">
+                                            <span
+                                                    th:id="${'dislike' + comment.id}"
+                                                    th:text="${comment.getDislikes().size()}"></span></a>
+                                           </div>
+                                        <form action="/deleteComment" method="get">
+                                            <input type="hidden" name="id" th:value="${comment.getId()}">
+                                            <input type="hidden" name="movieId"
+                                                   th:value="${comment.getMovie().getId()}">
+                                            <input th:type="${user.getUserType()=='ADMIN' || user.getUserType()==comment.getUser().getUserType()?'submit':'hidden'}" value="delete"></input>
+
+                                        </form>
+
                                     </div>
                                 </div>
-                                <div class="movie-review-item">
-                                    <div class="author">
-                                        <div class="thumb"><a href="#0"><img src="./assets/images/cast/cast04.jpg"
-                                                                             alt="cast"></a></div>
-                                        <div class="movie-review-info"><span class="reply-date">13 Days Ago</span><h6
-                                                class="subtitle"><a href="#0">rudra rai</a></h6><span><i
-                                                class="fas fa-check"></i>verified review</span></div>
-                                    </div>
-                                    <div class="movie-review-content">
-                                        <div class="review"><i class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i></div>
-                                        <h6 class="cont-title">Awesome Movie</h6>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat
-                                            enim non ante egestas vehicula. Suspendisse potenti. Fusce malesuada
-                                            fringilla lectus venenatis porttitor.</p>
-                                        <div class="review-meta"><a href="#0"><i
-                                                class="flaticon-hand"></i><span>8</span></a><a href="#0"
-                                                                                               class="dislike"><i
-                                                class="flaticon-dont-like-symbol"></i><span>0</span></a><a href="#0">
-                                            Report Abuse</a></div>
-                                    </div>
+
+                                <div th:if="${comments.totalPages>0}" class="pagination-area text-center">
+                                    <a th:each="page:${pageNumbers}"
+                                       th:href="@{/user/movieDetails(id=${movie.id}, size=${comments.size}, page=${(page-1)})}"
+                                       th:text="${page}"
+                                       th:class="${page==comments.number+1} ? active"></a>
                                 </div>
-                                <div class="movie-review-item">
-                                    <div class="author">
-                                        <div class="thumb"><a href="#0"><img src="./assets/images/cast/cast01.jpg"
-                                                                             alt="cast"></a></div>
-                                        <div class="movie-review-info"><span class="reply-date">13 Days Ago</span><h6
-                                                class="subtitle"><a href="#0">rafuj</a></h6><span><i
-                                                class="fas fa-check"></i>verified review</span></div>
-                                    </div>
-                                    <div class="movie-review-content">
-                                        <div class="review"><i class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i></div>
-                                        <h6 class="cont-title">Awesome Movie</h6>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat
-                                            enim non ante egestas vehicula. Suspendisse potenti. Fusce malesuada
-                                            fringilla lectus venenatis porttitor.</p>
-                                        <div class="review-meta"><a href="#0"><i
-                                                class="flaticon-hand"></i><span>8</span></a><a href="#0"
-                                                                                               class="dislike"><i
-                                                class="flaticon-dont-like-symbol"></i><span>0</span></a><a href="#0">
-                                            Report Abuse</a></div>
-                                    </div>
-                                </div>
-                                <div class="movie-review-item">
-                                    <div class="author">
-                                        <div class="thumb"><a href="#0"><img src="./assets/images/cast/cast03.jpg"
-                                                                             alt="cast"></a></div>
-                                        <div class="movie-review-info"><span class="reply-date">13 Days Ago</span><h6
-                                                class="subtitle"><a href="#0">bela bose</a></h6><span><i
-                                                class="fas fa-check"></i>verified review</span></div>
-                                    </div>
-                                    <div class="movie-review-content">
-                                        <div class="review"><i class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i><i
-                                                class="flaticon-favorite-heart-button"></i></div>
-                                        <h6 class="cont-title">Awesome Movie</h6>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat
-                                            enim non ante egestas vehicula. Suspendisse potenti. Fusce malesuada
-                                            fringilla lectus venenatis porttitor.</p>
-                                        <div class="review-meta"><a href="#0"><i
-                                                class="flaticon-hand"></i><span>8</span></a><a href="#0"
-                                                                                               class="dislike"><i
-                                                class="flaticon-dont-like-symbol"></i><span>0</span></a><a href="#0">
-                                            Report Abuse</a></div>
-                                    </div>
-                                </div>
-                                <div class="load-more text-center"><a href="#0" class="custom-button transparent">load
-                                    more</a></div>
                             </div>
                         </div>
                     </div>
@@ -348,7 +271,7 @@
             </div>
         </div>
     </div>
-</section><!-- ==========Movie-Section========== --><!-- ==========Newslater-Section========== -->
+</section> <!--==========Movie-Section==========  ==========Newslater-Section========== -->
 <footer class="footer-section">
     <div class="newslater-section padding-bottom">
         <div class="container">
@@ -407,9 +330,53 @@
         let val = $(this).text();
 
         window.location.href = 'http://localhost:8080/viewAll?category=' + val;
-
-
     });
+
+    $('#like').click(function () {
+        $('#likeCount').remove().append(
+            `<span>5</span>
+            `
+        )
+    })
+
+    $('.flaticon-hand').click(function () {
+        var href = $(this).attr('href');
+        console.log(href);
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'GET',
+            url: '/updateLikes?commentId=' + href,
+            data: JSON.stringify(href),
+            success: function (data) {
+                console.log(data)
+                let like = $('#comment' + href).text();
+                console.log(like)
+                $('#comment' + href).text(data ? + like + 1 : + like - 1)
+
+            }
+        });
+    })
+
+    $('.flaticon-dont-like-symbol').click(function () {
+        var href = $(this).attr('href');
+        console.log(href);
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'GET',
+            url: '/updateDislikes?commentId=' + href,
+            data: JSON.stringify(href),
+            success: function (data) {
+                let dislike = $('#dislike' + href).text();
+                console.log(dislike)
+                $('#dislike' + href).text(data ? +dislike + 1 : +dislike - 1)
+
+            }
+        });
+    })
+
+
 </script>
 </body>
 </html>

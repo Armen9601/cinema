@@ -1,9 +1,10 @@
 package com.example.common.service.serviceImpl;
 
-import com.example.common.entity.Actor;
+import com.example.common.dto.ResponseDto;
 import com.example.common.entity.Movie;
 import com.example.common.entity.QMovie;
 import com.example.common.entity.Rating;
+import com.example.common.entity.User;
 import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
 import com.example.common.properties.MovieProperties;
@@ -11,9 +12,9 @@ import com.example.common.repository.ActorRepository;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.RatingRepository;
 import com.example.common.service.MovieService;
+import com.example.common.service.RatingService;
 import com.example.common.util.FileUploadUtil;
 import com.example.common.util.MovieRatingComparator;
-import com.example.common.dto.ResponseDto;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,12 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static com.example.common.util.DateUtil.dateTimeFormatterWithDate;
 import static com.example.common.util.DateUtil.dateTimeFormatterWithDateAndTime;
@@ -50,6 +46,7 @@ public class MovieServiceImpl implements MovieService {
     private final ActorRepository actorRepository;
     private final MovieProperties movieProperties;
     private final FileUploadUtil fileUploadUtil;
+    private final RatingService ratingService;
 
     @Override
     public Movie add(
@@ -73,20 +70,13 @@ public class MovieServiceImpl implements MovieService {
         return movie;
     }
 
-    @Override
-    public Movie update(int movieId, int newRating) {
-        Movie byId = movieRepository.getById(movieId);
-        Rating rat = new Rating();
-        rat.setRating(newRating);
-        rat.setMovie(byId);
-        ratingRepository.save(rat);
-        double movieRating = 0;
-        List<Rating> byMovie_id = ratingRepository.findByMovie_Id(movieId);
+    private double update(List<Rating> byMovie_id) {
+        double result = 0;
         for (Rating rating : byMovie_id) {
-            movieRating = rating.getRating() + movieRating;
+            result = rating.getRating() + result;
         }
-        byId.setRating(movieRating / byMovie_id.size());
-        return movieRepository.save(byId);
+       result /= byMovie_id.size();
+        return result;
     }
 
     @Override
@@ -137,14 +127,6 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void delete(int id) {
         movieRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Movie> getByActorId(Actor actor) {
-        if (actor != null) {
-            return movieRepository.findByActor_Id(actor.getId());
-        }
-        return null;
     }
 
     @Override
@@ -205,5 +187,29 @@ public class MovieServiceImpl implements MovieService {
         localDateList.add(localDate.plusDays(3));
         localDateList.add(localDate.plusDays(4));
         return localDateList;
+    }
+
+    @Override
+    public boolean updateRating(int movieId, User user, int rat) {
+        boolean isRating = false;
+        Movie movie = movieRepository.getById(movieId);
+        List<Rating> byId = movie.getRatings();
+
+        if (byId.stream().anyMatch(m -> m.getUser().getId() == user.getId())) {
+            return isRating;
+        } else {
+            Rating rating = Rating.builder()
+                    .user(user)
+                    .movie(movie)
+                    .rating(rat)
+                    .build();
+            ratingRepository.save(rating);
+            byId.add(rating);
+            isRating = true;
+        }
+        movie.setRating(update(byId));
+        movieRepository.save(movie);
+
+        return isRating;
     }
 }

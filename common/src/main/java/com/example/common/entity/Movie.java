@@ -44,5 +44,9 @@ public class Movie {
     @Enumerated(value = EnumType.STRING)
     private Languages language;
     private String thriller;
+    @OneToMany
+    private List<Comment> comments;
+    @OneToMany
+    private List<Rating> ratings;
 
 }

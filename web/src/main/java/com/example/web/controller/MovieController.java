@@ -1,14 +1,22 @@
 package com.example.web.controller;
 
+import com.example.common.entity.Comment;
+import com.example.common.entity.Like;
 import com.example.common.entity.Movie;
 import com.example.common.properties.MovieProperties;
+import com.example.common.repository.LikeRepository;
+import com.example.common.service.CommentService;
+import com.example.common.service.LikeService;
 import com.example.common.service.MovieService;
+import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +41,8 @@ public class MovieController {
 
     private final MovieProperties properties;
     private final MovieService movieService;
+    private final CommentService commentService;
+    private final LikeService likeService;
 
     @GetMapping("/admin/addMovie")
     public String addMoviePage() {
@@ -47,14 +57,28 @@ public class MovieController {
     }
 
     @GetMapping("/user/movieDetails")
-    public String moviePage(@RequestParam("id") Movie movie, ModelMap modelMap) {
+    public String moviePage(@PageableDefault(size = 3) Pageable pageable,
+                            @RequestParam("id") Movie movie,
+                            ModelMap modelMap,
+                            @AuthenticationPrincipal CurrentUser currentUser) {
         Movie byId = movieService.getById(movie.getId());
+        Page<Comment> commentByMovieId = commentService.getCommentByMovieId(movie.getId(), pageable);
+        if (commentByMovieId.getTotalPages() > 0) {
+            List<Integer> pageNum = IntStream.rangeClosed(1, commentByMovieId.getTotalPages())
+                    .boxed()
+                    .collect(Collectors.toList());
+            modelMap.addAttribute("pageNumbers", pageNum);
+        }
         modelMap.addAttribute("movie", byId);
+        modelMap.addAttribute("comments", commentByMovieId);
+        modelMap.addAttribute("user", currentUser.getUser());
+
         return "movie-details";
     }
 
     @GetMapping("/user/viewAll")
-    public String allMovies(ModelMap modelMap, @PageableDefault(size = 9) Pageable pageable,
+    public String allMovies(ModelMap modelMap,
+                            @PageableDefault(size = 9) Pageable pageable,
                             @RequestParam(value = "search", required = false) String name) {
         Page<Movie> allMovies = name == null ? movieService.getAll(pageable) :
                 movieService.getByName(name, pageable);
@@ -82,10 +106,11 @@ public class MovieController {
 
     @PostMapping("/updateMovieRating")
     public String updateMovieRating(
+            @AuthenticationPrincipal CurrentUser currentUser,
             @RequestParam int rating,
             @RequestParam("id") int movieId
     ) {
-        movieService.update(movieId, rating);
+        movieService.updateRating(movieId, currentUser.getUser(), rating);
         return "redirect:/user/movieDetails?id=" + movieId;
     }
 

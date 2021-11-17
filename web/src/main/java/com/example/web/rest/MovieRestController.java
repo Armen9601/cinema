@@ -1,8 +1,8 @@
 package com.example.web.rest;
 
+import com.example.common.dto.ResponseDto;
 import com.example.common.entity.Movie;
 import com.example.common.service.MovieService;
-import com.example.common.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,3 +22,4 @@ public class MovieRestController {
     }
 
 }
+

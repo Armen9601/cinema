@@ -120,7 +120,7 @@
                                         style="height: 200px;width: 300px "   th:src="@{/movieImage(movieUrl=${movies.picUrl})}" alt="event"></a>
                                     <div class="event-date"><h6 class="date-title" th:text="${day.getDayOfMonth()}"></h6><span th:text="${day.getMonth()}"></span></div>
                                 </div>
-                                <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${movies.getId()})}"></a></div>
+                                <div class="movie-thumb c-thumb"><a th:href="@{/user/movieDetails(id=${movies.getId})}"></a></div>
                                 <div class="movie-content bg-one"><h5 class="title m-0"><a th:href="@{/user/movieDetails(id=${movies.getId()})}" th:text="${movies.name}"></a></h5>
 
                                 </div>

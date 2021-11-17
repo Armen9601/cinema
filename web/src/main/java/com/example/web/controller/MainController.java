@@ -1,6 +1,8 @@
 package com.example.web.controller;
 
 import com.example.common.entity.Movie;
+import com.example.common.service.CommentService;
+import com.example.common.service.LikeService;
 import com.example.common.service.MovieService;
 import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class MainController {
         List<Movie> allMovies = movieService.getByDay();
         LocalDate now = LocalDate.now();
         Slice<Movie> all = movieService.findFirst3(pageable);
+
         modelMap.addAttribute("allMovies", allMovies);
         modelMap.addAttribute("all", all);
         modelMap.addAttribute("day", now);

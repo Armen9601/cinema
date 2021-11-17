@@ -3,6 +3,7 @@ package com.example.common.service;
 import com.example.common.entity.Actor;
 import com.example.common.entity.Movie;
 import com.example.common.dto.ResponseDto;
+import com.example.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -22,8 +23,6 @@ public interface MovieService {
             String seanceThree
     ) throws IOException;
 
-    Movie update(int movieId, int rating);
-
     Page<Movie> getAll(Pageable pageable);
 
     Page<Movie> getByCategory(String category, Pageable pageable);
@@ -40,8 +39,6 @@ public interface MovieService {
 
     void delete(int id);
 
-    List<Movie> getByActorId(Actor actor);
-
     Movie getById(int movieId);
 
     Page<Movie> getByName(String name, Pageable pageable);
@@ -51,4 +48,7 @@ public interface MovieService {
     Slice<Movie> findFirst3(Pageable pageable);
 
     List<LocalDate> local(LocalDate localDate);
+
+    boolean updateRating(int movieId, User user, int rating);
+
 }

@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/*").hasAnyAuthority("ADMIN")
-                .anyRequest().hasAnyAuthority("USER", "ADMIN");
+                .anyRequest().permitAll();
        /* http
                 .csrf().disable()
                 .authorizeRequests()
@@ -75,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/plugins/**");
         webSecurity.ignoring().antMatchers("/pages/**");
         webSecurity.ignoring().antMatchers("/web/**");
-    }
 
     }
+
+}

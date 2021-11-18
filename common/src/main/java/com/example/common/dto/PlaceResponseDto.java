@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class PlaceResponseDto {
 
-    List<String> place;
-    LocalDateTime localDateTime;
-    Integer movieId;
+    private List<String> place;
+    private LocalDateTime localDateTime;
+    private Integer movieId;
 
 }

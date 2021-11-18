@@ -26,7 +26,7 @@ public class TicketController {
     private final TicketsService ticketsService;
     private final FoodService foodService;
 
-    @GetMapping("/bookTicket")
+    @GetMapping("/user/bookTicket")
     public String seatPlan(
             @RequestParam("movieId") int movieId,
             @RequestParam(value = "seance", required = false) Integer seance,
@@ -58,11 +58,11 @@ public class TicketController {
         return "redirect:/popcorn";
     }
 
-    @PostMapping("/user/makePaymont")
-    public String makePaymont(HttpSession session, @AuthenticationPrincipal CurrentUser currentUser, Locale locale) {
+    @PostMapping("/user/makePayment")
+    public String makePayment(HttpSession session, @AuthenticationPrincipal CurrentUser currentUser, Locale locale) {
         int id = ((BasketDto) session.getAttribute("basket")).getMovieId();
         ticketsService.addTicket(session, currentUser.getUser(), locale);
-        return "redirect:/bookTicket?movieId=" + id;
+        return "redirect:/user/bookTicket?movieId=" + id;
     }
 
 }

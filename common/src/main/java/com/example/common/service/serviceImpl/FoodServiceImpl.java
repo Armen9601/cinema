@@ -65,6 +65,11 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    public List<Food> getAllFoods() {
+        return null;
+    }
+
+    @Override
     public int totalPrice(HttpSession httpSession) {
         BasketDto basketDto = ((BasketDto) httpSession.getAttribute("basket"));
         int foodTotalPrice = 0;

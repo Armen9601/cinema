@@ -10,8 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.List;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -33,7 +33,11 @@ public class User {
     private String repeatPassword;
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "liked_movie",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
     private List<Movie> myLikedMovie;
 
 }

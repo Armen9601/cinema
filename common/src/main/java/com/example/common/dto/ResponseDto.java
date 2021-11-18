@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ResponseDto {
 
-    List<String> categories;
-    List<String> lang;
+    private List<String> categories;
+    private List<String> lang;
 
 }

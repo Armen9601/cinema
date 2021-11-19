@@ -21,10 +21,10 @@ public class CommentController {
 
     @PostMapping("/user/addComment")
     public String addComment(
-
-                             @ModelAttribute Comment comment,
-                             @RequestParam(name = "movieId") int movieId,
-                             @AuthenticationPrincipal CurrentUser currentUser) {
+            @ModelAttribute Comment comment,
+            @RequestParam(name = "movieId") int movieId,
+            @AuthenticationPrincipal CurrentUser currentUser
+    ) {
         comment.setUser(currentUser.getUser());
         comment.setMovie(movieService.getById(movieId));
         commentService.addComment(comment);
@@ -36,6 +36,5 @@ public class CommentController {
                                 @RequestParam(name = "id") int id) {
         commentService.deleteCommentById(id);
         return "redirect:/movieDetails?id=" + movieId;
-
     }
 }

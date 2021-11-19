@@ -1,13 +1,11 @@
 package com.example.common.service;
 
 import com.example.common.dto.MovieDto;
-import com.example.common.entity.Actor;
-import com.example.common.entity.Movie;
 import com.example.common.dto.ResponseDto;
+import com.example.common.entity.Movie;
 import com.example.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

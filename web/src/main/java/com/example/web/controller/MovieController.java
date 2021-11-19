@@ -4,9 +4,7 @@ import com.example.common.dto.MovieDto;
 import com.example.common.entity.Comment;
 import com.example.common.entity.Movie;
 import com.example.common.properties.MovieProperties;
-import com.example.common.service.ActorService;
 import com.example.common.service.CommentService;
-import com.example.common.service.LikeService;
 import com.example.common.service.MovieService;
 import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
@@ -40,9 +38,7 @@ public class MovieController {
 
     private final MovieProperties properties;
     private final MovieService movieService;
-    private final ActorService actorService;
     private final CommentService commentService;
-    private final LikeService likeService;
 
     @GetMapping("/admin/addMovie")
     public String addMoviePage(@AuthenticationPrincipal CurrentUser currentUser,

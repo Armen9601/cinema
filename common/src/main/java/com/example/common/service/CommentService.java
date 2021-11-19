@@ -1,8 +1,6 @@
 package com.example.common.service;
 
 import com.example.common.entity.Comment;
-import com.example.common.entity.Dislike;
-import com.example.common.entity.Like;
 import com.example.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,5 @@
 package com.example.common.service;
 
-import com.example.common.entity.Tickets;
 import com.example.common.entity.User;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +14,5 @@ public interface TicketsService {
     List<String> findBySeanceTime(LocalDateTime seanceTime);
 
     boolean existsByPlace(String place);
-
 
 }

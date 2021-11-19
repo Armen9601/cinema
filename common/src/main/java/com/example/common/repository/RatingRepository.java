@@ -9,6 +9,4 @@ public interface RatingRepository extends JpaRepository<Rating, Integer> {
 
     List<Rating> findByMovie_Id(int id);
 
-    void deleteByUserId(int id);
-
 }

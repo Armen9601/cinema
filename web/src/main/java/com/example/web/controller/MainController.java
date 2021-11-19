@@ -1,15 +1,9 @@
 package com.example.web.controller;
 
 import com.example.common.entity.Movie;
-import com.example.common.service.CommentService;
-import com.example.common.service.LikeService;
 import com.example.common.service.MovieService;
-import com.example.common.service.UserService;
 import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,7 +17,6 @@ import java.util.List;
 public class MainController {
 
     private final MovieService movieService;
-    private final UserService userService;
 
     @GetMapping("/")
     public String home(

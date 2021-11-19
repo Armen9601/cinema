@@ -19,5 +19,4 @@ public interface FoodService {
 
     int totalPrice(HttpSession httpSession);
 
-    List<Food> getAllFoods();
 }

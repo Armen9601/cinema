@@ -3,7 +3,9 @@ package com.example.rest.endpoint;
 import com.example.common.entity.Movie;
 import com.example.common.service.MovieService;
 import com.example.common.service.RatingService;
+import com.example.rest.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,7 +56,9 @@ public class MovieEndpoint {
     }
 
     @PostMapping("/updateMovieRating")
-    public Movie updateMovieByRating(@RequestParam int rating, @RequestParam int movieId) {
-        return movieService.update(movieId, rating);
+    public boolean updateMovieByRating(@RequestParam int rating,
+                                     @RequestParam int movieId,
+                                     @AuthenticationPrincipal CurrentUser currentUser) {
+        return movieService.updateRating(movieId,currentUser.getUser(), rating);
     }
 }

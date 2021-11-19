@@ -1,18 +1,17 @@
 package com.example.web.controller;
 
 import com.example.common.dto.MovieDto;
+import com.example.common.entity.Comment;
 import com.example.common.entity.Movie;
 import com.example.common.properties.MovieProperties;
-import com.example.common.repository.LikeRepository;
+import com.example.common.service.ActorService;
 import com.example.common.service.CommentService;
 import com.example.common.service.LikeService;
-import com.example.common.service.ActorService;
 import com.example.common.service.MovieService;
 import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
@@ -47,7 +46,7 @@ public class MovieController {
 
     @GetMapping("/admin/addMovie")
     public String addMoviePage(@AuthenticationPrincipal CurrentUser currentUser,
-    ModelMap modelMap) {
+                               ModelMap modelMap) {
         modelMap.addAttribute("user", currentUser.getUser());
         return "add-movie-page";
     }
@@ -55,7 +54,7 @@ public class MovieController {
     @GetMapping("/movieImage")
     void productImage(@RequestParam("movieUrl") String productUrl,
                       HttpServletResponse response
-                      ) throws IOException {
+    ) throws IOException {
         InputStream in = new FileInputStream(properties.getMovieImg() + File.separator + productUrl);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         IOUtils.copy(in, response.getOutputStream());
@@ -64,10 +63,8 @@ public class MovieController {
     @GetMapping("/movieDetails")
     public String moviePage(@PageableDefault(size = 3) Pageable pageable,
                             @RequestParam("id") Movie movie,
-                           @AuthenticationPrincipal CurrentUser currentUser,
-                            ModelMap modelMap
-                           ,
-                            @AuthenticationPrincipal CurrentUser currentUser) {
+                            @AuthenticationPrincipal CurrentUser currentUser,
+                            ModelMap modelMap) {
         Movie byId = movieService.getById(movie.getId());
         Page<Comment> commentByMovieId = commentService.getCommentByMovieId(movie.getId(), pageable);
         if (commentByMovieId.getTotalPages() > 0) {
@@ -79,8 +76,6 @@ public class MovieController {
         modelMap.addAttribute("movie", byId);
         modelMap.addAttribute("user", currentUser);
         modelMap.addAttribute("comments", commentByMovieId);
-        modelMap.addAttribute("user", currentUser.getUser());
-
         return "movie-details";
     }
 
@@ -99,7 +94,7 @@ public class MovieController {
         }
         modelMap.addAttribute("date", movieService.local(LocalDate.now()));
         modelMap.addAttribute("movies", allMovies);
-        modelMap.addAttribute("user", currentUser.getUser());
+        modelMap.addAttribute("user", currentUser);
         return "movie-grid";
     }
 

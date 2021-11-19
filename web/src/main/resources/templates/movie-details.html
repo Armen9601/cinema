@@ -136,7 +136,7 @@
                             <!--comment-->
                             <div class="tab-item">
                                 <h6>add comments</h6>
-                                <form action="/addComment" method="post">
+                                <form action="/user/addComment" method="post">
                                     <input type="text" placeholder="enter your comment" name="text">
                                     <input type="hidden" name="movieId" th:value="${movie.getId()}">
                                     <input type="submit" value="add comment">
@@ -166,11 +166,11 @@
                                                     th:id="${'dislike' + comment.id}"
                                                     th:text="${comment.getDislikes().size()}"></span></a>
                                            </div>
-                                        <form action="/deleteComment" method="get">
+                                        <form action="/user/deleteComment" method="get">
                                             <input type="hidden" name="id" th:value="${comment.getId()}">
                                             <input type="hidden" name="movieId"
                                                    th:value="${comment.getMovie().getId()}">
-                                            <input th:type="${user.getUserType()=='ADMIN' || user.getUserType()==comment.getUser().getUserType()?'submit':'hidden'}" value="delete"></input>
+                                            <input th:type="${user.getUser().getUserType().name=='ADMIN' || user.getUser().getUserType()==comment.getUser().getUserType()?'submit':'hidden'}" value="delete"></input>
 
                                         </form>
 
@@ -179,7 +179,7 @@
 
                                 <div th:if="${comments.totalPages>0}" class="pagination-area text-center">
                                     <a th:each="page:${pageNumbers}"
-                                       th:href="@{/user/movieDetails(id=${movie.id}, size=${comments.size}, page=${(page-1)})}"
+                                       th:href="@{/movieDetails(id=${movie.id}, size=${comments.size}, page=${(page-1)})}"
                                        th:text="${page}"
                                        th:class="${page==comments.number+1} ? active"></a>
                                 </div>
@@ -248,6 +248,14 @@
         let val = $(this).text();
 
         window.location.href = 'http://localhost:8080/viewAll?category=' + val;
+    });
+
+    $('#like').click(function () {
+        $('#likeCount').remove().append(
+            `<span>5</span>
+            `
+        )
+    })
 
     $('.flaticon-hand').click(function () {
         var href = $(this).attr('href');
@@ -285,7 +293,6 @@
             }
         });
     })
-
 
 </script>
 </body>

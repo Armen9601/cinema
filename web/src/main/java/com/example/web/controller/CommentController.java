@@ -19,7 +19,7 @@ public class CommentController {
     private final CommentService commentService;
     private final MovieService movieService;
 
-    @PostMapping("/addComment")
+    @PostMapping("/user/addComment")
     public String addComment(
 
                              @ModelAttribute Comment comment,
@@ -28,14 +28,14 @@ public class CommentController {
         comment.setUser(currentUser.getUser());
         comment.setMovie(movieService.getById(movieId));
         commentService.addComment(comment);
-        return "redirect:/user/movieDetails?id=" + movieId;
+        return "redirect:/movieDetails?id=" + movieId;
     }
 
-    @GetMapping("/deleteComment")
+    @GetMapping("/user/deleteComment")
     public String deleteComment(@RequestParam(name = "movieId") int movieId,
                                 @RequestParam(name = "id") int id) {
         commentService.deleteCommentById(id);
-        return "redirect:/user/movieDetails?id=" + movieId;
+        return "redirect:/movieDetails?id=" + movieId;
 
     }
 }

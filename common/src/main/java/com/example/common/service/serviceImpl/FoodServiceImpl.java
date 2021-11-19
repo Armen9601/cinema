@@ -10,11 +10,17 @@ import com.example.common.service.FoodService;
 import com.example.common.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -66,6 +72,29 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public List<Food> getAllFoods() {
+        return foodRepository.findAll();
+    }
+
+    @Override
+    public Food save(Food food) {
+        return foodRepository.save(food);
+    }
+
+    @Override
+    public void downloadPicByName(String productUrl, HttpServletResponse response) throws IOException {
+        InputStream in = new FileInputStream(foodProperties.getFoodImg()+ File.separator+productUrl);
+        response.setContentType(MediaType.IMAGE_GIF_VALUE);
+        IOUtils.copy(in, response.getOutputStream());
+    }
+
+    @Override
+    public Food addById(int id, MultipartFile multipartFile, String category) throws IOException {
+        Food food = foodRepository.getById(id);
+        if (!multipartFile.isEmpty()) {
+            food.setPicUrl(fileUploadUtil.getSmallPicUrl(multipartFile, false));
+        }
+        food.setFoodCategory(FoodCategory.valueOf(category.toUpperCase(Locale.ROOT)));
+        foodRepository.save(food);
         return null;
     }
 

@@ -1,10 +1,10 @@
 package com.example.web.controller;
 
+import com.example.common.dto.BasketDto;
 import com.example.common.entity.Food;
 import com.example.common.properties.FoodProperties;
 import com.example.common.service.FoodService;
 import com.example.common.service.MovieService;
-import com.example.common.dto.BasketDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.MediaType;
@@ -36,6 +36,7 @@ public class FoodController {
         return "addFood";
     }
 
+    /*----foood------*/
     @GetMapping("/popcorn")
     public String movieFood(
             ModelMap modelMap,

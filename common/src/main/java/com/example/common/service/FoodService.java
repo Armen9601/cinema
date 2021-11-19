@@ -3,6 +3,7 @@ package com.example.common.service;
 import com.example.common.entity.Food;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -20,4 +21,10 @@ public interface FoodService {
     int totalPrice(HttpSession httpSession);
 
     List<Food> getAllFoods();
+
+    Food save(Food food);
+
+    void downloadPicByName(String productUrl, HttpServletResponse response) throws IOException;
+
+    Food addById(int id, MultipartFile multipartFile, String category) throws IOException;
 }

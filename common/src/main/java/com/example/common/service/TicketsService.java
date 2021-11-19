@@ -17,4 +17,7 @@ public interface TicketsService {
     boolean existsByPlace(String place);
 
 
+    List<Tickets> getAllTickets();
+
+    Tickets save(Tickets tickets);
 }

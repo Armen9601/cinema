@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MovieRepository movieRepository;
-    private final ModelMapper mapper;
 
     @Override
     public void update(User user, int id) {

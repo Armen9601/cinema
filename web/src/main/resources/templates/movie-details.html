@@ -42,7 +42,7 @@
             <div class="details-banner-content offset-lg-3"><h3 class="title" th:text="${movie.name}"></h3>
                 <div class="tags"><a th:text="${movie.getLanguage()}"></a>
                 </div>
-                <a class="button" id="category" th:value="${movie.getCategory()}" th:text="${movie.getCategory()}"></a>
+                <a class="button"  th:value="${movie.getCategory()}" th:text="${movie.getCategory()}"></a>
                 <div class="social-and-duration">
                     <div class="duration-area">
                         <div class="item"><i class="far fa-clock"></i><span th:text="${movie.getDuration()}"></span>
@@ -101,7 +101,7 @@
                     <div class="tab summery-review">
                         <ul class="tab-menu">
                             <li class="active">actors</li>
-                            <li>comments<span>147</span></li>
+                            <li>comments</li>
                         </ul>
                         <div class="tab-area">
                             <div class="tab-item active">
@@ -170,7 +170,7 @@
                                             <input type="hidden" name="id" th:value="${comment.getId()}">
                                             <input type="hidden" name="movieId"
                                                    th:value="${comment.getMovie().getId()}">
-                                            <input th:type="${user.getUser().getUserType().name=='ADMIN' || user.getUser().getUserType()==comment.getUser().getUserType()?'submit':'hidden'}" value="delete"></input>
+                                            <input th:type="${user!=null && user.getUser().getUserType().name=='ADMIN' || user!=null && user.getUser().id==comment.getUser().id?'submit':'hidden'}" value="delete">
 
                                         </form>
 
@@ -264,7 +264,7 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             type: 'GET',
-            url: '/updateLikes?commentId=' + href,
+            url: '/user/updateLikes?commentId=' + href,
             data: JSON.stringify(href),
             success: function (data) {
                 console.log(data)
@@ -283,7 +283,7 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             type: 'GET',
-            url: '/updateDislikes?commentId=' + href,
+            url: '/user/updateDislikes?commentId=' + href,
             data: JSON.stringify(href),
             success: function (data) {
                 let dislike = $('#dislike' + href).text();

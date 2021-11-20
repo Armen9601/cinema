@@ -25,7 +25,29 @@
 <a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a><!-- ==========Overlay========== -->
 <!-- ==========Header-Section========== -->
 <header class="header-section">
-    <div th:include="/fragments/top-part:: top"></div>
+    <div class="container">
+        <div class="header-wrapper">
+            <div class="logo"><a href="/"><img src="../assets/images/logo/logo.png" alt="logo"></a></div>
+            <ul class="menu">
+                <li><a href="/" class="active">Home</a>
+                </li>
+                <li><a href="/user/viewAll">movies</a>
+                    <ul class="submenu">
+                        <li><a href="/admin/food" >Add Food</a></li>
+                    </ul>
+                </li>
+                <li><a href="/user/myLikedMovie">My Liked Movies</a>
+                </li>
+                <li><a href="/about">About Us</a>
+                </li>
+                <li><a href="/blog">blog</a>
+                </li>
+                <li><a href="/contact">contact</a></li>
+                <li class="header-button pr-0"><a th:href="${user==null?'/sign-in':'/logout'}" th:text="${user==null?'join us':'log out'}"></a></li>
+            </ul>
+            <div class="header-bar d-lg-none"><span></span><span></span><span></span></div>
+        </div>
+    </div>
 </header><!-- ==========Header-Section========== --><!-- ==========Banner-Section========== -->
 <section class="details-banner hero-area bg_img seat-plan-banner"
          data-background="../assets/images/banner/banner04.jpg">

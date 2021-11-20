@@ -46,7 +46,6 @@ public class UserController {
         if (result.hasErrors() || !userService.add(user)) {
             return "sign-up";
         }
-        user.setUserType(UserType.USER);
         userService.add(user);
         return "redirect:/";
     }

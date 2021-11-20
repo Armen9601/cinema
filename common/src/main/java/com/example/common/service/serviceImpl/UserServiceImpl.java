@@ -2,6 +2,7 @@ package com.example.common.service.serviceImpl;
 
 import com.example.common.entity.Movie;
 import com.example.common.entity.User;
+import com.example.common.enums.UserType;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.UserRepository;
 import com.example.common.service.UserService;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserType(UserType.USER);
         userRepository.save(user);
         return true;
     }

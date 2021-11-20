@@ -15,14 +15,14 @@ public class CommentLikeRestController {
 
     private final CommentService commentService;
 
-    @GetMapping("/updateLikes")
+    @GetMapping("/user/updateLikes")
     public ResponseEntity<Boolean> updateLikeCount(
             @RequestParam int commentId,
             @AuthenticationPrincipal CurrentUser currentUser) {
         return ResponseEntity.ok(commentService.updateLike(commentId, currentUser.getUser()));
     }
 
-    @GetMapping("/updateDislikes")
+    @GetMapping("/user/updateDislikes")
     public ResponseEntity<Boolean> updateDislikeCount(
             @RequestParam int commentId,
             @AuthenticationPrincipal CurrentUser currentUser) {

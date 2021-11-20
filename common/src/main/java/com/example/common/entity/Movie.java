@@ -47,8 +47,10 @@ public class Movie {
     private Languages language;
     private String thriller;
     @OneToMany
-    private List<Comment> comments;
-    @OneToMany
     private List<Rating> ratings;
 
+    @Override
+    public String toString() {
+        return "Movie";
+    }
 }

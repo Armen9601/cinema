@@ -1,7 +1,6 @@
 package com.example.web.controller;
 
 import com.example.common.entity.User;
-import com.example.common.enums.UserType;
 import com.example.common.service.EmailService;
 import com.example.common.service.UserService;
 import com.example.web.security.CurrentUser;

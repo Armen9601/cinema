@@ -5,7 +5,6 @@ import com.example.common.entity.Food;
 import com.example.common.properties.FoodProperties;
 import com.example.common.service.FoodService;
 import com.example.common.service.MovieService;
-import com.example.common.dto.BasketDto;
 import com.example.web.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;

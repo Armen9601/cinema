@@ -12,7 +12,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class TicketsEndpoint {
-    private TicketsService ticketsService;
+
+    private final TicketsService ticketsService;
     private final MovieService movieService;
 
     @GetMapping("/book/Ticket")

@@ -68,4 +68,14 @@ public class TicketsServicelmpl implements TicketsService {
         return ticketsRepository.existsByPlace(place);
     }
 
+    @Override
+    public List<Tickets> getAllTickets() {
+        return ticketsRepository.findAll();
+    }
+
+    @Override
+    public Tickets save(Tickets tickets) {
+        return ticketsRepository.save(tickets);
+    }
+
 }

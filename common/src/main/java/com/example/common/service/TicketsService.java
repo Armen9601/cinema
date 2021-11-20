@@ -1,5 +1,6 @@
 package com.example.common.service;
 
+import com.example.common.entity.Tickets;
 import com.example.common.entity.User;
 
 import javax.servlet.http.HttpSession;
@@ -15,4 +16,8 @@ public interface TicketsService {
 
     boolean existsByPlace(String place);
 
+
+    List<Tickets> getAllTickets();
+
+    Tickets save(Tickets tickets);
 }

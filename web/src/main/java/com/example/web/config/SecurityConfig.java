@@ -27,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.headers().frameOptions().disable()
                 .and()
                 .csrf().disable()
@@ -47,22 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/*").hasAnyAuthority("ADMIN")
-                .anyRequest().hasAnyAuthority("USER", "ADMIN");
-       /* http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.POST, "/**").hasAnyAuthority("ADMIN")
-                //.antMatchers(HttpMethod.DELETE, "/**").hasAnyAuthority("ADMIN")
-                .anyRequest()
-                .permitAll()
-                .and()
-                .logout()
-                .and()
-                .formLogin()
-                .loginPage("/sign-in")
-                .defaultSuccessUrl("/");*/
-
+                .anyRequest().permitAll();
     }
 
     @Override
@@ -77,4 +61,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/web/**");
     }
 
-    }
+}

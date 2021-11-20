@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link rel="stylesheet" href="../assets/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+
+    <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
+
+    <title>Add Actor</title></head>
+<body><
+<div class="preloader">
+    <div class="preloader-inner">
+        <div class="preloader-icon"><span></span><span></span></div>
+    </div>
+</div><!-- ==========Preloader========== --><!-- ==========Overlay========== -->
+<div class="overlay"></div>
+<a href="#0" class="scrollToTop"><i class="fas fa-angle-up"></i></a><!-- ==========Overlay========== -->
+<!-- ==========Header-Section========== -->
+<header class="header-section">
+    <div th:include="/fragments/top-part:: top"></div>
+</header><!-- ==========Header-Section========== --><!-- ==========Banner-Section========== -->
+<section class="details-banner hero-area bg_img seat-plan-banner"
+         data-background="../assets/images/banner/banner04.jpg">
+    <div class="container">
+        <div class="details-banner-wrapper">
+            <div class="details-banner-content style-two"><h3 class="title">Add Actor</h3>
+            </div>
+        </div>
+    </div>
+</section><!-- ==========Banner-Section========== --><!-- ==========Page-Title========== -->
+<section class="page-title bg-one">
+
+</section><!-- ==========Page-Title========== --><!-- ==========Movie-Section========== -->
+<div class="movie-facility padding-bottom padding-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div class="checkout-widget checkout-contact"><h5 class="title">Please Input Actor Details</h5>
+                    <form class="checkout-contact-form" action="/admin/addActors" method="post"
+                          enctype="multipart/form-data">
+                        <div class="form-group"><input type="text" name="name" placeholder="Name"></div>
+                        <div class="form-group"><input type="text" name="surname" placeholder="surname"></div>
+                        <div class="form-group"><input type="text" name="biography" placeholder="biography"></div>
+                        <div class="form-group"><input type="hidden" name="movieId" th:value="${movie}"></div>
+
+                        <label>
+
+                            <div class="form-group" style="margin-top: 30px"><i></i>Browse<input type="file"
+                                                                                                 style="display: none;"
+                                                                                                 name="pictureUrl" size="1"
+                                                                                                 class="custom-button"><br>
+                            </div>
+                        </label>
+                        <div class="form-group" style="margin-top: 30px"><input type="submit" value="Add"
+                                                                                class="custom-button"></div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- ==========Movie-Section========== --><!-- ==========Newslater-Section========== -->
+<footer class="footer-section">
+    <div class="newslater-section padding-bottom">
+        <div class="container">
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="footer-top">
+            <div class="logo"><a href="/"><img src="../assets/images/footer/footer-logo.png" alt="footer"></a>
+            </div>
+            <ul class="social-icons">
+                <li><a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://twitter.com/?lang=ru" class="active"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="https://www.pinterest.com/"><i class="fab fa-pinterest-p"></i></a></li>
+                <li><a href="https://www.google.ru/"><i class="fab fa-google"></i></a></li>
+                <li><a href="https://www.instagram.com/?hl=ru"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-area">
+                <div class="left"><p>Copyright © 2020.All Rights Reserved By <a href="http://www.bootstrapmb.com/">Boleto </a>
+                </p></div>
+                <ul class="links">
+                    <li><a href="/about">About</a></li>
+                    <li><a href="#0">Privacy Policy</a></li>
+                    <li><a href="#0">FAQ</a></li>
+                    <li><a href="#0">Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer><!-- ==========Newslater-Section========== -->
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<script src="../assets/js/modernizr-3.6.0.min.js"></script>
+<script src="../assets/js/plugins.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/isotope.pkgd.min.js"></script>
+<script src="../assets/js/magnific-popup.min.js"></script>
+<script src="../assets/js/owl.carousel.min.js"></script>
+<script src="../assets/js/wow.min.js"></script>
+<script src="../assets/js/countdown.min.js"></script>
+<script src="../assets/js/odometer.min.js"></script>
+<script src="../assets/js/viewport.jquery.js"></script>
+<script src="../assets/js/nice-select.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+    $('#timePicker').datetimepicker();
+</script>
+
+</body>
+</html>

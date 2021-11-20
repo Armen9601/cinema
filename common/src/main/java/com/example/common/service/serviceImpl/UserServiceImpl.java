@@ -2,6 +2,7 @@ package com.example.common.service.serviceImpl;
 
 import com.example.common.entity.Movie;
 import com.example.common.entity.User;
+import com.example.common.enums.UserType;
 import com.example.common.repository.MovieRepository;
 import com.example.common.repository.UserRepository;
 import com.example.common.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +22,17 @@ public class UserServiceImpl implements UserService {
     private final MovieRepository movieRepository;
 
     @Override
-    public void update(User user, int id) {
-
+    public boolean addOrRemove(User user, int id) {
+        boolean isRemove = false;
         Movie byId = movieRepository.getById(id);
-        List<Movie> myLikedMovie = user.getMyLikedMovie();
-
+        if (user.getMyLikedMovie().stream().anyMatch(m -> m.getId() == byId.getId())) {
+            user.getMyLikedMovie().removeIf(m -> m.getId() == id);
+        } else {
+            user.getMyLikedMovie().add(byId);
+            isRemove = true;
+        }
+        userRepository.save(user);
+        return isRemove;
     }
 
     @Override
@@ -34,6 +42,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setUserType(UserType.USER);
         userRepository.save(user);
         return true;
     }
@@ -42,4 +51,15 @@ public class UserServiceImpl implements UserService {
     public void deleteById(int id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
 }

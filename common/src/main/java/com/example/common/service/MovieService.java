@@ -1,13 +1,14 @@
 package com.example.common.service;
 
-import com.example.common.entity.Actor;
+import com.example.common.dto.MovieDto;
+import com.example.common.dto.ResponseDto;
 import com.example.common.entity.Movie;
-import com.example.common.util.ResponseDto;
+import com.example.common.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,9 +23,7 @@ public interface MovieService {
             String seanceThree
     ) throws IOException;
 
-    Movie update(int movieId, int rating);
-
-    Page<Movie> getAll(Pageable pageable);
+    Page<MovieDto> getAll(Pageable pageable, User user);
 
     Page<Movie> getByCategory(String category, Pageable pageable);
 
@@ -40,15 +39,30 @@ public interface MovieService {
 
     void delete(int id);
 
-    List<Movie> getByActorId(Actor actor);
+    Movie getById(int movieId);
 
-    Movie getById(Movie movie);
-
-    Page<Movie> getByName(String name, Pageable pageable);
+    Page<MovieDto> getByName(String name, Pageable pageable,User user);
 
     List<Movie> getByAll(ResponseDto responseDto);
 
-    Slice<Movie> findFirst3(Pageable pageable);
+    List<Movie> findTop3OByOrderByRatingDesc();
 
     List<LocalDate> local(LocalDate localDate);
+
+    boolean updateRating(int movieId, User user, int rating);
+
+
+    List<Movie> getAllMovie();
+
+    Movie updateMovieByPic(
+            int movieId, MultipartFile[] multipartFile,
+            String seanceOne, String seanceTwo,
+            String seanceThree
+    ) throws IOException;
+
+    Movie save(Movie movie);
+
+    Movie getByIndex(int index);
+
+    void downloadPicByName(String fileName, HttpServletResponse response) throws IOException;
 }

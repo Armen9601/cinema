@@ -23,8 +23,8 @@ import java.util.Iterator;
 @Component
 public class FileUploadUtil {
 
-    @Value("${movie.movieImg}")
-    String movieImg;
+   // @Value("${movie.movieImg}")
+    //String movieImg = "C:/Users/User/Desktop/e/";
 
     private final MovieProperties movieProperties;
 
@@ -68,8 +68,6 @@ public class FileUploadUtil {
         CustomMultipartFile customMultipartFile = new CustomMultipartFile(multipartFile.getBytes(), png);
         return compressImage(customMultipartFile, movieProperties.getMovieImg(), png,isResize);
     }
-
-
 }
 
 

@@ -3,6 +3,7 @@ package com.example.common.entity;
 
 import com.example.common.enums.Category;
 import com.example.common.enums.Languages;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "movies")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Movie {
 
     @Id
@@ -43,5 +45,12 @@ public class Movie {
     private List<Actor> actor;
     @Enumerated(value = EnumType.STRING)
     private Languages language;
+    private String thriller;
+    @OneToMany
+    private List<Rating> ratings;
 
+    @Override
+    public String toString() {
+        return "Movie";
+    }
 }
